@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/item1"
-        android:title="Food"/>
+        android:title="@string/food"/>
     <item android:id="@+id/item2"
-        android:title="Daily Necessities"/>
+        android:title="@string/daily_necessities"/>
     <item android:id="@+id/item3"
-        android:title="Transportation"/>
+        android:title="@string/transportation"/>
     <item android:id="@+id/item4"
-        android:title="Clothes"/>
+        android:title="@string/clothes"/>
     <item android:id="@+id/item5"
-        android:title="Entertainment"/>
+        android:title="@string/entertainment"/>
     <item android:id="@+id/item6"
-        android:title="Transfer Fee"/>
+        android:title="@string/transfer_fee"/>
     <item android:id="@+id/item7"
-        android:title="Health"/>
+        android:title="@string/health"/>
     <item android:id="@+id/item8"
-        android:title="Beauty"/>
+        android:title="@string/beauty"/>
     <item android:id="@+id/item9"
-        android:title="Utilities"/>
+        android:title="@string/utilities"/>
     <item android:id="@+id/item10"
-        android:title="Others"/>
+        android:title="@string/others"/>
 </menu>

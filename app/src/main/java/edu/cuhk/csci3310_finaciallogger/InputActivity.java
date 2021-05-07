@@ -1,5 +1,7 @@
 package edu.cuhk.csci3310_finaciallogger;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;

@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">csci3310_FinacialLogger</string>
+    <string name="view_by_raw_records">View By Raw Records</string>
+    <string name="view_by_graphs">View By Graphs</string>
+    <string name="please_select_a_category">Please select a category</string>
+    <string name="go">Go</string>
+    <string name="please_select_a_time">Please select a time</string>
+    <string name="please_select_a_graph_type">Please select a graph type</string>
+    <string name="food">Food</string>
+    <string name="daily_necessities">Daily Necessities</string>
+    <string name="transportation">Transportation</string>
+    <string name="clothes">Clothes</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="transfer_fee">Transfer Fee</string>
+    <string name="health">Health</string>
+    <string name="beauty">Beauty</string>
+    <string name="utilities">Utilities</string>
+    <string name="others">Others</string>
+    <string name="by_days">By Days</string>
+    <string name="by_months">By Months</string>
+    <string name="by_years">By Years</string>
+    <string name="bar_chart">Bar Chart</string>
+    <string name="line_chart">Line Chart</string>
+    <string name="pie_chart">Pie Chart</string>
 </resources>

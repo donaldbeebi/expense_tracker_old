@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void openRecord(View view) {
-        Intent intent = new Intent(MainActivity.this, RecordActivity.class);
+        Intent intent = new Intent(MainActivity.this, OverviewActivity.class);
         intent.putExtra("recordItem", mRecordItem);
         intent.putExtra("recordAmount", mRecordAmount);
         intent.putExtra("recordCategory",mRecordCategory);
