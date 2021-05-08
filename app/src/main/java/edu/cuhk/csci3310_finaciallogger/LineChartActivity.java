@@ -10,10 +10,14 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
@@ -25,7 +29,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class BarChartActivity extends AppCompatActivity {
+public class LineChartActivity extends AppCompatActivity {
     private LinkedList<String> mRecordItem;
     private LinkedList<String> mRecordAmount;
     private LinkedList<String> mRecordCategory;
@@ -36,7 +40,7 @@ public class BarChartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bar_chart);
+        setContentView(R.layout.activity_line_chart);
 
         // calling the action bar
         ActionBar actionBar = getSupportActionBar();
@@ -55,29 +59,31 @@ public class BarChartActivity extends AppCompatActivity {
         time = intent.getStringExtra("time");
 
         // creating the bar chart
-        BarChart barChart = findViewById(R.id.barChart);
-
+        LineChart lineChart = findViewById(R.id.lineChart);
         // get the data
-        ArrayList<BarEntry> spending = getData();
+        ArrayList<Entry> spending = getData();
 
         // setting different attributes of the bar chart
-        BarDataSet barDataSet = new BarDataSet(spending, "Spending");
-        barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        barDataSet.setValueTextColor(Color.BLACK);
-        barDataSet.setValueTextSize(16f);
+        LineDataSet lineDataSet = new LineDataSet(spending, "Spending");
+        lineDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        lineDataSet.setValueTextColor(Color.BLACK);
+        lineDataSet.setValueTextSize(16f);
+        lineDataSet.setDrawCircles(true);
+        lineDataSet.setCircleRadius(8);
+        lineDataSet.setDrawCircleHole(true);
+        lineDataSet.setCircleHoleRadius(8);
 
-        BarData barData = new BarData(barDataSet);
+        LineData lineData = new LineData(lineDataSet);
 
         // setting the x axis of the bar chart
-        XAxis xAxis = barChart.getXAxis();
+        XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
         xAxis.setGranularity(1f);
 
-        barChart.setFitBars(true);
-        barChart.setData(barData);
-        barChart.getDescription().setText("");
+        lineChart.setData(lineData);
+        lineChart.getDescription().setText("");
     }
 
     // this event will enable the back function to the button on press
@@ -151,8 +157,8 @@ public class BarChartActivity extends AppCompatActivity {
 
     // obtain the data
     // check the date of the data, add the data to the amountList if it is within the time range selected by users
-    public ArrayList<BarEntry> getData(){
-        ArrayList<BarEntry> spending = new ArrayList<>();
+    public ArrayList<Entry> getData(){
+        ArrayList<Entry> spending = new ArrayList<>();
         int position = 0;
         float[] amountList;
         switch (time) {
