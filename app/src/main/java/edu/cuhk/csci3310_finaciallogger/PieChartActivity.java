@@ -9,12 +9,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -24,7 +22,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class LineChartActivity extends AppCompatActivity {
+public class PieChartActivity extends AppCompatActivity {
     private LinkedList<String> mRecordItem;
     private LinkedList<String> mRecordAmount;
     private LinkedList<String> mRecordCategory;
@@ -35,7 +33,7 @@ public class LineChartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_line_chart);
+        setContentView(R.layout.activity_pie_chart);
 
         // calling the action bar
         ActionBar actionBar = getSupportActionBar();
@@ -53,33 +51,21 @@ public class LineChartActivity extends AppCompatActivity {
         category = intent.getStringExtra("category");
         time = intent.getStringExtra("time");
 
-        // creating the bar chart
-        LineChart lineChart = findViewById(R.id.lineChart);
+        // creating the pie chart
+        PieChart pieChart = findViewById(R.id.pieChart);
         // get the data
-        ArrayList<Entry> spending = getData();
+        ArrayList<PieEntry> spending = getData();
 
-        // setting different attributes of the bar chart
-        LineDataSet lineDataSet = new LineDataSet(spending, "Spending");
-        lineDataSet.setColors(obtainColor());
-        lineDataSet.setValueTextColor(Color.BLACK);
-        lineDataSet.setValueTextSize(16f);
-        lineDataSet.setLineWidth(8);
-        lineDataSet.setDrawCircles(true);
-        lineDataSet.setCircleRadius(8);
-        lineDataSet.setDrawCircleHole(true);
-        lineDataSet.setCircleHoleRadius(8);
+        // setting different attributes of the pie chart
+        PieDataSet pieDataSet = new PieDataSet(spending, "Spending");
+        pieDataSet.setColors(obtainColor());
+        pieDataSet.setValueTextColor(Color.BLACK);
+        pieDataSet.setValueTextSize(16f);
 
-        LineData lineData = new LineData(lineDataSet);
+        PieData pieData = new PieData(pieDataSet);
 
-        // setting the x axis of the bar chart
-        XAxis xAxis = lineChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setDrawGridLines(false);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
-        xAxis.setGranularity(1f);
-
-        lineChart.setData(lineData);
-        lineChart.getDescription().setText("");
+        pieChart.setData(pieData);
+        pieChart.getDescription().setText("");
     }
 
     // this event will enable the back function to the button on press
@@ -128,33 +114,10 @@ public class LineChartActivity extends AppCompatActivity {
         return position;
     }
 
-    // set the x-axis value
-    public ArrayList<String> getXAxisValues() {
-        ArrayList<String> xAxis = new ArrayList<>();
-        switch (time) {
-            case "By Days":
-                for (int i = 6; i >= 0; i--) {
-                    xAxis.add(LocalDate.now(ZoneId.of("Asia/Hong_Kong")).minusDays(i).format(DateTimeFormatter.ofPattern("dd/MM")));
-                }
-                break;
-            case "By Months":
-                for (int i = 5; i >= 0; i--) {
-                    xAxis.add(LocalDate.now(ZoneId.of("Asia/Hong_Kong")).minusMonths(i).format(DateTimeFormatter.ofPattern("MM/yyyy")));
-                }
-                break;
-            case "By Years":
-                for (int i = 4; i >= 0; i--) {
-                    xAxis.add(LocalDate.now(ZoneId.of("Asia/Hong_Kong")).minusYears(i).format(DateTimeFormatter.ofPattern("yyyy")));
-                }
-                break;
-        }
-        return xAxis;
-    }
-
     // obtain the data
     // check the date of the data, add the data to the amountList if it is within the time range selected by users
-    public ArrayList<Entry> getData(){
-        ArrayList<Entry> spending = new ArrayList<>();
+    public ArrayList<PieEntry> getData(){
+        ArrayList<PieEntry> spending = new ArrayList<>();
         int position = 0;
         float[] amountList;
         switch (time) {
@@ -170,7 +133,7 @@ public class LineChartActivity extends AppCompatActivity {
                 }
 
                 for (int i = 0; i < 7; i++) {
-                    spending.add(new Entry(i, amountList[i]));
+                    spending.add(new PieEntry(amountList[i], LocalDate.now(ZoneId.of("Asia/Hong_Kong")).minusDays(6 - i).format(DateTimeFormatter.ofPattern("dd/MM"))));
                 }
                 break;
             case "By Months":
@@ -185,7 +148,7 @@ public class LineChartActivity extends AppCompatActivity {
                 }
 
                 for (int i = 0; i < 6; i++) {
-                    spending.add(new Entry(i, amountList[i]));
+                    spending.add(new PieEntry(amountList[i], LocalDate.now(ZoneId.of("Asia/Hong_Kong")).minusMonths(5 - i).format(DateTimeFormatter.ofPattern("MM/yyyy"))));
                 }
                 break;
             case "By Years":
@@ -200,7 +163,7 @@ public class LineChartActivity extends AppCompatActivity {
                 }
 
                 for (int i = 0; i < 5; i++) {
-                    spending.add(new Entry(i, amountList[i]));
+                    spending.add(new PieEntry(amountList[i], LocalDate.now(ZoneId.of("Asia/Hong_Kong")).minusYears(4 - i).format(DateTimeFormatter.ofPattern("yyyy"))));
                 }
                 break;
         }

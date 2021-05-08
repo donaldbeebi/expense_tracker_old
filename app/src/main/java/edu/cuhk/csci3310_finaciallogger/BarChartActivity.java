@@ -15,7 +15,6 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -62,7 +61,7 @@ public class BarChartActivity extends AppCompatActivity {
 
         // setting different attributes of the bar chart
         BarDataSet barDataSet = new BarDataSet(spending, "Spending");
-        barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        barDataSet.setColors(obtainColor());
         barDataSet.setValueTextColor(Color.BLACK);
         barDataSet.setValueTextSize(16f);
 
@@ -203,5 +202,22 @@ public class BarChartActivity extends AppCompatActivity {
                 break;
         }
         return spending;
+    }
+
+    // return a color a scheme for the chart
+    public ArrayList<Integer> obtainColor() {
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+        colors.add(Color.rgb(227, 65, 50));
+        colors.add(Color.rgb(236,219,83));
+        colors.add(Color.rgb(191,216,51));
+        colors.add(Color.rgb(108,160,220));
+        colors.add(Color.rgb(100,83,148));
+        if (time.equals("By Months") || time.equals("By Days")){
+            colors.add(Color.rgb(108,79,60));
+        }
+        if (time.equals("By Days")){
+            colors.add(Color.rgb(179,182,185));
+        }
+        return colors;
     }
 }

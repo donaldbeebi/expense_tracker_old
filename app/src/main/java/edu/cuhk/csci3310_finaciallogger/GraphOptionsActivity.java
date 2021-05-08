@@ -201,6 +201,19 @@ public class GraphOptionsActivity extends AppCompatActivity {
                 newIntent.putExtra("time", time);
                 startActivity(newIntent);
             }
+            else if (type.equals("Pie Chart")) {
+                Intent newIntent = new Intent(GraphOptionsActivity.this, PieChartActivity.class);
+                // send records to LineChartActivity
+                newIntent.putExtra("recordItem3", mRecordItem3);
+                newIntent.putExtra("recordAmount3", mRecordAmount3);
+                newIntent.putExtra("recordCategory3", mRecordCategory3);
+                newIntent.putExtra("recordDate3", mRecordDate3);
+
+                // send category and time to LineChartActivity
+                newIntent.putExtra("category", category);
+                newIntent.putExtra("time", time);
+                startActivity(newIntent);
+            }
         }
         else{
             Toast.makeText(this, "Error, please make sure you selected a category, a time and a chart type", Toast.LENGTH_LONG).show();
