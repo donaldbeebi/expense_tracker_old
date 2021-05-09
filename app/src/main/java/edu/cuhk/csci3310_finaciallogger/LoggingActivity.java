@@ -38,16 +38,16 @@ public class LoggingActivity extends AppCompatActivity {
         Button StartInputButton=findViewById(R.id.StartInputbutton);
         EditText input=(EditText) findViewById((R.id.Manual_Input));
 
-//
-//        Bundle bundle=new Bundle();
-//        bundle.putStringArray("presetItemList", PresetList);
-//        bundle.putStringArray("presetAmountList", PresetListAmount);
-//        bundle.putStringArray("presetCategoryList", PresetListCategory);
-//        PresetFragment presetFragment=new PresetFragment();
-//        presetFragment.setArguments(bundle);
-//        FragmentManager fragmentManager=getSupportFragmentManager();
-//        FragmentTransaction transaction=fragmentManager.beginTransaction();
-//        transaction.replace(R.id.fragment,presetFragment);
+        Bundle bundle=new Bundle();
+        bundle.putStringArray("presetItemList", PresetList);
+        bundle.putStringArray("presetAmountList", PresetListAmount);
+        bundle.putStringArray("presetCategoryList", PresetListCategory);
+        PresetFragment presetFragment=new PresetFragment();
+        presetFragment.setArguments(bundle);
+        FragmentManager fragmentManager=getSupportFragmentManager();
+        FragmentTransaction transaction=fragmentManager.beginTransaction();
+        transaction.replace(R.id.PresetFragment,presetFragment);
+        transaction.commit();
 
         StartInputButton.setOnClickListener(new View.OnClickListener() {
             @Override
