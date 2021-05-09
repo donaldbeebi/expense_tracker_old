@@ -19,70 +19,31 @@
 //public class PresetListAdapter extends RecyclerView.Adapter<PresetListAdapter.PresetViewHolder> {
 //    private Context context;
 //    private LayoutInflater mInflater;
-//
-//    private final LinkedList<String> mImagePathList;
-//    private final LinkedList<String> mNameList;
-//    private final LinkedList<String> mGenuesList;
-//    private final LinkedList<Integer> mRichnessList;
+//    String[] mPresetItem,mPresetAmount,mPresetCategory;
 //
 //
 //    class PresetViewHolder extends RecyclerView.ViewHolder {
 //
-//        ImageView flowerImageItemView, richnessImageItemView,richnessImageItemView2,richnessImageItemView3;
-//        TextView nameTextView, wikiTextView;
 //
 //        final PresetListAdapter mAdapter;
-//
+//        TextView presetItemTextView,presetAmountTextView,presetCategoryTextView;
 //        public PresetViewHolder(View itemView, PresetListAdapter adapter) {
-//            super(itemView);
-//            flowerImageItemView = itemView.findViewById(R.id.image);
-//            nameTextView = itemView.findViewById(R.id.nameText);
-//            wikiTextView = itemView.findViewById(R.id.wikiText);
-//            richnessImageItemView = itemView.findViewById(R.id.richnessImageView);
-//            richnessImageItemView2 = itemView.findViewById(R.id.richnessImageView2);
-//            richnessImageItemView3 = itemView.findViewById(R.id.richnessImageView3);
+//                super(itemView);
+//                presetItemTextView=itemView.findViewById(R.id.PresetItem);
+//                presetAmountTextView=itemView.findViewById(R.id.PresetAmount);
+//                presetCategoryTextView=itemView.findViewById(R.id.PresetCategory);
+//                this.mAdapter=adapter;
 //
-//
-//            this.mAdapter = adapter;
-//
-//            // Event handling registration, page navigation goes here
-//            wikiTextView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int position=getAdapterPosition();
-//                    Intent wikiIntent= new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/"+mGenuesList.get(position)));
-//                    context.startActivity(wikiIntent);
-//                }
-//            });
-//            flowerImageItemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int position=getAdapterPosition();
-//                    Intent intent=new Intent(context,MainActivity2.class);
-//                    String mImagePath = mImagePathList.get(position);
-//                    intent.putExtra("flowerImagePath",mImagePath);
-//                    intent.putExtra("flowerName",mNameList.get(position));
-//                    intent.putExtra("genus",mGenuesList.get(position));
-//                    intent.putExtra("richness",mRichnessList.get(position));
-//                    intent.putExtra("position",position);
-//                    ((Activity)context).startActivityForResult(intent,2);
-//
-//                }
-//            });
-//
-//
-//            // End of ViewHolder initialization
-//        }
+//               }
 //    }
 //
 //    public PresetListAdapter(Context context,
-//                             LinkedList<String> imagePathList, LinkedList<String> mNameList, LinkedList<String> mGenusList, LinkedList<Integer> mRichnessList) {
+//                             String[] mPresetItem,String[] mPresetAmount,String[] mPresetCategory) {
 //        mInflater = LayoutInflater.from(context);
-//        this.mImagePathList = imagePathList;
-//        this.mNameList = mNameList;
-//        this.mGenuesList = mGenusList;
+//        this.mPresetCategory=mPresetCategory;
+//        this.mPresetAmount=mPresetAmount;
+//        this.mPresetItem=mPresetItem;
 //        this.context=context;
-//        this.mRichnessList = mRichnessList;
 //    }
 //
 //    @NonNull
@@ -94,23 +55,12 @@
 //
 //    @Override
 //    public void onBindViewHolder(@NonNull PresetViewHolder holder, final int position) {
-//        String mImagePath = mImagePathList.get(position);
-//        Uri uri = Uri.parse(mImagePath);
 //        // Update the following to display correct information based on the given position
 //
 //        // Set up View items for this row (position), modify to show correct information read from the CSV
-//        holder.flowerImageItemView.setImageURI(uri);
-//        holder.nameTextView.setText(mNameList.get(position));
-//        holder.wikiTextView.setText(mGenuesList.get(position)+"@wikipedia");
-//
-//        if (mRichnessList.get(position)==1) {
-//            holder.richnessImageItemView2.setVisibility(View.INVISIBLE);
-//            holder.richnessImageItemView3.setVisibility(View.INVISIBLE);
-//        }
-//        if (mRichnessList.get(position)==2) {
-//            holder.richnessImageItemView3.setVisibility(View.INVISIBLE);
-//        }
-//
+//        holder.presetItemTextView.setText(mPresetItem[position]);
+//        holder.presetAmountTextView.setText(mPresetAmount[position]);
+//        holder.presetCategoryTextView.setText(mPresetCategory[position]);
 //
 //    }
 //
@@ -120,7 +70,7 @@
 //
 //    @Override
 //    public int getItemCount() {
-//        return mImagePathList.size();
+//        return mPresetCategory.length;
 //    }
 //
 //}

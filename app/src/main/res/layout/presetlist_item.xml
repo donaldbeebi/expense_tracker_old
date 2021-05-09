@@ -22,7 +22,7 @@
             android:layout_marginTop="16dp"
             android:text="recordItem"
             android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@+id/PrsetAmount"
+            app:layout_constraintEnd_toStartOf="@+id/PresetAmount"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,16 +35,15 @@
             android:text="recordCategory"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/PrsetAmount"
+            app:layout_constraintStart_toEndOf="@+id/PresetAmount"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/PrsetAmount"
+            android:id="@+id/PresetAmount"
             android:layout_width="132dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="2dp"
-            android:onClick="wiki_link"
             android:text="recordAmount"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/PresetCategory"

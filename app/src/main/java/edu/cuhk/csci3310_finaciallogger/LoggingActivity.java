@@ -3,9 +3,12 @@ package edu.cuhk.csci3310_finaciallogger;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -14,8 +17,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import static com.github.mikephil.charting.charts.Chart.LOG_TAG;
+
 public class LoggingActivity extends AppCompatActivity {
-    Button preset1,preset2,preset3,preset4;
     String[] PresetList,PresetListAmount,PresetListCategory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,62 +35,19 @@ public class LoggingActivity extends AppCompatActivity {
         PresetList = intent.getStringArrayListExtra("presetItem").toArray(new String[0]);
         PresetListAmount = intent.getStringArrayListExtra("presetItemAmount").toArray(new String[0]);
         PresetListCategory = intent.getStringArrayListExtra("presetItemCategory").toArray(new String[0]);
-        preset1 = findViewById(R.id.preset1);
-        preset2 = findViewById(R.id.preset2);
-        preset3 = findViewById(R.id.preset3);
-        preset4 = findViewById(R.id.preset4);
         Button StartInputButton=findViewById(R.id.StartInputbutton);
         EditText input=(EditText) findViewById((R.id.Manual_Input));
-        preset1.setText(PresetList[0]);
-        preset2.setText(PresetList[1]);
-        preset3.setText(PresetList[2]);
-        preset4.setText(PresetList[3]);
 
-        preset1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoggingActivity.this, InputActivity.class);
-                intent.putExtra("input",PresetList[0]);
-                intent.putExtra("amount",PresetListAmount[0]);
-                intent.putExtra("category",PresetListCategory[0]);
-                startActivity(intent);
-
-            }
-        });
-        preset2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoggingActivity.this, InputActivity.class);
-                intent.putExtra("input",PresetList[1]);
-                intent.putExtra("amount",PresetListAmount[1]);
-                intent.putExtra("category",PresetListCategory[1]);
-                startActivity(intent);
-
-            }
-        });
-        preset3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoggingActivity.this, InputActivity.class);
-                intent.putExtra("input",PresetList[2]);
-                intent.putExtra("amount",PresetListAmount[2]);
-                intent.putExtra("category",PresetListCategory[2]);
-                startActivity(intent);
-
-            }
-        });
-        preset4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoggingActivity.this, InputActivity.class);
-                intent.putExtra("input",PresetList[3]);
-                intent.putExtra("amount",PresetListAmount[3]);
-                intent.putExtra("category",PresetListCategory[3]);
-                startActivity(intent);
-
-            }
-        });
-
+//
+//        Bundle bundle=new Bundle();
+//        bundle.putStringArray("presetItemList", PresetList);
+//        bundle.putStringArray("presetAmountList", PresetListAmount);
+//        bundle.putStringArray("presetCategoryList", PresetListCategory);
+//        PresetFragment presetFragment=new PresetFragment();
+//        presetFragment.setArguments(bundle);
+//        FragmentManager fragmentManager=getSupportFragmentManager();
+//        FragmentTransaction transaction=fragmentManager.beginTransaction();
+//        transaction.replace(R.id.fragment,presetFragment);
 
         StartInputButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,14 +60,6 @@ public class LoggingActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onResume(){
-        super.onResume();
-        preset1.setText(PresetList[0]);
-        preset2.setText(PresetList[1]);
-        preset3.setText(PresetList[2]);
-        preset4.setText(PresetList[3]);
-    }
 
     // this event will enable the back function to the button on press
     @Override

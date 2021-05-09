@@ -1,64 +1,97 @@
-package edu.cuhk.csci3310_finaciallogger;
-
-import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PresetFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class PresetFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public PresetFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PresetFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PresetFragment newInstance(String param1, String param2) {
-        PresetFragment fragment = new PresetFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_preset, container, false);
-    }
-}
+//package edu.cuhk.csci3310_finaciallogger;
+//
+//import android.content.Context;
+//import android.content.Intent;
+//import android.os.Bundle;
+//
+//import androidx.fragment.app.Fragment;
+//import androidx.recyclerview.widget.LinearLayoutManager;
+//import androidx.recyclerview.widget.RecyclerView;
+//
+//import android.util.Log;
+//import android.view.LayoutInflater;
+//import android.view.View;
+//import android.view.ViewGroup;
+//
+//import static com.github.mikephil.charting.charts.Chart.LOG_TAG;
+//
+///**
+// * A simple {@link Fragment} subclass.
+// * Use the {@link PresetFragment#newInstance} factory method to
+// * create an instance of this fragment.
+// */
+//public class PresetFragment extends Fragment {
+//
+//    // TODO: Rename and change types of parameters
+//    private String[] mPresetItem, mPresetAmount,mPresetCategory;
+//    private RecyclerView mRecyclerView;
+//    private PresetListAdapter mAdapter;
+//    private Context mContext;
+//
+//    public PresetFragment() {
+//        // Required empty public constructor
+//    }
+//
+//
+//    // TODO: Rename and change types and number of parameters
+//    public static PresetFragment newInstance(String[] mPresetItem,String[] mPresetAmount,String[] mPresetCategory) {
+//        PresetFragment fragment = new PresetFragment();
+//        Bundle args = new Bundle();
+//        args.putStringArray("presetItemList", mPresetItem);
+//        args.putStringArray("presetAmountList", mPresetAmount);
+//        args.putStringArray("presetCategoryList", mPresetCategory);
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
+//
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        if (getArguments() != null) {
+//            Log.d(LOG_TAG,"Arguments not null");
+//            if (mPresetItem==null){
+//                Log.d(LOG_TAG,"getting items");
+//            }
+//            mPresetItem = getArguments().getStringArray(String.valueOf(mPresetItem));
+//            mPresetAmount = getArguments().getStringArray(String.valueOf(mPresetAmount));
+//            mPresetCategory = getArguments().getStringArray(String.valueOf(mPresetCategory));
+//
+//        }
+//
+//    }
+//
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
+//        // Inflate the layout for this fragment
+//        View view=  inflater.inflate(R.layout.fragment_preset, container, false);
+//
+//        mRecyclerView = view.findViewById(R.id.PresetRecyclerview);
+//        mPresetItem = getArguments().getStringArray(String.valueOf(mPresetItem));
+//        mPresetAmount = getArguments().getStringArray(String.valueOf(mPresetAmount));
+//        mPresetCategory = getArguments().getStringArray(String.valueOf(mPresetCategory));
+//
+//        if (mPresetItem==null){
+//            Log.d(LOG_TAG,"noPresetItem");
+//        }
+//        mAdapter = new PresetListAdapter(mContext,mPresetItem,mPresetAmount,mPresetCategory);
+//        // Connect the adapter with the RecyclerView.
+//        mRecyclerView.setAdapter(mAdapter);
+//        // Give the RecyclerView a default layout manager.
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+//        return view;
+//    }
+//
+//
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        mContext = context;
+//    }
+//    @Override
+//    public void onDetach() {
+//        super.onDetach();
+//        mContext = null;
+//    }
+//
+//}
