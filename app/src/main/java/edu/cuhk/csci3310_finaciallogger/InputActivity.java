@@ -113,6 +113,10 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
         String saveRecordItem = String.valueOf(currentInput.getText());
         String saveRecordAmount = currentAmount;
         String saveRecordCategory= String.valueOf(ButtonCategory.getText());
+        if (saveRecordAmount==null || SelectCategory==0 || saveRecordItem==null || saveRecordAmount==""){
+            Toast.makeText(this, "Please fill in all the required fields!", Toast.LENGTH_LONG).show();
+            return;
+        }
         SimpleDateFormat formatter=new SimpleDateFormat("dd/MM/yyyy");
         Date saveRecordDate= Calendar.getInstance().getTime();
         String DateStr=formatter.format(saveRecordDate);

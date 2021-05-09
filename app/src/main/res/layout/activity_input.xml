@@ -52,15 +52,14 @@
         android:layout_width="196dp"
         android:layout_height="62dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="90dp"
         android:layout_marginEnd="100dp"
-        android:text="Set As Preset"
         android:onClick="savePreset"
+        android:text="Set As Preset"
         app:layout_constraintBottom_toTopOf="@+id/ConfirmLogging"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button0" />
+        app:layout_constraintTop_toBottomOf="@+id/CategoryButton" />
 
     <Button
         android:id="@+id/button7"
@@ -173,8 +172,9 @@
         android:layout_height="69dp"
         android:layout_marginStart="36dp"
         android:layout_marginEnd="36dp"
-        android:text="Next"
+        android:layout_marginBottom="10dp"
         android:onClick="confirmAmount"
+        android:text="Confirm Logging"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
@@ -184,7 +184,7 @@
     <TextView
         android:id="@+id/AmountView"
         android:layout_width="285dp"
-        android:layout_height="56dp"
+        android:layout_height="30dp"
         android:layout_marginStart="63dp"
         android:layout_marginTop="27dp"
         android:layout_marginEnd="63dp"
@@ -209,14 +209,44 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="153dp"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="154dp"
-        android:layout_marginBottom="46dp"
-        android:text="Category"
+        android:layout_marginBottom="20dp"
         android:onClick="showCategory"
+        android:text="Category"
         app:layout_constraintBottom_toTopOf="@+id/SetAsPreset"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button0" />
+        app:layout_constraintTop_toBottomOf="@+id/button0"
+        app:layout_constraintVertical_bias="0.555" />
+
+    <TextView
+        android:id="@+id/Item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="324dp"
+        android:layout_marginBottom="11dp"
+        android:text="Item"
+        app:layout_constraintBottom_toTopOf="@+id/current_Input"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/AmountText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="302dp"
+        android:layout_marginBottom="4dp"
+        android:text="Amount"
+        app:layout_constraintBottom_toTopOf="@+id/AmountView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/current_Input" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
