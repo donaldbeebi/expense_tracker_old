@@ -26,14 +26,14 @@
 //    private final LinkedList<Integer> mRichnessList;
 //
 //
-//    class FlowerViewHolder extends RecyclerView.ViewHolder {
+//    class PresetViewHolder extends RecyclerView.ViewHolder {
 //
 //        ImageView flowerImageItemView, richnessImageItemView,richnessImageItemView2,richnessImageItemView3;
 //        TextView nameTextView, wikiTextView;
 //
-//        final FlowerListAdapter mAdapter;
+//        final PresetListAdapter mAdapter;
 //
-//        public FlowerViewHolder(View itemView, FlowerListAdapter adapter) {
+//        public PresetViewHolder(View itemView, PresetListAdapter adapter) {
 //            super(itemView);
 //            flowerImageItemView = itemView.findViewById(R.id.image);
 //            nameTextView = itemView.findViewById(R.id.nameText);
@@ -75,7 +75,7 @@
 //        }
 //    }
 //
-//    public FlowerListAdapter(Context context,
+//    public PresetListAdapter(Context context,
 //                             LinkedList<String> imagePathList, LinkedList<String> mNameList, LinkedList<String> mGenusList, LinkedList<Integer> mRichnessList) {
 //        mInflater = LayoutInflater.from(context);
 //        this.mImagePathList = imagePathList;
@@ -87,13 +87,13 @@
 //
 //    @NonNull
 //    @Override
-//    public FlowerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View mItemView = mInflater.inflate(R.layout.imagelist_item, parent, false);
-//        return new FlowerViewHolder(mItemView, this);
+//    public PresetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//        View mItemView = mInflater.inflate(R.layout.presetlist_item, parent, false);
+//        return new PresetViewHolder(mItemView, this);
 //    }
 //
 //    @Override
-//    public void onBindViewHolder(@NonNull FlowerViewHolder holder, final int position) {
+//    public void onBindViewHolder(@NonNull PresetViewHolder holder, final int position) {
 //        String mImagePath = mImagePathList.get(position);
 //        Uri uri = Uri.parse(mImagePath);
 //        // Update the following to display correct information based on the given position

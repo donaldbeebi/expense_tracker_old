@@ -117,4 +117,9 @@ public class LoggingActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void startNewPreset(View view) {
+        Intent intent = new Intent(LoggingActivity.this, AddPresetActivity.class);
+        startActivity(intent);
+    }
 }

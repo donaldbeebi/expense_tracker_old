@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Csci3310_FinacialLogger">
-        <activity android:name=".PieChartActivity"></activity>
+        <activity android:name=".AddPresetActivity"></activity>
+        <activity android:name=".PieChartActivity" />
         <activity android:name=".LineChartActivity" />
         <activity android:name=".BarChartActivity" />
         <activity android:name=".GraphOptionsActivity" />
