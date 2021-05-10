@@ -1,3 +1,6 @@
+/**
+ * ABANDONED CLASS
+ */
 package edu.cuhk.csci3310_finaciallogger;
 
 import androidx.appcompat.app.AppCompatActivity;
