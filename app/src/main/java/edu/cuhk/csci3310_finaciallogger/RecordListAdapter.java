@@ -1,6 +1,7 @@
 package edu.cuhk.csci3310_finaciallogger;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,7 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Re
 
     String[] mRecordItem,mRecordAmount,mRecordCategory,mRecordDate;
     private LayoutInflater mInflater;
-
+    private Context mContext;
 
     class RecordViewHolder extends RecyclerView.ViewHolder{
         final RecordListAdapter mAdapter;
@@ -28,7 +29,10 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Re
             amountTextView=itemView.findViewById(R.id.recordAmount);
             categoryTextView=itemView.findViewById(R.id.recordCategory);
             this.mAdapter=adapter;
+
+
         }
+
     }
 
 
@@ -40,6 +44,7 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Re
         this.mRecordCategory = recordCategory;
         this.mRecordAmount = recordAmount;
         this.mRecordDate = recordDate;
+        this.mContext= context;
 
     }
 

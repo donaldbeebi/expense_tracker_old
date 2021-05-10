@@ -26,15 +26,28 @@ public class PresetListAdapter extends RecyclerView.Adapter<PresetListAdapter.Pr
 
 
         final PresetListAdapter mAdapter;
-        TextView presetItemTextView,presetAmountTextView,presetCategoryTextView;
-        public PresetViewHolder(View itemView, PresetListAdapter adapter) {
-                super(itemView);
-                presetItemTextView=itemView.findViewById(R.id.PresetItem);
-                presetAmountTextView=itemView.findViewById(R.id.PresetAmount);
-                presetCategoryTextView=itemView.findViewById(R.id.PresetCategory);
-                this.mAdapter=adapter;
+        TextView presetItemTextView, presetAmountTextView, presetCategoryTextView;
 
-               }
+        public PresetViewHolder(View itemView, PresetListAdapter adapter) {
+            super(itemView);
+            presetItemTextView = itemView.findViewById(R.id.PresetItem);
+            presetAmountTextView = itemView.findViewById(R.id.PresetAmount);
+            presetCategoryTextView = itemView.findViewById(R.id.PresetCategory);
+            this.mAdapter = adapter;
+            presetItemTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, InputActivity.class);
+                    intent.putExtra("PresetItem", presetItemTextView.getText());
+                    intent.putExtra("PresetAmount", presetAmountTextView.getText());
+                    intent.putExtra("PresetCategory", presetCategoryTextView.getText());
+                    context.startActivity(intent);
+                }
+
+            });
+
+
+        }
     }
 
     public PresetListAdapter(Context context,

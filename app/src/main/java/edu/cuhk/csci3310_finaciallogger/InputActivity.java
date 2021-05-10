@@ -42,9 +42,9 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
         Intent intent = getIntent();
-        String input = intent.getStringExtra("input");
-        String amount = intent.getStringExtra("amount");
-        String category = intent.getStringExtra("category");
+        String input = intent.getStringExtra("PresetItem");
+        String amount = intent.getStringExtra("PresetAmount");
+        String category = intent.getStringExtra("PresetCategory");
         Button0 = (Button) findViewById(R.id.button0);
         Button1 = (Button) findViewById(R.id.button1);
         Button2 = (Button) findViewById(R.id.button2);

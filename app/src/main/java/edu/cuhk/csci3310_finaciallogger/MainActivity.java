@@ -131,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
         //End of for creating file to save info for first time open the app
 
         LoggingButton.setOnClickListener(new View.OnClickListener() {
