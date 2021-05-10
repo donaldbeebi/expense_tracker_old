@@ -29,7 +29,6 @@ public class GameView extends SurfaceView implements Runnable {
     private GameObjectManager m_GameObjectManager;
     private UpdatableObjectManager m_UpdatableObjectManager;
     private DrawableObjectManager m_DrawableObjectManager;
-    private GameObject m_Giraffe1;
 
     private Button m_RightButton;
 
@@ -47,11 +46,9 @@ public class GameView extends SurfaceView implements Runnable {
         dummyData.add(new ArrayList<>(Arrays.asList(1, 0, 4)));
         dummyData.add(new ArrayList<>(Arrays.asList(1, 0, 0)));
         m_SPM.saveData(SharedPreferencesManager.convertToString(dummyData));
-        //ArrayList<ArrayList<Integer>> gameData = SharedPreferencesManager.convertToInt(m_SPM.getData());
 
         m_BackgroundManager = new BackgroundManager();
-        int[] backgrounds = new int[]{ 1, 1, 1, 1 };
-        m_BackgroundManager.loadBackgrounds(backgrounds, getResources());
+        m_BackgroundManager.loadBackgrounds(SharedPreferencesManager.convertToInt(m_SPM.getData()), getResources());
 
         m_GameObjectManager = new GameObjectManager();
 
@@ -63,8 +60,6 @@ public class GameView extends SurfaceView implements Runnable {
         m_DrawableObjectManager = new DrawableObjectManager();
         m_DrawableObjectManager.setBackgrounds(m_BackgroundManager.getBackgrounds());
         m_DrawableObjectManager.setGameObjects(m_GameObjectManager.getGameObjectArray());
-
-        m_Giraffe1 = new GameObject(0, 200, 200, new FloatRect(48.0f, 48.0f, 431.0f, 767.0f), 1, getResources());
 
         m_CanvasScale = (float) screenSizeY / (float) Background.BACKGROUND_HEIGHT;
         m_CanvasCamera = new CanvasCamera(Background.getCameraPositionX(0), screenSizeX);
@@ -97,8 +92,6 @@ public class GameView extends SurfaceView implements Runnable {
         float dt = (float) m_DeltaTime;
 
         m_UpdatableObjectManager.update(dt);
-
-        m_Giraffe1.update(dt);
         m_CanvasCamera.update(dt);
     }
 
@@ -107,9 +100,8 @@ public class GameView extends SurfaceView implements Runnable {
             Canvas canvas = getHolder().lockCanvas();
             canvas.translate(m_CanvasCamera.getCanvasPositionX(), 0.0f);
             canvas.scale(m_CanvasScale, m_CanvasScale, m_CanvasCamera.getPivotPositionX(), 0.0f);
+
             m_DrawableObjectManager.draw(canvas);
-            m_Giraffe1.draw(canvas);
-            m_GameObjectManager.getGameObjectArray().get(0).get(0).draw(canvas);
 
             getHolder().unlockCanvasAndPost(canvas);
         }

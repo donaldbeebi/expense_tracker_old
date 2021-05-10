@@ -8,7 +8,7 @@ import android.graphics.Matrix;
 
 import edu.cuhk.csci3310_finaciallogger.R;
 
-public class GameObject implements DrawableObject, UpdatableObject {
+public class GameObject implements DrawableObject, UpdatableObject, Comparable<GameObject> {
     private static final float MAX_DEGREE = 10.0f;
     private static final float ROTATION_SPEED = 60.0f;
     private static final float SPEED = 100.0f;
@@ -20,7 +20,6 @@ public class GameObject implements DrawableObject, UpdatableObject {
     private float m_VelocityX;
     private float m_VelocityY;
 
-    private float m_Direction;
     private float m_Rotation;
     private boolean m_RotatingRight;
     private boolean m_InMotion;
@@ -32,15 +31,12 @@ public class GameObject implements DrawableObject, UpdatableObject {
     private float m_CurrentIdleTime;
     private float m_MaxIdleTime;
 
-    private FloatRect m_Boundary;
-    private int m_Location;
+    private final FloatRect m_Boundary;
 
-    GameObject(int type, int positionX, int positionY, FloatRect boundary, int location, Resources res) {
+    GameObject(int type, FloatRect boundary, Resources res) {
         m_Bitmap = BitmapFactory.decodeResource(res, R.drawable.object_spritesheet);
         m_Bitmap = Bitmap.createBitmap(m_Bitmap);
 
-        m_PositionX = positionX;
-        m_PositionY = positionY;
         m_VelocityX = 0.0f;
         m_VelocityY = 0.0f;
 
@@ -50,8 +46,13 @@ public class GameObject implements DrawableObject, UpdatableObject {
         if(Math.random() > 0.5d) m_ScaleX = 1.0f;
         else m_ScaleX = -1.0f;
 
-        m_Boundary = new FloatRect(boundary.left, boundary.top - m_Bitmap.getHeight() / 2.0f, boundary.right - m_Bitmap.getWidth(), boundary.bottom - m_Bitmap.getHeight());
-        m_Location = location;
+        m_Boundary = new FloatRect(
+                boundary.left,
+                boundary.top - m_Bitmap.getHeight() / 2.0f,
+                boundary.right - m_Bitmap.getWidth(),
+                boundary.bottom - m_Bitmap.getHeight());
+        m_PositionX = (float) Math.random() * (m_Boundary.right - m_Boundary.left) + m_Boundary.left;
+        m_PositionY = (float) Math.random() * (m_Boundary.bottom - m_Boundary.top) + m_Boundary.top;
 
         randomize();
     }
@@ -60,9 +61,9 @@ public class GameObject implements DrawableObject, UpdatableObject {
         /*
          * Randomizing the walking direction
          */
-        m_Direction = (float) (Math.random() * 360.0d);
-        m_VelocityX = SPEED * (float) Math.cos(Math.toRadians(m_Direction));
-        m_VelocityY = SPEED * (float) Math.sin(Math.toRadians(m_Direction));
+        float direction = (float) (Math.random() * 360.0d);
+        m_VelocityX = SPEED * (float) Math.cos(Math.toRadians(direction));
+        m_VelocityY = SPEED * (float) Math.sin(Math.toRadians(direction));
 
         /*
          * Randomizing the number of steps to take
@@ -73,10 +74,6 @@ public class GameObject implements DrawableObject, UpdatableObject {
          * Randomizing the idle time
          */
         m_MaxIdleTime = (float) (Math.random() * 10.0d);
-    }
-
-    public int getLocation() {
-        return m_Location;
     }
 
     @Override
@@ -135,5 +132,18 @@ public class GameObject implements DrawableObject, UpdatableObject {
         matrix.postScale(m_ScaleX, 1.0f, m_Bitmap.getWidth() / 2.0f, m_Bitmap.getHeight());
         matrix.postTranslate(m_PositionX, m_PositionY);
         canvas.drawBitmap(m_Bitmap, matrix, null);
+    }
+
+    @Override
+    public int compareTo(GameObject gameObject) {
+        return Float.compare(this.getPhysicalCoordinateY(), gameObject.getPhysicalCoordinateY());
+    }
+
+    public float getPhysicalCoordinateX() {
+        return m_PositionX + m_Bitmap.getWidth() / 2.0f;
+    }
+
+    public float getPhysicalCoordinateY() {
+        return m_PositionY + m_Bitmap.getHeight();
     }
 }

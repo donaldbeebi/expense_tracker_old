@@ -23,7 +23,7 @@ public class GameObjectManager {
             int count = integers.get(2);
             for(int j = 0; j < count; j++) {
                 FloatRect boundary = new FloatRect(Background.getBoundary(i));
-                gameObjects.add(new GameObject(type, (int) boundary.left + 20 + j * 5, 200, boundary, 1 , res));
+                gameObjects.add(new GameObject(type, boundary, res));
             }
             m_GameObjectArray.add(gameObjects);
         }
