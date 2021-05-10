@@ -59,18 +59,17 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/fragment"-->
-<!--        android:name="edu.cuhk.csci3310_finaciallogger.PresetFragment"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="64dp"-->
-<!--        android:layout_marginBottom="90dp"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/AddPreset"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        tools:layout="@layout/fragment_preset" />-->
+    <FrameLayout
+        android:id="@+id/PresetFragment"
+        android:name="edu.cuhk.csci3310_finaciallogger.PresetFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/AddPreset"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PresetText"
+        tools:layout="@layout/fragment_preset" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,7 @@
 package edu.cuhk.csci3310_finaciallogger;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -39,6 +41,12 @@ public class AddPresetActivity extends AppCompatActivity implements PopupMenu.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_preset);
+
+        // calling the action bar
+        ActionBar actionBar = getSupportActionBar();
+        // showing the back button in action bar
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
             Intent intent = getIntent();
             Button0 = (Button) findViewById(R.id.button0);
             Button1 = (Button) findViewById(R.id.button1);
@@ -182,6 +190,15 @@ public class AddPresetActivity extends AppCompatActivity implements PopupMenu.On
             categoryMenu.show();
         }
 
+    // this event will enable the back function to the button on press
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
