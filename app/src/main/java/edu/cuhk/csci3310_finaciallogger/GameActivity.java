@@ -59,7 +59,7 @@ public class GameActivity extends AppCompatActivity {
 
         if (file.exists()) {
             try {
-                m_FirstTime = true;
+                m_FirstTime = false;
                 isd = new FileInputStream(PRESET_FILE_PATH);
                 isdr= new FileInputStream(RECORD_FILE_PATH);
             } catch (FileNotFoundException e) {
@@ -175,6 +175,17 @@ public class GameActivity extends AppCompatActivity {
         //Setting up the overview button
         button = new Button(this);
         button.setText(R.string.overview_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GameActivity.this, OverviewActivity.class);
+                intent.putExtra("recordItem", m_Data.get("record_item"));
+                intent.putExtra("recordAmount", m_Data.get("record_amount"));
+                intent.putExtra("recordCategory", m_Data.get("record_category"));
+                intent.putExtra("recordDate", m_Data.get("record_date"));
+                startActivity(intent);
+            }
+        });
         int overview_button_id = View.generateViewId();
         button.setId(overview_button_id);
         rl = new RelativeLayout.LayoutParams(
