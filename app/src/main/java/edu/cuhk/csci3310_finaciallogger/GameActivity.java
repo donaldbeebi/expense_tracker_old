@@ -68,6 +68,8 @@ public class GameActivity extends AppCompatActivity {
         /*
          * Setting the overview button
          */
+        Button overviewButton = new Button(this);
+        overviewButton.setText("Overview");
 
         /*
          * Setting up the game view
