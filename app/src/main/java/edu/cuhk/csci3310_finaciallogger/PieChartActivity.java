@@ -141,7 +141,7 @@ public class PieChartActivity extends AppCompatActivity {
                 }
 
                 for (int i = 0; i < 7; i++) {
-                    spending.add(new PieEntry(amountList[i], LocalDate.now(ZoneId.of("Asia/Hong_Kong")).minusDays(6 - i).format(DateTimeFormatter.ofPattern("dd/MMM"))));
+                    spending.add(new PieEntry(amountList[i], LocalDate.now(ZoneId.of("Asia/Hong_Kong")).minusDays(6 - i).format(DateTimeFormatter.ofPattern("MMM dd"))));
                 }
                 break;
             case "By Months":

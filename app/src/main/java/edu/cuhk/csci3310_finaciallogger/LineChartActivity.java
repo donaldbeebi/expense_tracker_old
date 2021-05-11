@@ -142,7 +142,7 @@ public class LineChartActivity extends AppCompatActivity {
         switch (time) {
             case "By Days":
                 for (int i = 6; i >= 0; i--) {
-                    xAxis.add(LocalDate.now(ZoneId.of("Asia/Hong_Kong")).minusDays(i).format(DateTimeFormatter.ofPattern("dd/MMM")));
+                    xAxis.add(LocalDate.now(ZoneId.of("Asia/Hong_Kong")).minusDays(i).format(DateTimeFormatter.ofPattern("MMM dd")));
                 }
                 break;
             case "By Months":
