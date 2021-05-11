@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +12,9 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,6 +29,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import edu.cuhk.csci3310_finaciallogger.R;
+import edu.cuhk.csci3310_finaciallogger.game.CurrencyManager;
 import edu.cuhk.csci3310_finaciallogger.game.GameView;
 
 public class GameActivity extends AppCompatActivity {
@@ -38,6 +42,8 @@ public class GameActivity extends AppCompatActivity {
     private FrameLayout m_FrameLayout;
     private GameView m_GameView;
     private RelativeLayout m_GameOverlay;
+
+    long m_TimeLastPaused;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,11 +142,16 @@ public class GameActivity extends AppCompatActivity {
         //Setting up the game overlay
         m_GameOverlay = new RelativeLayout(this);
 
+        //Setting up the overlay
         //Setting up variables
         View anchorView;
         Button button;
         RelativeLayout.LayoutParams rl;
+        LinearLayout.LayoutParams ll;
 
+        /*
+         * LEFT AND RIGHT BUTTONS
+         */
         //Setting up the first anchor view
         anchorView = new View(this);
         int anchor_view_1_id = View.generateViewId();
@@ -176,6 +187,23 @@ public class GameActivity extends AppCompatActivity {
         rightButton.setLayoutParams(rl);
         m_GameOverlay.addView(rightButton);
 
+        /*
+         * CURRENCY INFO BAR
+         */
+        //Setting up the currency info bar
+        View currencyInfoBar = View.inflate(this, R.layout.currency_info_bar, null);
+        int currency_info_bar_id = View.generateViewId();
+        currencyInfoBar.setId(currency_info_bar_id);
+        rl = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        rl.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        currencyInfoBar.setLayoutParams(rl);
+        m_GameOverlay.addView(currencyInfoBar);
+
+        /*
+         * OVERVIEW AND LOG BUTTON
+         */
         //Setting up the second anchor view
         anchorView = new View(this);
         int anchor_view_2_id = View.generateViewId();
@@ -204,7 +232,7 @@ public class GameActivity extends AppCompatActivity {
         rl = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-        rl.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        rl.addRule(RelativeLayout.ABOVE, currency_info_bar_id);
         rl.addRule(RelativeLayout.LEFT_OF, anchor_view_2_id);
         button.setLayoutParams(rl);
         m_GameOverlay.addView(button);
@@ -227,11 +255,14 @@ public class GameActivity extends AppCompatActivity {
         rl = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-        rl.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        rl.addRule(RelativeLayout.ABOVE, currency_info_bar_id);
         rl.addRule(RelativeLayout.RIGHT_OF, anchor_view_2_id);
         button.setLayoutParams(rl);
         m_GameOverlay.addView(button);
 
+        /*
+         * SPINNING WHEEL BUTTON
+         */
         //Setting up the spinning wheel button
         button = new Button(this);
         button.setText("Wheel");
@@ -276,25 +307,30 @@ public class GameActivity extends AppCompatActivity {
                 this,
                 bounds.width(),
                 bounds.height() - actionBarHeight - statusBarHeight - navigationBarHeight,
-                leftButton,
-                rightButton,
+                leftButton, rightButton,
+                currencyInfoBar.findViewById(R.id.coins_text_view),
                 getSharedPreferences("edu.cuhk.csci3310_finaciallogger", MODE_PRIVATE));
 
         //Setting up the frame layout
         m_FrameLayout.addView(m_GameView);
         m_FrameLayout.addView(m_GameOverlay);
+
         setContentView(m_FrameLayout);
+
+        m_TimeLastPaused = System.nanoTime();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         m_GameView.pause();
+        m_TimeLastPaused = System.nanoTime();
+        Log.d("GameActivity", "onPause");
     }
 
     protected void onResume() {
         super.onResume();
-        m_GameView.resume();
+        m_GameView.resume(m_TimeLastPaused);
         Log.d("GameActivity", "onResume");
     }
 
