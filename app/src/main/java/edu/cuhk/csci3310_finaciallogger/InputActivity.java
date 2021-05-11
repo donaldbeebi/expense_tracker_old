@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -68,6 +69,10 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
         ButtonClear = (Button) findViewById(R.id.buttonClear);
         currentInput = (EditText) findViewById(R.id.current_Input);
         mAmountView = (TextView) findViewById((R.id.AmountView));
+        TextView ItemTitleTextView= findViewById(R.id.ItemTitleTextView);
+        ItemTitleTextView.setPaintFlags(ItemTitleTextView.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+        TextView AmountTitleTextView= findViewById(R.id.AmountTitleTextView);
+        AmountTitleTextView.setPaintFlags(AmountTitleTextView.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
         mAmountView.setText(amount);
         currentInput.setText(input);
         if (amount!=null){

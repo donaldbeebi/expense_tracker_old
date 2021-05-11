@@ -25,12 +25,10 @@
         android:id="@+id/button0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="11dp"
-        android:layout_marginEnd="24dp"
         android:onClick="updateAmount"
         android:text="0"
-        app:layout_constraintEnd_toStartOf="@+id/buttondot"
         app:layout_constraintStart_toEndOf="@+id/buttonClear"
         app:layout_constraintTop_toBottomOf="@+id/button8" />
 
@@ -38,34 +36,18 @@
         android:id="@+id/button8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="11dp"
-        android:layout_marginEnd="24dp"
         android:onClick="updateAmount"
         android:text="8"
-        app:layout_constraintEnd_toStartOf="@+id/button9"
         app:layout_constraintStart_toEndOf="@+id/button7"
         app:layout_constraintTop_toBottomOf="@+id/button5" />
-
-    <Button
-        android:id="@+id/SetAsPreset"
-        android:layout_width="196dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
-        android:onClick="savePreset"
-        android:text="Set As Preset"
-        app:layout_constraintBottom_toTopOf="@+id/ConfirmLogging"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CategoryButton" />
 
     <Button
         android:id="@+id/button7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="51dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="11dp"
         android:onClick="updateAmount"
         android:text="7"
@@ -74,12 +56,12 @@
 
     <Button
         android:id="@+id/buttonClear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="51dp"
+        android:layout_width="88dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="11dp"
-        android:text="Clear"
         android:onClick="clearAmount"
+        android:text="Clear"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button7" />
 
@@ -87,12 +69,10 @@
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="51dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="23dp"
         android:onClick="updateAmount"
         android:text="1"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AmountView" />
 
@@ -100,7 +80,7 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="16dp"
         android:onClick="updateAmount"
         android:text="2"
@@ -111,9 +91,9 @@
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginEnd="60dp"
         android:onClick="updateAmount"
         android:text="3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -124,23 +104,23 @@
         android:id="@+id/button6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="11dp"
-        android:layout_marginEnd="49dp"
+        android:layout_marginEnd="57dp"
         android:onClick="updateAmount"
         android:text="6"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button5"
         app:layout_constraintTop_toBottomOf="@+id/button3" />
 
     <Button
         android:id="@+id/button5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="11dp"
-        android:layout_marginEnd="24dp"
         android:onClick="updateAmount"
         android:text="5"
-        app:layout_constraintEnd_toStartOf="@+id/button6"
         app:layout_constraintStart_toEndOf="@+id/button4"
         app:layout_constraintTop_toBottomOf="@+id/button2" />
 
@@ -148,7 +128,7 @@
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="51dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="11dp"
         android:onClick="updateAmount"
         android:text="4"
@@ -159,11 +139,13 @@
         android:id="@+id/button9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="11dp"
-        android:layout_marginEnd="49dp"
+        android:layout_marginEnd="57dp"
         android:onClick="updateAmount"
         android:text="9"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button8"
         app:layout_constraintTop_toBottomOf="@+id/button6" />
 
     <Button
@@ -171,15 +153,16 @@
         android:layout_width="344dp"
         android:layout_height="69dp"
         android:layout_marginStart="36dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="36dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="108dp"
         android:onClick="confirmAmount"
         android:text="Confirm Logging"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SetAsPreset" />
+        app:layout_constraintTop_toBottomOf="@+id/CategoryButton" />
 
     <TextView
         android:id="@+id/AmountView"
@@ -188,7 +171,6 @@
         android:layout_marginStart="63dp"
         android:layout_marginTop="27dp"
         android:layout_marginEnd="63dp"
-        android:text="AmountView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/current_Input" />
@@ -197,32 +179,30 @@
         android:id="@+id/buttondot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="11dp"
-        android:layout_marginEnd="49dp"
-        android:text="."
+        android:layout_marginEnd="57dp"
         android:onClick="updateAmount"
+        android:text="."
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button0"
         app:layout_constraintTop_toBottomOf="@+id/button9" />
 
     <Button
         android:id="@+id/CategoryButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="153dp"
+        android:layout_width="221dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="95dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="154dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="95dp"
         android:onClick="showCategory"
         android:text="Category"
-        app:layout_constraintBottom_toTopOf="@+id/SetAsPreset"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button0"
-        app:layout_constraintVertical_bias="0.555" />
+        app:layout_constraintTop_toBottomOf="@+id/button0" />
 
     <TextView
-        android:id="@+id/Item"
+        android:id="@+id/ItemTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="58dp"
@@ -230,13 +210,14 @@
         android:layout_marginEnd="324dp"
         android:layout_marginBottom="11dp"
         android:text="Item"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/current_Input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/AmountText"
+        android:id="@+id/AmountTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="58dp"
@@ -244,6 +225,7 @@
         android:layout_marginEnd="302dp"
         android:layout_marginBottom="4dp"
         android:text="Amount"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/AmountView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
