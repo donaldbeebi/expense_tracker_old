@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,19 +27,20 @@ public class PresetListAdapter extends RecyclerView.Adapter<PresetListAdapter.Pr
 
 
         final PresetListAdapter mAdapter;
-        TextView presetItemTextView, presetAmountTextView, presetCategoryTextView;
+        TextView presetAmountTextView, presetCategoryTextView;
+        Button presetItemButton;
 
         public PresetViewHolder(View itemView, PresetListAdapter adapter) {
             super(itemView);
-            presetItemTextView = itemView.findViewById(R.id.PresetItem);
+            presetItemButton = itemView.findViewById(R.id.PresetItem);
             presetAmountTextView = itemView.findViewById(R.id.PresetAmount);
             presetCategoryTextView = itemView.findViewById(R.id.PresetCategory);
             this.mAdapter = adapter;
-            presetItemTextView.setOnClickListener(new View.OnClickListener() {
+            presetItemButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, InputActivity.class);
-                    intent.putExtra("PresetItem", presetItemTextView.getText());
+                    intent.putExtra("PresetItem", presetItemButton.getText());
                     intent.putExtra("PresetAmount", presetAmountTextView.getText());
                     intent.putExtra("PresetCategory", presetCategoryTextView.getText());
                     context.startActivity(intent);
@@ -71,7 +73,7 @@ public class PresetListAdapter extends RecyclerView.Adapter<PresetListAdapter.Pr
         // Update the following to display correct information based on the given position
 
         // Set up View items for this row (position), modify to show correct information read from the CSV
-        holder.presetItemTextView.setText(mPresetItem[position]);
+        holder.presetItemButton.setText(mPresetItem[position]);
         holder.presetAmountTextView.setText(mPresetAmount[position]);
         holder.presetCategoryTextView.setText(mPresetCategory[position]);
 

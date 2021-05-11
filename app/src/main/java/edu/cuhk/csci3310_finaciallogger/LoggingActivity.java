@@ -46,9 +46,9 @@ public class LoggingActivity extends AppCompatActivity {
         TextView PresetTitleItemTextView= findViewById(R.id.PresetTitleItemTextView);
         TextView PresetTitleAmountTextView=findViewById(R.id.PresetTitleAmountTextView);
         TextView PresetTitleCategoryTextView= findViewById(R.id.PresetTitleCategoryTextView);
-        PresetTitleAmountTextView.setPaintFlags(PresetTitleAmountTextView.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
-        PresetTitleItemTextView.setPaintFlags(PresetTitleItemTextView.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
-        PresetTitleCategoryTextView.setPaintFlags(PresetTitleCategoryTextView.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+        PresetTitleAmountTextView.setPaintFlags(PresetTitleAmountTextView.getPaintFlags()| Paint.FAKE_BOLD_TEXT_FLAG);
+        PresetTitleItemTextView.setPaintFlags(PresetTitleItemTextView.getPaintFlags()| Paint.FAKE_BOLD_TEXT_FLAG);
+        PresetTitleCategoryTextView.setPaintFlags(PresetTitleCategoryTextView.getPaintFlags()| Paint.FAKE_BOLD_TEXT_FLAG);
 
         //initializing fragment
         Bundle bundle=new Bundle();
@@ -67,6 +67,7 @@ public class LoggingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoggingActivity.this, InputActivity.class);
+                Toast.makeText(LoggingActivity.this, input.getText().toString(), Toast.LENGTH_SHORT).show();
                 intent.putExtra("input", input.getText().toString());
                 startActivity(intent);
 
