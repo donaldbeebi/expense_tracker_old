@@ -219,6 +219,27 @@ public class GameActivity extends AppCompatActivity {
         button.setLayoutParams(rl);
         m_GameOverlay.addView(button);
 
+        //Setting up the spinning wheel button
+        button = new Button(this);
+        button.setText("Wheel");
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GameActivity.this, GameTransactionActivity.class);
+                startActivity(intent);
+            }
+        });
+        int spinning_wheel_button_id = View.generateViewId();
+        button.setId(spinning_wheel_button_id);
+        rl = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        rl.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        rl.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        rl.setMargins(16, 16, 16, 16);
+        button.setLayoutParams(rl);
+        m_GameOverlay.addView(button);
+
         //Setting up the game view
         Rect bounds = getWindowManager().getCurrentWindowMetrics().getBounds();
         TypedValue tv = new TypedValue();

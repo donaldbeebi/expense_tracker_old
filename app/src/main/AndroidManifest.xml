@@ -15,21 +15,24 @@
         <activity android:name=".GameActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddPresetActivity"/>
+        <activity
+            android:name=".GameTransactionActivity"
+            android:label="@string/title_activity_game_transaction">
+        </activity>
+        <activity android:name=".AddPresetActivity" />
         <activity android:name=".PieChartActivity" />
         <activity android:name=".LineChartActivity" />
         <activity android:name=".BarChartActivity" />
         <activity android:name=".GraphOptionsActivity" />
         <activity android:name=".OverviewActivity" />
-        <activity android:name=".RecordActivity"/>
+        <activity android:name=".RecordActivity" />
         <activity android:name=".InputActivity" />
         <activity android:name=".LoggingActivity" />
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
