@@ -6,12 +6,9 @@ import java.util.Arrays;
 import static java.lang.System.nanoTime;
 
 public class CurrencyManager {
-    private static final int TOTAL_NUMBER_OF_TYPES = 1;
-    private static final int GIRAFFE_INDEX = 0;
-
     private float m_TotalNumberOfCoins;
 
-    private int[] m_AnimalNumberList = new int[TOTAL_NUMBER_OF_TYPES];
+    private int[] m_AnimalNumberList = new int[GameObjectManager.TOTAL_NUMBER_OF_TYPES];
     private float[] m_AnimalRateList = new float[] {
             //per minute
             10.0f    //giraffe
@@ -26,7 +23,7 @@ public class CurrencyManager {
     }
 
     public void update(float dt) {
-        for(int i = 0; i < TOTAL_NUMBER_OF_TYPES; i++) {
+        for(int i = 0; i < GameObjectManager.TOTAL_NUMBER_OF_TYPES; i++) {
             m_TotalNumberOfCoins += (float) m_AnimalNumberList[i] * ((m_AnimalRateList[i] / 60.0f) * dt);
         }
     }

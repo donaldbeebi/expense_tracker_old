@@ -5,9 +5,12 @@ import android.content.SharedPreferences;
 import java.util.ArrayList;
 
 public class SharedPreferencesManager {
-    private final SharedPreferences m_SharedPreferences;
+    private static final SharedPreferencesManager m_Instance = new SharedPreferencesManager();
+    private  SharedPreferences m_SharedPreferences;
 
-    SharedPreferencesManager(SharedPreferences sharedPreferences) {
+    public static SharedPreferencesManager getInstance() { return m_Instance; }
+
+    public void setSharedPreferences(SharedPreferences sharedPreferences) {
         m_SharedPreferences = sharedPreferences;
     }
 

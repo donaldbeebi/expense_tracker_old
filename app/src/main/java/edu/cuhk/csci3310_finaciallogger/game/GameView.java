@@ -43,8 +43,11 @@ public class GameView extends SurfaceView implements Runnable {
         m_CurrentBackground = 0;
         m_Formatter = new DecimalFormat("#,###");
 
-        m_SPM = new SharedPreferencesManager(sharedPreferences);
+        //TODO: MARK AS INITIALIZED IS REDUNDANT??
+        m_SPM = SharedPreferencesManager.getInstance();
+        m_SPM.setSharedPreferences(sharedPreferences);
         m_SPM.markAsInitialized();
+
         //DEBUG
         ArrayList<ArrayList<Integer>> dummyData = new ArrayList<>();
         dummyData.add(new ArrayList<>(Arrays.asList(1, 0, 5)));

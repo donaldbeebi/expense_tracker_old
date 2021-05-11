@@ -3,6 +3,7 @@ package edu.cuhk.csci3310_finaciallogger;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
@@ -25,19 +26,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 
 import edu.cuhk.csci3310_finaciallogger.R;
 import edu.cuhk.csci3310_finaciallogger.game.CurrencyManager;
+import edu.cuhk.csci3310_finaciallogger.game.GameObjectManager;
 import edu.cuhk.csci3310_finaciallogger.game.GameView;
 
 public class GameActivity extends AppCompatActivity {
-
     private Boolean m_FirstTime;
     private HashMap<String, LinkedList<String>> m_Data;
     private static String PRESET_FILE_PATH = "/data/data/edu.cuhk.csci3310_finaciallogger/files/preset";
     private static String RECORD_FILE_PATH = "/data/data/edu.cuhk.csci3310_finaciallogger/files/record";
+
+    private static final int GAME_TRANSACTION_ACTIVITY = 1;
 
     private FrameLayout m_FrameLayout;
     private GameView m_GameView;
@@ -269,8 +274,9 @@ public class GameActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //m_NewAnimals.
                 Intent intent = new Intent(GameActivity.this, GameTransactionActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, GAME_TRANSACTION_ACTIVITY);
             }
         });
         int spinning_wheel_button_id = View.generateViewId();
@@ -328,10 +334,26 @@ public class GameActivity extends AppCompatActivity {
         Log.d("GameActivity", "onPause");
     }
 
+    @Override
     protected void onResume() {
         super.onResume();
         m_GameView.resume(m_TimeLastPaused);
         Log.d("GameActivity", "onResume");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == GAME_TRANSACTION_ACTIVITY) {
+            if(resultCode == Activity.RESULT_OK) {
+                Log.d("GameActivity", "RESULT OK");
+
+            }
+            else if(resultCode == Activity.RESULT_CANCELED) {
+                Log.d("GameActivity", "RESULT CANCELLED");
+                //do nothing
+            }
+        }
     }
 
     public void openRecord(View view) {
