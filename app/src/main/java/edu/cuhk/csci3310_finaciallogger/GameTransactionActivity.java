@@ -1,10 +1,12 @@
 package edu.cuhk.csci3310_finaciallogger;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -17,6 +19,10 @@ public class GameTransactionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_transaction);
+
+        //Setting up a back button
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         //Setting up the navigation buttons
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
@@ -43,6 +49,12 @@ public class GameTransactionActivity extends AppCompatActivity {
         fragmentTransaction.commitNow();
 
         bottomNavigation.setSelectedItemId(R.id.spinning_wheel_nav_button);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return true;
     }
 
     private void displayBuyWheelsFragment() {
