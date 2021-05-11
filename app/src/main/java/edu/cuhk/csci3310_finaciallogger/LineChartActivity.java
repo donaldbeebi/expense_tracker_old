@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -78,6 +79,13 @@ public class LineChartActivity extends AppCompatActivity {
         xAxis.setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
         xAxis.setGranularity(1f);
 
+        // set the position of the legend
+        Legend legend = lineChart.getLegend();
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        legend.setFormSize(16f);
+        legend.setTextSize(16f);
+        legend.setWordWrapEnabled(true);
+
         lineChart.setData(lineData);
         lineChart.getDescription().setText("");
     }
@@ -134,12 +142,12 @@ public class LineChartActivity extends AppCompatActivity {
         switch (time) {
             case "By Days":
                 for (int i = 6; i >= 0; i--) {
-                    xAxis.add(LocalDate.now(ZoneId.of("Asia/Hong_Kong")).minusDays(i).format(DateTimeFormatter.ofPattern("dd/MM")));
+                    xAxis.add(LocalDate.now(ZoneId.of("Asia/Hong_Kong")).minusDays(i).format(DateTimeFormatter.ofPattern("dd/MMM")));
                 }
                 break;
             case "By Months":
                 for (int i = 5; i >= 0; i--) {
-                    xAxis.add(LocalDate.now(ZoneId.of("Asia/Hong_Kong")).minusMonths(i).format(DateTimeFormatter.ofPattern("MM/yyyy")));
+                    xAxis.add(LocalDate.now(ZoneId.of("Asia/Hong_Kong")).minusMonths(i).format(DateTimeFormatter.ofPattern("MMM/yyyy")));
                 }
                 break;
             case "By Years":
