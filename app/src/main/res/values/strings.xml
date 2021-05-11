@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">csci3310_FinacialLogger</string>
+    <string name="app_name">CSCI3310 Financial Logger</string>
     <string name="view_by_raw_records">View By Raw Records</string>
     <string name="view_by_graphs">View By Graphs</string>
     <string name="please_select_a_category">Please select a category</string>
@@ -22,6 +22,6 @@
     <string name="bar_chart">Bar Chart</string>
     <string name="line_chart">Line Chart</string>
     <string name="pie_chart">Pie Chart</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="overview_button">overview</string>
 </resources>

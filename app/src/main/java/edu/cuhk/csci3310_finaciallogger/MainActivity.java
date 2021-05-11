@@ -1,16 +1,15 @@
+/**
+ * ABANDONED CLASS
+ */
 package edu.cuhk.csci3310_finaciallogger;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
-import android.icu.text.AlphabeticIndex;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,9 +20,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
@@ -69,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
             isdr = getResources().openRawResource(R.raw.record);
 
         }
-
 
         //Read from inputstream for creating the presetlist in the Logging Activity
         BufferedReader br = new BufferedReader(new InputStreamReader(isd, Charset.forName("UTF-8")));
@@ -132,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //End of for creating file to save info for first time open the app
-
         LoggingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -145,6 +139,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //DEBUG
+        Log.d("MainActivity", "OnCreate");
+        //startActivity(new Intent(this, GameActivity.class));
     }
 
 

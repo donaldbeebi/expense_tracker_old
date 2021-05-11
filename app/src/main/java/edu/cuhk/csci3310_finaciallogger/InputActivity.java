@@ -41,6 +41,13 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
+
+
+        // calling the action bar
+        ActionBar actionBar = getSupportActionBar();
+        // showing the back button in action bar
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         Intent intent = getIntent();
         String input = intent.getStringExtra("PresetItem");
         String amount = intent.getStringExtra("PresetAmount");
@@ -310,5 +317,15 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
             default:
                 return false;
         }
+    }
+
+    // this event will enable the back function to the button on press
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
