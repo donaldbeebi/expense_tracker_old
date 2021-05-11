@@ -150,6 +150,19 @@ public class GameActivity extends AppCompatActivity {
         anchorView.setLayoutParams(rl);
         m_GameOverlay.addView(anchorView);
 
+        //Setting up the left button
+        Button leftButton = new Button(this);
+        leftButton.setText("Left");
+        int left_button_id = View.generateViewId();
+        leftButton.setId(left_button_id);
+        rl = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        rl.addRule(RelativeLayout.ABOVE, anchor_view_1_id);
+        leftButton.setLayoutParams(rl);
+        m_GameOverlay.addView(leftButton);
+
         //Setting up the right button
         Button rightButton = new Button(this);
         rightButton.setText("Right");
@@ -219,6 +232,27 @@ public class GameActivity extends AppCompatActivity {
         button.setLayoutParams(rl);
         m_GameOverlay.addView(button);
 
+        //Setting up the spinning wheel button
+        button = new Button(this);
+        button.setText("Wheel");
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GameActivity.this, GameTransactionActivity.class);
+                startActivity(intent);
+            }
+        });
+        int spinning_wheel_button_id = View.generateViewId();
+        button.setId(spinning_wheel_button_id);
+        rl = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        rl.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        rl.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        rl.setMargins(16, 16, 16, 16);
+        button.setLayoutParams(rl);
+        m_GameOverlay.addView(button);
+
         //Setting up the game view
         Rect bounds = getWindowManager().getCurrentWindowMetrics().getBounds();
         TypedValue tv = new TypedValue();
@@ -242,6 +276,7 @@ public class GameActivity extends AppCompatActivity {
                 this,
                 bounds.width(),
                 bounds.height() - actionBarHeight - statusBarHeight - navigationBarHeight,
+                leftButton,
                 rightButton,
                 getSharedPreferences("edu.cuhk.csci3310_finaciallogger", MODE_PRIVATE));
 

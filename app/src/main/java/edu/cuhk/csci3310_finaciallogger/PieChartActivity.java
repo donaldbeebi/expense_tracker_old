@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -57,12 +58,19 @@ public class PieChartActivity extends AppCompatActivity {
         ArrayList<PieEntry> spending = getData();
 
         // setting different attributes of the pie chart
-        PieDataSet pieDataSet = new PieDataSet(spending, "Spending");
+        PieDataSet pieDataSet = new PieDataSet(spending, "");
         pieDataSet.setColors(obtainColor());
         pieDataSet.setValueTextColor(Color.BLACK);
         pieDataSet.setValueTextSize(16f);
 
         PieData pieData = new PieData(pieDataSet);
+
+        // set the position of the legend
+        Legend legend = pieChart.getLegend();
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        legend.setTextSize(16f);
+        legend.setFormSize(16f);
+        legend.setWordWrapEnabled(true);
 
         pieChart.setData(pieData);
         pieChart.getDescription().setText("");
@@ -133,7 +141,7 @@ public class PieChartActivity extends AppCompatActivity {
                 }
 
                 for (int i = 0; i < 7; i++) {
-                    spending.add(new PieEntry(amountList[i], LocalDate.now(ZoneId.of("Asia/Hong_Kong")).minusDays(6 - i).format(DateTimeFormatter.ofPattern("dd/MM"))));
+                    spending.add(new PieEntry(amountList[i], LocalDate.now(ZoneId.of("Asia/Hong_Kong")).minusDays(6 - i).format(DateTimeFormatter.ofPattern("MMM dd"))));
                 }
                 break;
             case "By Months":
@@ -148,7 +156,7 @@ public class PieChartActivity extends AppCompatActivity {
                 }
 
                 for (int i = 0; i < 6; i++) {
-                    spending.add(new PieEntry(amountList[i], LocalDate.now(ZoneId.of("Asia/Hong_Kong")).minusMonths(5 - i).format(DateTimeFormatter.ofPattern("MM/yyyy"))));
+                    spending.add(new PieEntry(amountList[i], LocalDate.now(ZoneId.of("Asia/Hong_Kong")).minusMonths(5 - i).format(DateTimeFormatter.ofPattern("MMM/yyyy"))));
                 }
                 break;
             case "By Years":

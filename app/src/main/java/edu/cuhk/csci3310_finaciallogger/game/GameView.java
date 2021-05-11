@@ -30,10 +30,8 @@ public class GameView extends SurfaceView implements Runnable {
     private UpdatableObjectManager m_UpdatableObjectManager;
     private DrawableObjectManager m_DrawableObjectManager;
 
-    private Button m_RightButton;
-
     //The constructor is called in onCreate() in GameActivity
-    public GameView(Context context, int screenSizeX, int screenSizeY, Button rightButton, SharedPreferences sharedPreferences) {
+    public GameView(Context context, int screenSizeX, int screenSizeY, Button leftButton, Button rightButton, SharedPreferences sharedPreferences) {
         super(context);
 
         m_CurrentBackground = 0;
@@ -64,11 +62,17 @@ public class GameView extends SurfaceView implements Runnable {
         m_CanvasScale = (float) screenSizeY / (float) Background.BACKGROUND_HEIGHT;
         m_CanvasCamera = new CanvasCamera(Background.getCameraPositionX(0), screenSizeX);
 
-        m_RightButton = rightButton;
-        m_RightButton.setOnClickListener(new Button.OnClickListener() {
+        leftButton.setOnClickListener(new Button.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                m_CanvasCamera.setCameraTargetPosition(Background.getCameraPositionX(m_CurrentBackground++));
+            public void onClick(View view) {
+                m_CanvasCamera.setCameraTargetPosition(Background.getCameraPositionX(--m_CurrentBackground));
+            }
+        });
+
+        rightButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                m_CanvasCamera.setCameraTargetPosition(Background.getCameraPositionX(++m_CurrentBackground));
             }
         });
     }
