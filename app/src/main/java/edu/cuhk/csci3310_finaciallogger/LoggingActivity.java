@@ -67,7 +67,6 @@ public class LoggingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoggingActivity.this, InputActivity.class);
-                Toast.makeText(LoggingActivity.this, input.getText().toString(), Toast.LENGTH_SHORT).show();
                 intent.putExtra("input", input.getText().toString());
                 startActivity(intent);
 

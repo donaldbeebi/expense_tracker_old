@@ -50,7 +50,7 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        String input = intent.getStringExtra("PresetItem");
+        String input = intent.getStringExtra("input");
         String amount = intent.getStringExtra("PresetAmount");
         String category = intent.getStringExtra("PresetCategory");
         Button0 = (Button) findViewById(R.id.button0);
@@ -75,6 +75,7 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
         AmountTitleTextView.setPaintFlags(AmountTitleTextView.getPaintFlags()| Paint.FAKE_BOLD_TEXT_FLAG);
         mAmountView.setText(amount);
         currentInput.setText(input);
+        SelectCategory=0;
         if (amount!=null){
             currentAmount=amount;
         }
@@ -85,6 +86,7 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
         categoryMenu.setOnMenuItemClickListener(this);
         categoryMenu.inflate(R.menu.category_menu);
         if (category!=null) {
+            SelectCategory=1;
             switch (category) {
                 case "Food":
                     ButtonCategory.setText("Food");
@@ -118,7 +120,7 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
                     return;
             }
         }
-        SelectCategory=0;
+
     }
 
     public void confirmAmount(View view) {

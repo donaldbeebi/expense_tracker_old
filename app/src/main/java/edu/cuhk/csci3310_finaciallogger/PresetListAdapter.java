@@ -57,7 +57,7 @@ public class PresetListAdapter extends RecyclerView.Adapter<PresetListAdapter.Pr
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, InputActivity.class);
-                    intent.putExtra("PresetItem", presetItemButton.getText());
+                    intent.putExtra("input", presetItemButton.getText());
                     intent.putExtra("PresetAmount", presetAmountTextView.getText());
                     intent.putExtra("PresetCategory", presetCategoryTextView.getText());
                     context.startActivity(intent);
