@@ -134,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("presetItem", mPresetList);
                 intent.putExtra("presetItemAmount", mPresetListAmount);
                 intent.putExtra("presetItemCategory",mPresetListCategory);
+                finish();
                 startActivity(intent);
 
             }

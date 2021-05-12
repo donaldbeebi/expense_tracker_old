@@ -155,17 +155,10 @@ public class AddPresetActivity extends AppCompatActivity implements PopupMenu.On
                 String TARGET = savePresetItem + "," + savePresetAmount + "," + savePresetCategory + "\n";
                 Toast.makeText(this, TARGET, Toast.LENGTH_SHORT).show();
                 fos = openFileOutput("preset", MODE_PRIVATE);
-                int count = 0;
+                fos.write(TARGET.getBytes());
                 while (((line = br.readLine()) != null)) {
-                    if (count == 0) {
-                        fos.write(TARGET.getBytes());
-                        fos.write((line+"\n").getBytes());
-                        count++;
-                        continue;
-                    }
                     String output = line + "\n";
                     fos.write(output.getBytes());
-                    count++;
                     //Toast.makeText(this, "overwriting", Toast.LENGTH_SHORT).show();
                 }
             } catch (FileNotFoundException fileNotFoundException) {
