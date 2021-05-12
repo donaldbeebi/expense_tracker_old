@@ -132,7 +132,7 @@ public class PieChartActivity extends AppCompatActivity {
             case "By Days":
                 amountList = new float[7];
                 for (int i = 0; i < mRecordItem.size(); i++) {
-                    if (mRecordCategory.get(i).equals(category)) {
+                    if (mRecordCategory.get(i).equals(category) || category.equals("All")) {
                         position = checkDate(mRecordDate.get(i));
                         if (position != -1) {
                             amountList[position] += Float.parseFloat(mRecordAmount.get(i));
@@ -147,7 +147,7 @@ public class PieChartActivity extends AppCompatActivity {
             case "By Months":
                 amountList = new float[6];
                 for (int i = 0; i < mRecordItem.size(); i++) {
-                    if (mRecordCategory.get(i).equals(category)) {
+                    if (mRecordCategory.get(i).equals(category) || category.equals("All")) {
                         position = checkDate(mRecordDate.get(i));
                         if (position != -1) {
                             amountList[position] += Float.parseFloat(mRecordAmount.get(i));
@@ -162,7 +162,7 @@ public class PieChartActivity extends AppCompatActivity {
             case "By Years":
                 amountList = new float[5];
                 for (int i = 0; i < mRecordItem.size(); i++) {
-                    if (mRecordCategory.get(i).equals(category)) {
+                    if (mRecordCategory.get(i).equals(category) || category.equals("All")) {
                         position = checkDate(mRecordDate.get(i));
                         if (position != -1) {
                             amountList[position] += Float.parseFloat(mRecordAmount.get(i));

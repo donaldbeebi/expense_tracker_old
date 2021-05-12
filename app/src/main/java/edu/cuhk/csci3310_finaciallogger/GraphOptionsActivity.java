@@ -63,12 +63,16 @@ public class GraphOptionsActivity extends AppCompatActivity {
     public void showPopupCategory(View v) {
         @SuppressLint("RtlHardcoded") PopupMenu popup = new PopupMenu(this, v, Gravity.RIGHT);
         MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.category_menu, popup.getMenu());
+        inflater.inflate(R.menu.category_graph_menu, popup.getMenu());
         popup.show();
 
         // the on menu item click behaviour of the category pop up menu
         popup.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
+                case R.id.item0:
+                    category = "All";
+                    buttonCategory.setText(category);
+                    return true;
                 case R.id.item1:
                     category = "Food";
                     buttonCategory.setText(category);
