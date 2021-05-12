@@ -196,6 +196,7 @@ public class AddPresetActivity extends AppCompatActivity implements PopupMenu.On
             }
 
             Intent intent = new Intent(this, GameActivity.class);
+            finish();
             startActivity(intent);
         }
 

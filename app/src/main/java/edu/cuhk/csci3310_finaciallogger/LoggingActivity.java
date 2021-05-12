@@ -68,6 +68,7 @@ public class LoggingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(LoggingActivity.this, InputActivity.class);
                 intent.putExtra("input", input.getText().toString());
+                finish();
                 startActivity(intent);
 
             }

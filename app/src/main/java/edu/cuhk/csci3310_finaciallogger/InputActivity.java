@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.icu.text.SimpleDateFormat;
@@ -185,82 +186,11 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-
+        finish();
         //Toast.makeText(this, "done confirmation", Toast.LENGTH_SHORT).show();
 
     }
 
-    public void savePreset(View view) {
-        String savePresetItem = String.valueOf(currentInput.getText());
-        String savePresetAmount = currentAmount;
-        String savePresetCategory= String.valueOf(ButtonCategory.getText());
-        if (savePresetAmount==null || SelectCategory==0 || savePresetItem==null || savePresetAmount==""){
-            Toast.makeText(this, "Please fill in all the required fields!", Toast.LENGTH_LONG).show();
-            return;
-        }
-        FileInputStream is = null;
-        FileInputStream isd = null;
-        try {
-            isd = new FileInputStream(FILE_PATH_dup);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        BufferedReader br = new BufferedReader(new InputStreamReader(isd, Charset.forName("UTF-8")));
-        FileOutputStream fos = null;
-        String line = "";
-        try {
-            String TARGET = savePresetItem + "," + savePresetAmount + "," + savePresetCategory + "\n";
-            Toast.makeText(this, TARGET, Toast.LENGTH_SHORT).show();
-            fos = openFileOutput("preset", MODE_PRIVATE);
-            int count = 0;
-            while (((line = br.readLine()) != null)) {
-                if (count == 0) {
-                    fos.write(TARGET.getBytes());
-                    fos.write((line+"\n").getBytes());
-                    count++;
-                    continue;
-                }
-                if (count == 3) {
-                    break;
-                }
-                String output = line + "\n";
-                fos.write(output.getBytes());
-                count++;
-                //Toast.makeText(this, "overwriting", Toast.LENGTH_SHORT).show();
-            }
-        } catch (FileNotFoundException fileNotFoundException) {
-            fileNotFoundException.printStackTrace();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-
-        //overwrite duplicate file
-        try {
-            is = new FileInputStream(FILE_PATH);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        BufferedReader brd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-        FileOutputStream fosd = null;
-        try {
-            fosd = openFileOutput("preset_dup", MODE_PRIVATE);
-            while (((line = brd.readLine()) != null)) {
-                String output = line + "\n";
-                fosd.write(output.getBytes());
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
 
     public void updateAmount(View view) {
         Button button = (Button) view;
