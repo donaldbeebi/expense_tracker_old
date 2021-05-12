@@ -1,11 +1,11 @@
 package edu.cuhk.csci3310_finaciallogger.game;
 
-import android.content.Context;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.Random;
 
 import edu.cuhk.csci3310_finaciallogger.R;
@@ -26,10 +27,24 @@ import edu.cuhk.csci3310_finaciallogger.R;
  * create an instance of this fragment.
  */
 public class SpinningWheelFragment extends Fragment {
+    private static final String DRAWABLE_FILE_PATH = "android.resource://edu.cuhk.csci3310_finaciallogger/drawable/";
+
+    private TextView m_BucksText;
     private ImageView m_Wheel;
     private TextView m_ResultText;
+    private TextView m_CostText;
     private Button m_SpinButton;
+    private DecimalFormat m_Formatter;
+
+    private int m_SelectedWheel;
+    private static final int[] SPIN_COSTS = {
+            1, //savanna
+            3, //safari
+            5 //wetland
+    };
+
     private int m_CurrentDegree;
+    //TODO: Properly place this static memory
     private static final String[] m_Sectors = { "Giraffe", "Lion", "Gryphon" };
     private SharedPreferencesManager m_SPM;
 
@@ -71,7 +86,9 @@ public class SpinningWheelFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        m_SPM = new SharedPreferencesManager(getActivity().getSharedPreferences("edu.cuhk.csci3310_finaciallogger", Context.MODE_PRIVATE));
+        m_Formatter = new DecimalFormat("#,###");
+        m_SelectedWheel = 0;
+        m_SPM = SharedPreferencesManager.getInstance();
         m_CurrentDegree = 0;
     }
 
@@ -80,9 +97,16 @@ public class SpinningWheelFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_spinning_wheel, container, false);
 
+        m_BucksText = view.findViewById(R.id.bucks_text_view_spinning_wheel);
         m_Wheel = view.findViewById(R.id.spinning_wheel);
-        m_ResultText = view.findViewById(R.id.result_text);
+        m_ResultText = view.findViewById(R.id.result_text_view);
         m_SpinButton = view.findViewById(R.id.spin_button);
+        m_CostText = view.findViewById(R.id.buck_cost_text_view);
+
+        //initializing the bucks text
+        m_BucksText.setText(m_Formatter.format(m_SPM.getBucks()));
+
+        updateData(m_SelectedWheel);
 
         m_SpinButton.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -91,19 +115,22 @@ public class SpinningWheelFragment extends Fragment {
             }
         });
 
-        // Inflate the layout for this fragment
         return view;
     }
 
+    //TODO: RESET THE DEGREE AFTER SELECTING A DIFFERENT WHEEL
     //TODO: ADD THE ABILITY TO CHARGE
     public void spin(View view) {
         m_SpinButton.setEnabled(false);
-        Log.d("CurrentRotation", String.valueOf(m_Wheel.getRotation()));
-        Random random = new Random();
-        int degree = random.nextInt(360);
-        int result = degree / 120;
+        m_SPM.deductBucks(SPIN_COSTS[m_SelectedWheel]);
+        m_BucksText.setText(String.valueOf(m_SPM.getBucks()));
         //TODO: ADD GAME DATA
         m_SPM.addGameObjectData(0, 1);
+
+        //rotating
+        Random random = new Random();
+        int degree = random.nextInt(360);
+        String animalName = GameObject.ANIMAL_TYPES[m_SelectedWheel][degree / 120].substring(0, 1).toUpperCase() + GameObject.ANIMAL_TYPES[m_SelectedWheel][degree / 120].substring(1);
 
         RotateAnimation rotateAnimation = new RotateAnimation(m_CurrentDegree, degree + 720,
                 RotateAnimation.RELATIVE_TO_SELF, 0.5f,
@@ -119,10 +146,9 @@ public class SpinningWheelFragment extends Fragment {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                m_ResultText.setText("You got " + m_Sectors[result] + "!");
+                m_ResultText.setText("You got " + animalName + "!");
                 m_CurrentDegree = degree;
                 m_SpinButton.setEnabled(true);
-                m_SPM.addBucks(10);
             }
 
             @Override
@@ -131,5 +157,29 @@ public class SpinningWheelFragment extends Fragment {
         });
 
         m_Wheel.startAnimation(rotateAnimation);
+    }
+
+    public void setSelectedWheel(int selectedWheel) {
+        //getting the proper wheel
+        m_SelectedWheel = selectedWheel;
+        updateData(selectedWheel);
+    }
+
+    private void updateData(int selectedWheel) {
+        String imagePath = DRAWABLE_FILE_PATH + "spinning_wheel_test_" + Background.HABITAT_TYPES[selectedWheel];
+        Uri uri = Uri.parse(imagePath);
+        m_Wheel.setImageURI(uri);
+
+        //setting the cost right
+        //Checking if the user has enough bucks
+        m_CostText.setText("Cost: " + String.valueOf(SPIN_COSTS[selectedWheel] + " buck(s)."));
+        if(m_SPM.getBucks() < SPIN_COSTS[selectedWheel]) {
+            m_SpinButton.setEnabled(false);
+            m_CostText.setTextColor(Color.RED);
+        }
+        else {
+            m_SpinButton.setEnabled(true);
+            m_CostText.setTextColor(Color.GREEN);
+        }
     }
 }

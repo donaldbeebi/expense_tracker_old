@@ -10,6 +10,7 @@ import edu.cuhk.csci3310_finaciallogger.R;
 public class Background implements DrawableObject {
     public static final int BACKGROUND_WIDTH = 480;
     public static final int BACKGROUND_HEIGHT = 1056;
+    public static final String[] HABITAT_TYPES = new String[] { "savanna", "safari", "wetland" };
 
     public static FloatRect getBoundary(int index) {
         return new FloatRect(index * BACKGROUND_WIDTH + 48.0f, 48.0f, index * BACKGROUND_WIDTH + 431.0f, 767.0f);

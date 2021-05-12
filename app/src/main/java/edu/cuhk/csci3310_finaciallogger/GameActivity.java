@@ -314,8 +314,8 @@ public class GameActivity extends AppCompatActivity {
                 bounds.width(),
                 bounds.height() - actionBarHeight - statusBarHeight - navigationBarHeight,
                 leftButton, rightButton,
-                currencyInfoBar.findViewById(R.id.bucks_text_view),
-                currencyInfoBar.findViewById(R.id.coins_text_view));
+                currencyInfoBar.findViewById(R.id.bucks_text_view_game),
+                currencyInfoBar.findViewById(R.id.coins_text_view_game));
 
         //Setting up the frame layout
         m_FrameLayout.addView(m_GameView);

@@ -7,15 +7,25 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import edu.cuhk.csci3310_finaciallogger.game.SelectWheelFragment;
+import edu.cuhk.csci3310_finaciallogger.game.SharedPreferencesManager;
 import edu.cuhk.csci3310_finaciallogger.game.SpinningWheelFragment;
+import edu.cuhk.csci3310_finaciallogger.game.WheelSelector;
 
 public class GameTransactionActivity extends AppCompatActivity {
+    private static final String SELECT_WHEEL_FRAGMENT_TAG = "select_wheel_fragment";
     private static final String SPINNING_WHEEL_FRAGMENT_TAG = "spinning_wheel_fragment";
+
+    private WheelSelector m_WheelSelector;
+
+    SelectWheelFragment m_SelectWheelFragment;
+    SpinningWheelFragment m_SpinningWheelFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,22 +45,31 @@ public class GameTransactionActivity extends AppCompatActivity {
                     displaySpinningWheelFragment();
                     return true;
                 }
-                if (item.getItemId() == R.id.buy_wheels_nav_button) {
-                    displayBuyWheelsFragment();
+                if (item.getItemId() == R.id.select_wheels_nav_button) {
+                    displaySelectWheelsFragment();
                     return true;
                 }
                 return false;
             }
         });
 
+        //Setting up the managers
+        m_WheelSelector = new WheelSelector();
+        m_WheelSelector.selectWheel(0);
+
         //Setting up the fragments
-        SpinningWheelFragment spinningWheelFragment = SpinningWheelFragment.newInstance("", "");
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.transaction_frame_layout, spinningWheelFragment, SPINNING_WHEEL_FRAGMENT_TAG);
+        m_SelectWheelFragment = SelectWheelFragment.newInstance("","");
+        fragmentTransaction.add(R.id.transaction_frame_layout, m_SelectWheelFragment, SELECT_WHEEL_FRAGMENT_TAG);
+        m_SpinningWheelFragment = SpinningWheelFragment.newInstance("", "");
+        fragmentTransaction.add(R.id.transaction_frame_layout, m_SpinningWheelFragment, SPINNING_WHEEL_FRAGMENT_TAG);
+        fragmentTransaction.hide(m_SelectWheelFragment);
+        fragmentTransaction.show(m_SpinningWheelFragment);
         fragmentTransaction.commitNow();
 
-        bottomNavigation.setSelectedItemId(R.id.spinning_wheel_nav_button);
+        //bottomNavigation.setSelectedItemId(R.id.spinning_wheel_nav_button);
+        bottomNavigation.getMenu().getItem(1).setChecked(true);
     }
 
     @Override
@@ -60,11 +79,12 @@ public class GameTransactionActivity extends AppCompatActivity {
         return true;
     }
 
-    private void displayBuyWheelsFragment() {
+    private void displaySelectWheelsFragment() {
         //Hiding the spinning wheel fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.hide(fragmentManager.findFragmentByTag(SPINNING_WHEEL_FRAGMENT_TAG));
+        fragmentTransaction.hide(m_SpinningWheelFragment);
+        fragmentTransaction.show(m_SelectWheelFragment);
         fragmentTransaction.commit();
     }
 
@@ -72,7 +92,9 @@ public class GameTransactionActivity extends AppCompatActivity {
         //Showing the spinning wheel fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.show(fragmentManager.findFragmentByTag(SPINNING_WHEEL_FRAGMENT_TAG));
+        m_SpinningWheelFragment.setSelectedWheel(m_SelectWheelFragment.getSelectedWheel());
+        fragmentTransaction.hide(m_SelectWheelFragment);
+        fragmentTransaction.show(m_SpinningWheelFragment);
         fragmentTransaction.commit();
     }
 

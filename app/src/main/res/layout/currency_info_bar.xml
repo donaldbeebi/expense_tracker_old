@@ -14,7 +14,7 @@
         app:srcCompat="@drawable/buy_wheels_icon_temp" />
 
     <TextView
-        android:id="@+id/bucks_text_view"
+        android:id="@+id/bucks_text_view_game"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -30,7 +30,7 @@
         app:srcCompat="@drawable/buy_wheels_icon_temp" />
 
     <TextView
-        android:id="@+id/coins_text_view"
+        android:id="@+id/coins_text_view_game"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

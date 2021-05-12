@@ -6,20 +6,36 @@ import java.util.Arrays;
 import static java.lang.System.nanoTime;
 
 public class CoinManager {
-    private float m_TotalNumberOfCoins;
+    private static final CoinManager m_Instance = new CoinManager();
 
+    public static final float[] HABITAT_PRICES = new float[] {
+            0.0f, //savanna
+            1_000.0f, //safari
+            1_000_000.0f //wetland
+    };
+
+    private float m_TotalNumberOfCoins;
     private int[] m_AnimalNumberList;
-    private float[] m_AnimalRateList = new float[] {
+    private static final float[] m_AnimalRateList = new float[] {
             //per minute
             10.0f    //giraffe
     };
 
-    CoinManager(float currentCoins, int[] data) {
+    //CoinManager(float currentCoins, int[] data) {
+    //    m_TotalNumberOfCoins = currentCoins;
+    //    m_AnimalNumberList = data;
+    //}
+
+    public static CoinManager getInstance() {
+        return m_Instance;
+    }
+
+    public void initialize(float currentCoins, int[] data) {
         m_TotalNumberOfCoins = currentCoins;
         m_AnimalNumberList = data;
     }
 
-    public void updateData(int[] data) {
+    public void updateAnimalNumberList(int[] data) {
         m_AnimalNumberList = data;
     }
 
@@ -32,6 +48,14 @@ public class CoinManager {
     public void compensate(long timeLastPaused) {
         double dt = (System.nanoTime() - timeLastPaused) / 1000000000.0d;
         update((float) dt);
+    }
+
+    public boolean deduct(float amount) {
+        if(amount > m_TotalNumberOfCoins) {
+            return false;
+        }
+        m_TotalNumberOfCoins -= amount;
+        return true;
     }
 
     public float getTotalNumberOfCoins() {
