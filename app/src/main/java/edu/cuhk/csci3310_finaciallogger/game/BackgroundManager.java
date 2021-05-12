@@ -7,14 +7,9 @@ import java.util.ArrayList;
 import edu.cuhk.csci3310_finaciallogger.BuildConfig;
 
 public class BackgroundManager {
-    private boolean m_Initialized;
     private ArrayList<Background> m_Backgrounds;
 
-    BackgroundManager() {
-        m_Initialized = false;
-        m_Backgrounds = new ArrayList<>();
-    }
-
+    /*
     public void loadBackgrounds(ArrayList<ArrayList<Integer>> data, Resources res) {
         int backgroundPosition = 0;
         for (ArrayList<Integer> integers: data) {
@@ -26,19 +21,19 @@ public class BackgroundManager {
             }
         }
     }
+    */
 
-    public void setCurrentBackground(int currentBackground) {
-        if (BuildConfig.DEBUG && !m_Initialized) {
-            throw new AssertionError("Background has not been initialized!");
+    public void loadBackgrounds(int[] data, Resources res) {
+        int backgroundPosition = 0;
+        m_Backgrounds = new ArrayList<>();
+        for(int i = 0; i < data.length; i++) {
+            int animalCount = data[i];
+            while(animalCount > 0) {
+                m_Backgrounds.add(new Background(0, Background.BACKGROUND_WIDTH * backgroundPosition, 0, res));
+                backgroundPosition++;
+                animalCount -= 10;
+            }
         }
-
-    }
-
-    public void addBackground(int background) {
-        if (BuildConfig.DEBUG && !m_Initialized) {
-            throw new AssertionError("Background has not been initialized!");
-        }
-
     }
 
     public ArrayList<Background> getBackgrounds() {

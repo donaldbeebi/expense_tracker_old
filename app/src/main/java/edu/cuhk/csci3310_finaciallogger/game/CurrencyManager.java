@@ -14,12 +14,9 @@ public class CurrencyManager {
             10.0f    //giraffe
     };
 
-    CurrencyManager(float currentCoins, ArrayList<ArrayList<Integer>> data) {
+    CurrencyManager(float currentCoins, int[] data) {
         m_TotalNumberOfCoins = currentCoins;
-        Arrays.fill(m_AnimalNumberList, 0);
-        for(int i = 0; i < data.size(); i++) {
-            m_AnimalNumberList[data.get(i).get(1)] += data.get(i).get(2);
-        }
+        m_AnimalNumberList = data;
     }
 
     public void update(float dt) {

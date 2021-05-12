@@ -22,8 +22,6 @@ public class CanvasCamera implements UpdatableObject {
 
     public void setCameraTargetPosition(float positionX) {
         positionX = -(positionX - m_ScreenSizeX / 2);
-        Log.d("canvasposition", String.valueOf(m_CanvasPositionX));
-        Log.d("positionX", String.valueOf(positionX));
         m_Distance = positionX - m_CanvasPositionX;
         if(m_Distance < 0) {
             m_Distance = -m_Distance;
@@ -34,9 +32,6 @@ public class CanvasCamera implements UpdatableObject {
         }
         m_TargetPositionX = positionX;
         m_InMotion = true;
-        Log.d("initial distance", String.valueOf(m_Distance));
-        Log.d("targetPosition", String.valueOf(m_TargetPositionX));
-        Log.d("screenSizeX", String.valueOf(m_ScreenSizeX));
     }
 
     public float getCanvasPositionX() {

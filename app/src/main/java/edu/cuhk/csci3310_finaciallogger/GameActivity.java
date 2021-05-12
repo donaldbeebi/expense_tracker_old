@@ -344,14 +344,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == GAME_TRANSACTION_ACTIVITY) {
-            if(resultCode == Activity.RESULT_OK) {
-                Log.d("GameActivity", "RESULT OK");
-
-            }
-            else if(resultCode == Activity.RESULT_CANCELED) {
-                Log.d("GameActivity", "RESULT CANCELLED");
-                //do nothing
-            }
+            m_GameView.updateGameObjects();
         }
     }
 

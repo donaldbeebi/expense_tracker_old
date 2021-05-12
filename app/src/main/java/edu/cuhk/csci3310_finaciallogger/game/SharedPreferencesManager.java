@@ -18,8 +18,19 @@ public class SharedPreferencesManager {
         m_SharedPreferences = sharedPreferences;
     }
 
-    public void markAsInitialized() {
-        m_SharedPreferences.edit().putBoolean("shared_preferences_initialized", true).apply();
+    public void initialize() {
+        //if shared preferences has not been initialized
+        if (!m_SharedPreferences.getBoolean("shared_preferences_initialized", false)) {
+            m_SharedPreferences.edit().putBoolean("shared_preferences_initialized", true).apply();
+
+            SharedPreferences.Editor editor = m_SharedPreferences.edit();
+
+            int listSize = GameObject.TOTAL_NUMBER_OF_TYPES;
+            for(int i = 0; i < listSize; i++) {
+                editor.putInt(String.valueOf(i), 0);
+            }
+            editor.apply();
+        }
     }
 
     //has the shared preferences been used before?
@@ -27,6 +38,7 @@ public class SharedPreferencesManager {
         return m_SharedPreferences.getBoolean("shared_preferences_initialized", false);
     }
 
+    /*
     //save the list of string arrays into the shared preferences
     public void saveGameObjectData(ArrayList<String[]> list) {
         SharedPreferences.Editor editor = m_SharedPreferences.edit();
@@ -35,8 +47,8 @@ public class SharedPreferencesManager {
         int stringSize = list.get(0).length;
         for(int i = 0; i < listSize; i++) {
             String row = "";
+            StringBuilder sb = new StringBuilder();
             for(int j = 0; j < stringSize; j++) {
-                StringBuilder sb = new StringBuilder();
                 row = sb.append(row).append(list.get(i)[j]).toString();
                 if (j != stringSize - 1) row = row + ",";
             }
@@ -46,15 +58,72 @@ public class SharedPreferencesManager {
         editor.putInt("list_size", listSize);
         editor.apply();
     }
+    */
 
+    public void saveGameObjectData(int[] data) {
+        SharedPreferences.Editor editor = m_SharedPreferences.edit();
+        int listSize = GameObject.TOTAL_NUMBER_OF_TYPES;
+        for(int i = 0; i < listSize; i++) {
+            editor.putInt(String.valueOf(i), data[i]);
+        }
+        editor.apply();
+    }
+
+    public int[] getGameObjectData() {
+        int listSize = GameObject.TOTAL_NUMBER_OF_TYPES;
+        int[] gameObjectData = new int[listSize];
+        for(int i = 0; i < listSize; i++) {
+            gameObjectData[i] = m_SharedPreferences.getInt(String.valueOf(i), 0);
+        }
+        return gameObjectData;
+    }
+
+    public void addGameObjectData(int[] data) {
+        SharedPreferences.Editor editor = m_SharedPreferences.edit();
+        int listSize = GameObject.TOTAL_NUMBER_OF_TYPES;
+        for(int i = 0; i < data.length; i++) {
+            if(data[i] > 0) {
+                int currentCount = m_SharedPreferences.getInt(String.valueOf(i), 0);
+                editor.putInt(String.valueOf(i), currentCount + data[i]);
+            }
+        }
+        editor.apply();
+    }
+
+    public void addGameObjectData(int type, int count) {
+        int currentCount = m_SharedPreferences.getInt(String.valueOf(type), 0);
+        SharedPreferences.Editor editor = m_SharedPreferences.edit();
+        editor.putInt(String.valueOf(type), currentCount + count);
+        editor.apply();
+    }
     //adding game data
     //index corresponds to the type
     //value at index corresponds to the number of animals of index type
-    public void addGameObject(int[] gameObjectData) {
-        
+    /*
+    public void addGameObject(ArrayList<Integer> gameObjectData) {
+        SharedPreferences.Editor editor = m_SharedPreferences.edit();
+        for(int i = 0; i < gameObjectData.size(); i++) {
+            int addCount = gameObjectData.get(i);
+            if(addCount != 0) {
+                String[] row = m_SharedPreferences.getString(String.valueOf(i), "").split(",");
+                int currentCount = Integer.parseInt(row[2]);
+                row[2] = String.valueOf(currentCount + addCount);
+                //turning the string array row back into one line
+                String line = "";
+                StringBuilder sb = new StringBuilder();
+                for(int j = 0; j < row.length; j++) {
+                    line = sb.append(line).append(row[j]).toString();
+                    if (j != row.length - 1) line = line + ",";
+                }
+                editor.putString(String.valueOf(i), line);
+            }
+        }
+        editor.apply();
     }
+    */
 
     //obtain a list of string arrays from the shared preferences
+    /*
     public ArrayList<String[]> getGameObjectData() {
         if(isInitialized()) {
             ArrayList<String[]> resultList = new ArrayList<>();
@@ -67,6 +136,7 @@ public class SharedPreferencesManager {
         }
         return new ArrayList<>();
     }
+    */
 
     public void saveCurrencyInfo(int coins, int bucks, long timeLastOpened) {
         SharedPreferences.Editor editor = m_SharedPreferences.edit();
