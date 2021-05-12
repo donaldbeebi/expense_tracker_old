@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="66dp"
         android:background="@color/white">
 
 
@@ -32,7 +32,7 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="50dp"
             android:text="recordCategory"
             android:textColor="#7D8388"
             android:textSize="16sp"
@@ -56,8 +56,8 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/deleteButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
             android:layout_marginStart="13dp"
             android:layout_marginEnd="30dp"
             android:clickable="true"
