@@ -4,10 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,8 +22,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
     private Button Button1, Button2, Button3, Button4, Button5, Button6, Button7, Button8, Button9, Button0, Buttondot, ButtonClear, ButtonCategory, ButtonConfirm;
@@ -132,9 +131,9 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
             Toast.makeText(this, "Please fill in all the required fields!", Toast.LENGTH_LONG).show();
             return;
         }
-        SimpleDateFormat formatter=new SimpleDateFormat("dd/MM/yyyy");
-        Date saveRecordDate= Calendar.getInstance().getTime();
-        String DateStr=formatter.format(saveRecordDate);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate saveRecordDate= LocalDate.now(ZoneId.of("Asia/Hong_Kong"));
+        String DateStr=dtf.format(saveRecordDate);
         FileInputStream isr = null;
         FileInputStream isdr = null;
         try {

@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -102,6 +103,10 @@ public class GameActivity extends AppCompatActivity {
                 m_Data.get("preset_list_amount").addLast(store[1]);
                 m_Data.get("preset_list_category").addLast(store[2]);
             }
+            if (m_FirstTime) {
+                fos.close();
+                fosd.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -124,10 +129,14 @@ public class GameActivity extends AppCompatActivity {
                 m_Data.get("record_date").addLast(store[2]);
                 m_Data.get("record_category").addLast(store[3]);
             }
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            br.close();
+            brr.close();
+            isd.close();
+            isdr.close();
+            if (m_FirstTime) {
+                fosr.close();
+                fosrd.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -330,6 +339,36 @@ public class GameActivity extends AppCompatActivity {
         super.onResume();
         m_GameView.resume(m_TimeLastPaused);
         Log.d("GameActivity", "onResume");
+
+        // read the record list again
+        m_Data.put("record_item", new LinkedList<>());
+        m_Data.put("record_amount", new LinkedList<>());
+        m_Data.put("record_date", new LinkedList<>());
+        m_Data.put("record_category", new LinkedList<>());
+        InputStream isdr = null;
+        try {
+            isdr = new FileInputStream(RECORD_FILE_PATH);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        //Reading from input stream for creating the preset list in the Logging Activity
+        BufferedReader brr = new BufferedReader(new InputStreamReader(isdr, StandardCharsets.UTF_8));
+
+        String linewriter = "";
+        try {
+            while (((linewriter = brr.readLine()) != null)) {
+                String output = linewriter + "\n";
+                String[] store = linewriter.split(",");
+                m_Data.get("record_item").addLast(store[0]);
+                m_Data.get("record_amount").addLast(store[1]);
+                m_Data.get("record_date").addLast(store[2]);
+                m_Data.get("record_category").addLast(store[3]);
+            }
+            brr.close();
+            isdr.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
