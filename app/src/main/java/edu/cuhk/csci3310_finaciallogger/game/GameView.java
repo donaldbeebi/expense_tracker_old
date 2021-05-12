@@ -161,8 +161,14 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void resume(long timeLastPaused) {
-        //restoring game states
+        //updating the currency number
         m_CoinManager.compensate(timeLastPaused);
+        m_BucksTextView.post(new Runnable() {
+            @Override
+            public void run() {
+                m_BucksTextView.setText(m_Formatter.format(m_SPM.getBucks()));
+            }
+        });
 
         m_Running = true;
         m_Thread = new Thread(this);
@@ -170,7 +176,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void pause() {
-        m_SPM.saveCoinInfo((int) m_CoinManager.getTotalNumberOfCoins(), System.nanoTime());
+        m_SPM.saveCoinInfo(m_CoinManager.getTotalNumberOfCoins(), System.nanoTime());
         try {
             m_Running = false;
             m_Thread.join();
@@ -180,6 +186,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     }
 
+    //this is called every time it resumes from the spinning wheel transaction activity to the game activity
     public void updateGameStates() {
         int[] gameObjectData = m_SPM.getGameObjectData();
         m_BackgroundManager.loadBackgrounds(gameObjectData, getResources());
@@ -191,7 +198,7 @@ public class GameView extends SurfaceView implements Runnable {
         m_BucksTextView.post(new Runnable() {
             @Override
             public void run() {
-                m_BucksTextView.setText(m_Formatter.format((int) m_SPM.getBucks()));
+                m_BucksTextView.setText(m_Formatter.format(m_SPM.getBucks()));
             }
         });
     }
