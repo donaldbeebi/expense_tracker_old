@@ -27,24 +27,14 @@ public class Background implements DrawableObject {
         m_PositionY = positionY;
 
         switch(type) {
-            case 1:
+            case 0:
                 m_Bitmap = BitmapFactory.decodeResource(res, R.drawable.background_1);
                 break;
-            case 2:
+            case 1:
                 m_Bitmap = BitmapFactory.decodeResource(res, R.drawable.background_2);
                 break;
         }
         m_Bitmap = Bitmap.createBitmap(m_Bitmap);
-    }
-
-    //called to properly scale the camera
-    public int getHeight() {
-        return m_Bitmap.getHeight();
-    }
-
-    public void setPosition(int positionX, int positionY) {
-        m_PositionX = positionX;
-        m_PositionY = positionY;
     }
 
     @Override

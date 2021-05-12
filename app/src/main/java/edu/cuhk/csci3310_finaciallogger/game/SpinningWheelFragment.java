@@ -1,9 +1,11 @@
-package edu.cuhk.csci3310_finaciallogger;
+package edu.cuhk.csci3310_finaciallogger.game;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,7 @@ import android.widget.TextView;
 
 import java.util.Random;
 
-import edu.cuhk.csci3310_finaciallogger.game.SharedPreferencesManager;
+import edu.cuhk.csci3310_finaciallogger.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +28,7 @@ import edu.cuhk.csci3310_finaciallogger.game.SharedPreferencesManager;
 public class SpinningWheelFragment extends Fragment {
     ImageView m_Wheel;
     TextView m_ResultText;
+    int m_CurrentDegree;
     private static final String[] m_Sectors = { "Giraffe", "Lion", "Gryphon" };
     private SharedPreferencesManager m_SPM;
 
@@ -67,8 +70,8 @@ public class SpinningWheelFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        m_SPM = SharedPreferencesManager.getInstance();
+        m_SPM = new SharedPreferencesManager(getActivity().getSharedPreferences("edu.cuhk.csci3310_finaciallogger", Context.MODE_PRIVATE));
+        m_CurrentDegree = 0;
     }
 
     @Override
@@ -91,11 +94,16 @@ public class SpinningWheelFragment extends Fragment {
         return view;
     }
 
+    //TODO: ADD THE ABILITY TO CHARGE
     public void spin(View view) {
+        Log.d("CurrentRotation", String.valueOf(m_Wheel.getRotation()));
         Random random = new Random();
         int degree = random.nextInt(360);
+        int result = degree / 120;
+        //TODO: ADD GAME DATA
+        //m_SPM.addGameObjectData(0, 1);
 
-        RotateAnimation rotateAnimation = new RotateAnimation(0, degree + 720,
+        RotateAnimation rotateAnimation = new RotateAnimation(m_CurrentDegree, degree + 720,
                 RotateAnimation.RELATIVE_TO_SELF, 0.5f,
                 RotateAnimation.RELATIVE_TO_SELF, 0.5f);
 
@@ -108,8 +116,8 @@ public class SpinningWheelFragment extends Fragment {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                int result = degree / 120;
                 m_ResultText.setText("You got " + m_Sectors[result] + "!");
+                m_CurrentDegree = degree;
             }
 
             @Override

@@ -1,7 +1,6 @@
 package edu.cuhk.csci3310_finaciallogger.game;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
@@ -37,31 +36,31 @@ public class GameView extends SurfaceView implements Runnable {
     private TextView m_BucksAmount;
 
     //The constructor is called in onCreate() in GameActivity
-    public GameView(Context context, int screenSizeX, int screenSizeY, Button leftButton, Button rightButton, TextView bucksTextView, SharedPreferences sharedPreferences) {
+    public GameView(Context context, int screenSizeX, int screenSizeY, Button leftButton, Button rightButton, TextView bucksTextView) {
         super(context);
 
         m_CurrentBackground = 0;
         m_Formatter = new DecimalFormat("#,###");
 
         //TODO: MARK AS INITIALIZED IS REDUNDANT??
-        m_SPM = SharedPreferencesManager.getInstance();
-        m_SPM.setSharedPreferences(sharedPreferences);
-        m_SPM.markAsInitialized();
+        m_SPM = new SharedPreferencesManager(getContext().getSharedPreferences("edu.cuhk.csci3310_finaciallogger", Context.MODE_PRIVATE));
+        m_SPM.initialize();
 
         //DEBUG
-        ArrayList<ArrayList<Integer>> dummyData = new ArrayList<>();
-        dummyData.add(new ArrayList<>(Arrays.asList(1, 0, 5)));
-        dummyData.add(new ArrayList<>(Arrays.asList(1, 0, 2)));
-        dummyData.add(new ArrayList<>(Arrays.asList(1, 0, 4)));
-        dummyData.add(new ArrayList<>(Arrays.asList(1, 0, 0)));
-        m_SPM.saveGameObjectData(SharedPreferencesManager.convertToString(dummyData));
+        //int[] dummyData = new int[] { 22 };
+        //ArrayList<ArrayList<Integer>> dummyData = new ArrayList<>();
+        //dummyData.add(new ArrayList<>(Arrays.asList(1, 0, 22)));
+        //m_SPM.saveGameObjectData(SharedPreferencesManager.convertToString(dummyData));
+        //m_SPM.saveGameObjectData(dummyData);
+        int[] gameObjectData = m_SPM.getGameObjectData();
 
         m_BackgroundManager = new BackgroundManager();
-        m_BackgroundManager.loadBackgrounds(SharedPreferencesManager.convertToInt(m_SPM.getGameObjectData()), getResources());
+        //m_BackgroundManager.loadBackgrounds(m_SPM.getGameObjectData(), getResources());
+        m_BackgroundManager.loadBackgrounds(gameObjectData, getResources());
 
         m_GameObjectManager = new GameObjectManager();
 
-        m_GameObjectManager.loadGameObjects(SharedPreferencesManager.convertToInt(m_SPM.getGameObjectData()), getResources());
+        m_GameObjectManager.loadGameObjects(gameObjectData, getResources());
 
         m_UpdatableObjectManager = new UpdatableObjectManager();
         m_UpdatableObjectManager.setGameObjects(m_GameObjectManager.getGameObjectArray());
@@ -91,7 +90,7 @@ public class GameView extends SurfaceView implements Runnable {
             timeLastOpened = m_SPM.getTimeLastOpened();
         }
 
-        m_CurrencyManager = new CurrencyManager((float) coins, SharedPreferencesManager.convertToInt(m_SPM.getGameObjectData()));
+        m_CurrencyManager = new CurrencyManager((float) coins, m_SPM.getGameObjectData());
         m_CurrencyManager.compensate(timeLastOpened);
 
         leftButton.setOnClickListener(new Button.OnClickListener() {
@@ -161,7 +160,9 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void resume(long timeLastPaused) {
+        //restoring game states
         m_CurrencyManager.compensate(timeLastPaused);
+
         m_Running = true;
         m_Thread = new Thread(this);
         m_Thread.start();
@@ -176,6 +177,15 @@ public class GameView extends SurfaceView implements Runnable {
             e.printStackTrace();
         }
 
+    }
+
+    public void updateGameObjects() {
+        int[] gameObjectData = m_SPM.getGameObjectData();
+        m_BackgroundManager.loadBackgrounds(gameObjectData, getResources());
+        m_GameObjectManager.loadGameObjects(gameObjectData, getResources());
+        m_UpdatableObjectManager.setGameObjects(m_GameObjectManager.getGameObjectArray());
+        m_DrawableObjectManager.setBackgrounds(m_BackgroundManager.getBackgrounds());
+        m_DrawableObjectManager.setGameObjects(m_GameObjectManager.getGameObjectArray());
     }
 
     @Override
