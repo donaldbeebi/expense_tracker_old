@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -67,6 +68,10 @@ public class AddPresetActivity extends AppCompatActivity implements PopupMenu.On
             categoryMenu = new PopupMenu(this, ButtonCategory);
             categoryMenu.setOnMenuItemClickListener(this);
             categoryMenu.inflate(R.menu.category_menu);
+            TextView ItemTitleTextView= findViewById(R.id.ItemTitleTextView);
+            ItemTitleTextView.setPaintFlags(ItemTitleTextView.getPaintFlags()| Paint.FAKE_BOLD_TEXT_FLAG);
+            TextView AmountTitleTextView= findViewById(R.id.AmountTitleTextView);
+            AmountTitleTextView.setPaintFlags(AmountTitleTextView.getPaintFlags()| Paint.FAKE_BOLD_TEXT_FLAG);
             if (category!=null) {
                 switch (category) {
                     case "Food":
@@ -135,9 +140,6 @@ public class AddPresetActivity extends AppCompatActivity implements PopupMenu.On
                         count++;
                         continue;
                     }
-                    if (count == 3) {
-                        break;
-                    }
                     String output = line + "\n";
                     fos.write(output.getBytes());
                     count++;
@@ -170,7 +172,7 @@ public class AddPresetActivity extends AppCompatActivity implements PopupMenu.On
                 e.printStackTrace();
             }
 
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, GameActivity.class);
             startActivity(intent);
         }
 
