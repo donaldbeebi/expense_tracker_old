@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,8 @@ import android.widget.TextView;
 
 import java.util.Random;
 
+import edu.cuhk.csci3310_finaciallogger.game.SharedPreferencesManager;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SpinningWheelFragment#newInstance} factory method to
@@ -25,7 +26,8 @@ import java.util.Random;
 public class SpinningWheelFragment extends Fragment {
     ImageView m_Wheel;
     TextView m_ResultText;
-    private static final String[] m_Sectors = { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" };
+    private static final String[] m_Sectors = { "Giraffe", "Lion", "Gryphon" };
+    private SharedPreferencesManager m_SPM;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -65,6 +67,8 @@ public class SpinningWheelFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        m_SPM = SharedPreferencesManager.getInstance();
     }
 
     @Override
@@ -104,7 +108,8 @@ public class SpinningWheelFragment extends Fragment {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                m_ResultText.setText("You got " + getResult(degree) + "!");
+                int result = degree / 120;
+                m_ResultText.setText("You got " + m_Sectors[result] + "!");
             }
 
             @Override
@@ -112,23 +117,5 @@ public class SpinningWheelFragment extends Fragment {
         });
 
         m_Wheel.startAnimation(rotateAnimation);
-    }
-
-    public String getResult(int degree) {
-        //total degree 360 || 12 segment || 30 degree each segment
-        int initialPoint = 0;
-        int endPoint = 30;
-        int i = 0;
-        String res = null;
-
-        do {
-            if(degree >= initialPoint && degree < endPoint) {
-                res = m_Sectors[i];
-            }
-            initialPoint += 30;
-            endPoint += 30;
-            i++;
-        } while(res == null);
-        return res;
     }
 }

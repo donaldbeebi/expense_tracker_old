@@ -9,7 +9,10 @@ import java.util.ArrayList;
  */
 
 public class GameObjectManager {
-    ArrayList<ArrayList<GameObject>> m_GameObjectArray;
+    public static final int TOTAL_NUMBER_OF_TYPES = 1;
+    public static final int GIRAFFE_INDEX = 0;
+
+    private ArrayList<ArrayList<GameObject>> m_GameObjectArray;
 
     GameObjectManager() {
         m_GameObjectArray = new ArrayList<>();
