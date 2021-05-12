@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -114,10 +115,32 @@ public class AddPresetActivity extends AppCompatActivity implements PopupMenu.On
             String savePresetItem = String.valueOf(currentInput.getText());
             String savePresetAmount = currentAmount;
             String savePresetCategory= String.valueOf(ButtonCategory.getText());
+
+            //check if filled in all the fields
             if (savePresetAmount==null || SelectCategory==0 || savePresetItem==null || savePresetAmount==""){
                 Toast.makeText(this, "Please fill in all the required fields!", Toast.LENGTH_LONG).show();
                 return;
             }
+
+            //check if the input of amount contains more than one "."
+            String[] ForCheckAmount=savePresetAmount.split("");
+            Log.d("countdot check", String.valueOf(ForCheckAmount));
+            Integer countdot=0;
+            for (int i=0;i<ForCheckAmount.length;i++){
+                Log.d("countdot",ForCheckAmount[i]);
+
+                if (ForCheckAmount[i].equals(".")){
+                    Log.d("countdot check","one dot count");
+                    countdot++;
+                }
+
+                if (countdot==2){
+                    Toast.makeText(this, "Invalid input amount, please clear and try again", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+
+
             FileInputStream is = null;
             FileInputStream isd = null;
             try {

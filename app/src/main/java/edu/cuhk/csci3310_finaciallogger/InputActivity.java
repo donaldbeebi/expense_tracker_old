@@ -70,9 +70,9 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
         currentInput = (EditText) findViewById(R.id.current_Input);
         mAmountView = (TextView) findViewById((R.id.AmountView));
         TextView ItemTitleTextView= findViewById(R.id.ItemTitleTextView);
-        ItemTitleTextView.setPaintFlags(ItemTitleTextView.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+        ItemTitleTextView.setPaintFlags(ItemTitleTextView.getPaintFlags()| Paint.FAKE_BOLD_TEXT_FLAG);
         TextView AmountTitleTextView= findViewById(R.id.AmountTitleTextView);
-        AmountTitleTextView.setPaintFlags(AmountTitleTextView.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+        AmountTitleTextView.setPaintFlags(AmountTitleTextView.getPaintFlags()| Paint.FAKE_BOLD_TEXT_FLAG);
         mAmountView.setText(amount);
         currentInput.setText(input);
         if (amount!=null){

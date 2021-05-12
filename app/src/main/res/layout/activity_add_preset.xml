@@ -10,7 +10,7 @@
     <EditText
         android:id="@+id/current_Input"
         android:layout_width="292dp"
-        android:layout_height="53dp"
+        android:layout_height="40dp"
         android:layout_marginStart="59dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="60dp"
@@ -19,6 +19,7 @@
         android:text="Click to input item"
         android:textColor="#7D8388"
         android:textColorHighlight="#FFFFFF"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -52,12 +53,13 @@
     <Button
         android:id="@+id/SetAsPreset"
         android:layout_width="196dp"
-        android:layout_height="62dp"
+        android:layout_height="75dp"
         android:layout_marginStart="100dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="100dp"
         android:onClick="savePreset"
         android:text="Set As Preset"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/ConfirmLogging"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.466"
@@ -177,6 +179,7 @@
         android:layout_marginStart="63dp"
         android:layout_marginTop="27dp"
         android:layout_marginEnd="63dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/current_Input" />
@@ -194,8 +197,8 @@
 
     <Button
         android:id="@+id/CategoryButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="221sp"
+        android:layout_height="49sp"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp"
         android:onClick="showCategory"
