@@ -24,8 +24,9 @@ public class BackgroundManager {
     */
 
     public void loadBackgrounds(int[] data, Resources res) {
-        int backgroundPosition = 0;
+        int backgroundPosition = 1;
         m_Backgrounds = new ArrayList<>();
+        //loading the rest of the sections
         for(int i = 0; i < data.length; i++) {
             int animalCount = data[i];
             while(animalCount > 0) {
@@ -34,6 +35,8 @@ public class BackgroundManager {
                 animalCount -= 10;
             }
         }
+        //loading the last placeholder section
+        m_Backgrounds.add(new Background(0, Background.BACKGROUND_WIDTH * backgroundPosition, 0, res));
     }
 
     public ArrayList<Background> getBackgrounds() {

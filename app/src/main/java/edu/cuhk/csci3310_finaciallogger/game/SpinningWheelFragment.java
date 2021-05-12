@@ -26,9 +26,10 @@ import edu.cuhk.csci3310_finaciallogger.R;
  * create an instance of this fragment.
  */
 public class SpinningWheelFragment extends Fragment {
-    ImageView m_Wheel;
-    TextView m_ResultText;
-    int m_CurrentDegree;
+    private ImageView m_Wheel;
+    private TextView m_ResultText;
+    private Button m_SpinButton;
+    private int m_CurrentDegree;
     private static final String[] m_Sectors = { "Giraffe", "Lion", "Gryphon" };
     private SharedPreferencesManager m_SPM;
 
@@ -81,9 +82,9 @@ public class SpinningWheelFragment extends Fragment {
 
         m_Wheel = view.findViewById(R.id.spinning_wheel);
         m_ResultText = view.findViewById(R.id.result_text);
-        Button spinButton = view.findViewById(R.id.spin_button);
+        m_SpinButton = view.findViewById(R.id.spin_button);
 
-        spinButton.setOnClickListener(new Button.OnClickListener() {
+        m_SpinButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
                 spin(view);
@@ -96,6 +97,7 @@ public class SpinningWheelFragment extends Fragment {
 
     //TODO: ADD THE ABILITY TO CHARGE
     public void spin(View view) {
+        m_SpinButton.setEnabled(false);
         Log.d("CurrentRotation", String.valueOf(m_Wheel.getRotation()));
         Random random = new Random();
         int degree = random.nextInt(360);
@@ -112,16 +114,20 @@ public class SpinningWheelFragment extends Fragment {
         rotateAnimation.setInterpolator(new DecelerateInterpolator());
         rotateAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {}
+            public void onAnimationStart(Animation animation) {
+            }
 
             @Override
             public void onAnimationEnd(Animation animation) {
                 m_ResultText.setText("You got " + m_Sectors[result] + "!");
                 m_CurrentDegree = degree;
+                m_SpinButton.setEnabled(true);
+                m_SPM.addBucks(10);
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {}
+            public void onAnimationRepeat(Animation animation) {
+            }
         });
 
         m_Wheel.startAnimation(rotateAnimation);

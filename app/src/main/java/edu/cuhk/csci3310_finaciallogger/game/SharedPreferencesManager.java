@@ -18,6 +18,7 @@ public class SharedPreferencesManager {
         m_SharedPreferences = sharedPreferences;
     }
 
+    /*
     public void initialize() {
         //if shared preferences has not been initialized
         if (!m_SharedPreferences.getBoolean("shared_preferences_initialized", false)) {
@@ -32,11 +33,15 @@ public class SharedPreferencesManager {
             editor.apply();
         }
     }
+    */
 
     //has the shared preferences been used before?
+    /*
     public boolean isInitialized() {
         return m_SharedPreferences.getBoolean("shared_preferences_initialized", false);
     }
+
+    */
 
     /*
     //save the list of string arrays into the shared preferences
@@ -137,25 +142,40 @@ public class SharedPreferencesManager {
         return new ArrayList<>();
     }
     */
+    public void addBucks(int amount) {
+        int currentAmount = m_SharedPreferences.getInt("bucks", 0);
 
-    public void saveCurrencyInfo(int coins, int bucks, long timeLastOpened) {
+        SharedPreferences.Editor editor = m_SharedPreferences.edit();
+        editor.putInt("bucks", currentAmount + amount).apply();
+    }
+
+    public boolean deductBucks(int amount) {
+        int currentAmount = m_SharedPreferences.getInt("bucks", 0);
+        if(amount > currentAmount) {
+            return false;
+        }
+        SharedPreferences.Editor editor = m_SharedPreferences.edit();
+        editor.putInt("bucks", currentAmount - amount).apply();
+        return true;
+    }
+
+    public void saveCoinInfo(int coins, long timeLastOpened) {
         SharedPreferences.Editor editor = m_SharedPreferences.edit();
         editor.putInt("coins", coins);
-        editor.putInt("bucks", bucks);
         editor.putLong("time_last_opened", timeLastOpened);
         editor.apply();
     }
 
     public int getCoins() {
-        return m_SharedPreferences.getInt("coins", -1);
+        return m_SharedPreferences.getInt("coins", 0);
     }
 
     public int getBucks() {
-        return m_SharedPreferences.getInt("bucks", -1);
+        return m_SharedPreferences.getInt("bucks", 0);
     }
 
     public long getTimeLastOpened() {
-        return m_SharedPreferences.getLong("time_last_opened", -1);
+        return m_SharedPreferences.getLong("time_last_opened", System.nanoTime());
     }
 
     public static ArrayList<ArrayList<Integer>> convertToInt(ArrayList<String[]> data) {

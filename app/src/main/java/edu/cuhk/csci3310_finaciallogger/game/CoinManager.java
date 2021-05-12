@@ -5,16 +5,16 @@ import java.util.Arrays;
 
 import static java.lang.System.nanoTime;
 
-public class CurrencyManager {
+public class CoinManager {
     private float m_TotalNumberOfCoins;
 
-    private int[] m_AnimalNumberList = new int[GameObject.TOTAL_NUMBER_OF_TYPES];
+    private int[] m_AnimalNumberList;
     private float[] m_AnimalRateList = new float[] {
             //per minute
             10.0f    //giraffe
     };
 
-    CurrencyManager(float currentCoins, int[] data) {
+    CoinManager(float currentCoins, int[] data) {
         m_TotalNumberOfCoins = currentCoins;
         m_AnimalNumberList = data;
     }

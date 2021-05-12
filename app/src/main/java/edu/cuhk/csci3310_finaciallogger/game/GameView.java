@@ -9,8 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class GameView extends SurfaceView implements Runnable {
 
@@ -31,12 +29,14 @@ public class GameView extends SurfaceView implements Runnable {
     private GameObjectManager m_GameObjectManager;
     private UpdatableObjectManager m_UpdatableObjectManager;
     private DrawableObjectManager m_DrawableObjectManager;
-    private CurrencyManager m_CurrencyManager;
+    private CoinManager m_CoinManager;
 
-    private TextView m_BucksAmount;
+    private TextView m_CoinsTextView;
+    private TextView m_BucksTextView;
+
 
     //The constructor is called in onCreate() in GameActivity
-    public GameView(Context context, int screenSizeX, int screenSizeY, Button leftButton, Button rightButton, TextView bucksTextView) {
+    public GameView(Context context, int screenSizeX, int screenSizeY, Button leftButton, Button rightButton, TextView bucksTextView, TextView coinsTextView) {
         super(context);
 
         m_CurrentBackground = 0;
@@ -44,7 +44,7 @@ public class GameView extends SurfaceView implements Runnable {
 
         //TODO: MARK AS INITIALIZED IS REDUNDANT??
         m_SPM = new SharedPreferencesManager(getContext().getSharedPreferences("edu.cuhk.csci3310_finaciallogger", Context.MODE_PRIVATE));
-        m_SPM.initialize();
+        //m_SPM.initialize();
 
         //DEBUG
         //int[] dummyData = new int[] { 22 };
@@ -73,25 +73,25 @@ public class GameView extends SurfaceView implements Runnable {
         m_CanvasCamera = new CanvasCamera(Background.getCameraPositionX(0), screenSizeX);
 
         //handling currency
+        /*
         int coins;
-        int bucks;
         long timeLastOpened;
         //if this is the first time this app is installed
         if(!m_SPM.isInitialized()) {
             coins = 0;
-            bucks = 0;
             timeLastOpened = System.nanoTime();
-            m_SPM.saveCurrencyInfo(coins, bucks, timeLastOpened);
+            m_SPM.saveCoinInfo(coins, timeLastOpened);
         }
         //if there is already data about the amount of currency
         else {
             coins = m_SPM.getCoins();
-            bucks = m_SPM.getBucks();
             timeLastOpened = m_SPM.getTimeLastOpened();
         }
 
-        m_CurrencyManager = new CurrencyManager((float) coins, m_SPM.getGameObjectData());
-        m_CurrencyManager.compensate(timeLastOpened);
+         */
+
+        m_CoinManager = new CoinManager((float) m_SPM.getCoins(), m_SPM.getGameObjectData());
+        m_CoinManager.compensate(m_SPM.getTimeLastOpened());
 
         leftButton.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -107,7 +107,8 @@ public class GameView extends SurfaceView implements Runnable {
             }
         });
 
-        m_BucksAmount = bucksTextView;
+        m_BucksTextView = bucksTextView;
+        m_CoinsTextView = coinsTextView;
     }
 
     @Override
@@ -130,11 +131,11 @@ public class GameView extends SurfaceView implements Runnable {
 
         m_UpdatableObjectManager.update(dt);
         m_CanvasCamera.update(dt);
-        m_CurrencyManager.update(dt);
-        m_BucksAmount.post(new Runnable() {
+        m_CoinManager.update(dt);
+        m_CoinsTextView.post(new Runnable() {
             @Override
             public void run() {
-                m_BucksAmount.setText(m_Formatter.format((int) m_CurrencyManager.getTotalNumberOfCoins()));
+                m_CoinsTextView.setText(m_Formatter.format((int) m_CoinManager.getTotalNumberOfCoins()));
             }
         });
     }
@@ -161,7 +162,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     public void resume(long timeLastPaused) {
         //restoring game states
-        m_CurrencyManager.compensate(timeLastPaused);
+        m_CoinManager.compensate(timeLastPaused);
 
         m_Running = true;
         m_Thread = new Thread(this);
@@ -169,7 +170,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void pause() {
-        m_SPM.saveCurrencyInfo((int) m_CurrencyManager.getTotalNumberOfCoins(), 0, System.nanoTime());
+        m_SPM.saveCoinInfo((int) m_CoinManager.getTotalNumberOfCoins(), System.nanoTime());
         try {
             m_Running = false;
             m_Thread.join();
@@ -179,13 +180,19 @@ public class GameView extends SurfaceView implements Runnable {
 
     }
 
-    public void updateGameObjects() {
+    public void updateGameStates() {
         int[] gameObjectData = m_SPM.getGameObjectData();
         m_BackgroundManager.loadBackgrounds(gameObjectData, getResources());
         m_GameObjectManager.loadGameObjects(gameObjectData, getResources());
         m_UpdatableObjectManager.setGameObjects(m_GameObjectManager.getGameObjectArray());
         m_DrawableObjectManager.setBackgrounds(m_BackgroundManager.getBackgrounds());
         m_DrawableObjectManager.setGameObjects(m_GameObjectManager.getGameObjectArray());
+        m_BucksTextView.post(new Runnable() {
+            @Override
+            public void run() {
+                m_BucksTextView.setText(m_Formatter.format((int) m_SPM.getBucks()));
+            }
+        });
     }
 
     @Override

@@ -1,11 +1,8 @@
 package edu.cuhk.csci3310_finaciallogger;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +12,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,14 +22,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import edu.cuhk.csci3310_finaciallogger.R;
-import edu.cuhk.csci3310_finaciallogger.game.CurrencyManager;
-import edu.cuhk.csci3310_finaciallogger.game.GameObjectManager;
 import edu.cuhk.csci3310_finaciallogger.game.GameView;
 
 public class GameActivity extends AppCompatActivity {
@@ -314,6 +305,7 @@ public class GameActivity extends AppCompatActivity {
                 bounds.width(),
                 bounds.height() - actionBarHeight - statusBarHeight - navigationBarHeight,
                 leftButton, rightButton,
+                currencyInfoBar.findViewById(R.id.bucks_text_view),
                 currencyInfoBar.findViewById(R.id.coins_text_view));
 
         //Setting up the frame layout
@@ -344,7 +336,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == GAME_TRANSACTION_ACTIVITY) {
-            m_GameView.updateGameObjects();
+            m_GameView.updateGameStates();
         }
     }
 
