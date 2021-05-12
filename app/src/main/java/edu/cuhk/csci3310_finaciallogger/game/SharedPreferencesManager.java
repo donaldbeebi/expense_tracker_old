@@ -5,12 +5,16 @@ import android.content.SharedPreferences;
 import java.util.ArrayList;
 
 public class SharedPreferencesManager {
-    private static final SharedPreferencesManager m_Instance = new SharedPreferencesManager();
+    //private static final SharedPreferencesManager m_Instance = new SharedPreferencesManager();
     private  SharedPreferences m_SharedPreferences;
 
-    public static SharedPreferencesManager getInstance() { return m_Instance; }
+    //public static SharedPreferencesManager getInstance() { return m_Instance; }
 
-    public void setSharedPreferences(SharedPreferences sharedPreferences) {
+    //public void setSharedPreferences(SharedPreferences sharedPreferences) {
+    //    m_SharedPreferences = sharedPreferences;
+    //}
+
+    SharedPreferencesManager(SharedPreferences sharedPreferences) {
         m_SharedPreferences = sharedPreferences;
     }
 
@@ -41,6 +45,13 @@ public class SharedPreferencesManager {
         //storing the list size in order to loop through the list when calling "getData()"
         editor.putInt("list_size", listSize);
         editor.apply();
+    }
+
+    //adding game data
+    //index corresponds to the type
+    //value at index corresponds to the number of animals of index type
+    public void addGameObject(int[] gameObjectData) {
+        
     }
 
     //obtain a list of string arrays from the shared preferences

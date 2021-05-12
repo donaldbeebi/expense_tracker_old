@@ -37,23 +37,21 @@ public class GameView extends SurfaceView implements Runnable {
     private TextView m_BucksAmount;
 
     //The constructor is called in onCreate() in GameActivity
-    public GameView(Context context, int screenSizeX, int screenSizeY, Button leftButton, Button rightButton, TextView bucksTextView, SharedPreferences sharedPreferences) {
+    public GameView(Context context, int screenSizeX, int screenSizeY, Button leftButton, Button rightButton, TextView bucksTextView) {
         super(context);
 
         m_CurrentBackground = 0;
         m_Formatter = new DecimalFormat("#,###");
 
         //TODO: MARK AS INITIALIZED IS REDUNDANT??
-        m_SPM = SharedPreferencesManager.getInstance();
-        m_SPM.setSharedPreferences(sharedPreferences);
+        //m_SPM = SharedPreferencesManager.getInstance();
+        m_SPM = new SharedPreferencesManager(getContext().getSharedPreferences("edu.cuhk.csci3310_finaciallogger", Context.MODE_PRIVATE));
+        //m_SPM.setSharedPreferences(sharedPreferences);
         m_SPM.markAsInitialized();
 
         //DEBUG
         ArrayList<ArrayList<Integer>> dummyData = new ArrayList<>();
-        dummyData.add(new ArrayList<>(Arrays.asList(1, 0, 5)));
-        dummyData.add(new ArrayList<>(Arrays.asList(1, 0, 2)));
-        dummyData.add(new ArrayList<>(Arrays.asList(1, 0, 4)));
-        dummyData.add(new ArrayList<>(Arrays.asList(1, 0, 0)));
+        dummyData.add(new ArrayList<>(Arrays.asList(1, 0, 22)));
         m_SPM.saveGameObjectData(SharedPreferencesManager.convertToString(dummyData));
 
         m_BackgroundManager = new BackgroundManager();

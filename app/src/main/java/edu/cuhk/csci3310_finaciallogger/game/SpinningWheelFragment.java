@@ -1,5 +1,6 @@
-package edu.cuhk.csci3310_finaciallogger;
+package edu.cuhk.csci3310_finaciallogger.game;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,7 +17,7 @@ import android.widget.TextView;
 
 import java.util.Random;
 
-import edu.cuhk.csci3310_finaciallogger.game.SharedPreferencesManager;
+import edu.cuhk.csci3310_finaciallogger.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,7 +69,7 @@ public class SpinningWheelFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        m_SPM = SharedPreferencesManager.getInstance();
+        m_SPM = new SharedPreferencesManager(getActivity().getSharedPreferences("edu.cuhk.csci3310_finaciallogger", Context.MODE_PRIVATE));
     }
 
     @Override
@@ -94,6 +95,7 @@ public class SpinningWheelFragment extends Fragment {
     public void spin(View view) {
         Random random = new Random();
         int degree = random.nextInt(360);
+        int result = degree / 120;
 
         RotateAnimation rotateAnimation = new RotateAnimation(0, degree + 720,
                 RotateAnimation.RELATIVE_TO_SELF, 0.5f,
@@ -108,7 +110,6 @@ public class SpinningWheelFragment extends Fragment {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                int result = degree / 120;
                 m_ResultText.setText("You got " + m_Sectors[result] + "!");
             }
 

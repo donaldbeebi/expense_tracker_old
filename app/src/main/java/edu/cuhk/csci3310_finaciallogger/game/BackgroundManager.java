@@ -16,10 +16,14 @@ public class BackgroundManager {
     }
 
     public void loadBackgrounds(ArrayList<ArrayList<Integer>> data, Resources res) {
-        int count = 0;
+        int backgroundPosition = 0;
         for (ArrayList<Integer> integers: data) {
-            m_Backgrounds.add(new Background(integers.get(0), Background.BACKGROUND_WIDTH * count, 0, res));
-            count++;
+            int animalCount = integers.get(2);
+            while(animalCount > 0) {
+                m_Backgrounds.add(new Background(integers.get(0), Background.BACKGROUND_WIDTH * backgroundPosition, 0, res));
+                backgroundPosition++;
+                animalCount -= 10;
+            }
         }
     }
 

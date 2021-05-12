@@ -314,8 +314,7 @@ public class GameActivity extends AppCompatActivity {
                 bounds.width(),
                 bounds.height() - actionBarHeight - statusBarHeight - navigationBarHeight,
                 leftButton, rightButton,
-                currencyInfoBar.findViewById(R.id.coins_text_view),
-                getSharedPreferences("edu.cuhk.csci3310_finaciallogger", MODE_PRIVATE));
+                currencyInfoBar.findViewById(R.id.coins_text_view));
 
         //Setting up the frame layout
         m_FrameLayout.addView(m_GameView);

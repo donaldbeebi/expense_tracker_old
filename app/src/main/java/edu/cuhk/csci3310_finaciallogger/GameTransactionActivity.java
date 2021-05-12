@@ -7,11 +7,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import edu.cuhk.csci3310_finaciallogger.game.SpinningWheelFragment;
 
 public class GameTransactionActivity extends AppCompatActivity {
     private static final String SPINNING_WHEEL_FRAGMENT_TAG = "spinning_wheel_fragment";
