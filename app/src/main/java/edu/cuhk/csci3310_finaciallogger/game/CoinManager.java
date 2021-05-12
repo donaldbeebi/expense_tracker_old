@@ -19,6 +19,10 @@ public class CoinManager {
         m_AnimalNumberList = data;
     }
 
+    public void updateData(int[] data) {
+        m_AnimalNumberList = data;
+    }
+
     public void update(float dt) {
         for(int i = 0; i < GameObject.TOTAL_NUMBER_OF_TYPES; i++) {
             m_TotalNumberOfCoins += (float) m_AnimalNumberList[i] * ((m_AnimalRateList[i] / 60.0f) * dt);

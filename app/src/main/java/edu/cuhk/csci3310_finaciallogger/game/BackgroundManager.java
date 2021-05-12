@@ -24,7 +24,7 @@ public class BackgroundManager {
     */
 
     public void loadBackgrounds(int[] data, Resources res) {
-        int backgroundPosition = 1;
+        int backgroundPosition = 0;
         m_Backgrounds = new ArrayList<>();
         //loading the rest of the sections
         for(int i = 0; i < data.length; i++) {

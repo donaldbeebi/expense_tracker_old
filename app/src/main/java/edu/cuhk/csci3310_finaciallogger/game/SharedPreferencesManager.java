@@ -159,15 +159,15 @@ public class SharedPreferencesManager {
         return true;
     }
 
-    public void saveCoinInfo(int coins, long timeLastOpened) {
+    public void saveCoinInfo(float coins, long timeLastOpened) {
         SharedPreferences.Editor editor = m_SharedPreferences.edit();
-        editor.putInt("coins", coins);
+        editor.putFloat("coins", coins);
         editor.putLong("time_last_opened", timeLastOpened);
         editor.apply();
     }
 
-    public int getCoins() {
-        return m_SharedPreferences.getInt("coins", 0);
+    public float getCoins() {
+        return m_SharedPreferences.getFloat("coins", 0);
     }
 
     public int getBucks() {

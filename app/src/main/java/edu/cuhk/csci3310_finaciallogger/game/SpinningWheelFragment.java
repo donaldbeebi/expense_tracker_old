@@ -103,7 +103,7 @@ public class SpinningWheelFragment extends Fragment {
         int degree = random.nextInt(360);
         int result = degree / 120;
         //TODO: ADD GAME DATA
-        //m_SPM.addGameObjectData(0, 1);
+        m_SPM.addGameObjectData(0, 1);
 
         RotateAnimation rotateAnimation = new RotateAnimation(m_CurrentDegree, degree + 720,
                 RotateAnimation.RELATIVE_TO_SELF, 0.5f,

@@ -90,7 +90,7 @@ public class GameView extends SurfaceView implements Runnable {
 
          */
 
-        m_CoinManager = new CoinManager((float) m_SPM.getCoins(), m_SPM.getGameObjectData());
+        m_CoinManager = new CoinManager(m_SPM.getCoins(), m_SPM.getGameObjectData());
         m_CoinManager.compensate(m_SPM.getTimeLastOpened());
 
         leftButton.setOnClickListener(new Button.OnClickListener() {
@@ -187,6 +187,7 @@ public class GameView extends SurfaceView implements Runnable {
         m_UpdatableObjectManager.setGameObjects(m_GameObjectManager.getGameObjectArray());
         m_DrawableObjectManager.setBackgrounds(m_BackgroundManager.getBackgrounds());
         m_DrawableObjectManager.setGameObjects(m_GameObjectManager.getGameObjectArray());
+        m_CoinManager.updateData(gameObjectData);
         m_BucksTextView.post(new Runnable() {
             @Override
             public void run() {
