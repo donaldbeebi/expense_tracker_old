@@ -6,21 +6,25 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 
+import java.util.Random;
+
 import edu.cuhk.csci3310_finaciallogger.R;
 
 public class GameObject implements DrawableObject, UpdatableObject, Comparable<GameObject> {
     public static final int MAX_NUMBER_OF_ANIMALS_PER_SECTION = 10;
-    public static final int TOTAL_NUMBER_OF_TYPES = 1;
+    public static final int TOTAL_NUMBER_OF_ANIMAL_TYPES = 9;
+    public static final int NUMBER_OF_ANIMAL_TYPES_PER_HABITAT = 3;
     public static final String[][] ANIMAL_TYPES = new String[][]{
             { "rabbit", "cow", "unicorn" }, //farm
             { "giraffe", "lion", "gryphon" }, //savanna
-            { "monkey", "panda", "phoenix" } //jungle
+            { "gorilla", "panda", "lemur" } //jungle
     };
 
     private static final float MAX_DEGREE = 10.0f;
     private static final float ROTATION_SPEED = 60.0f;
-    private static final float SPEED = 10.0f;
+    private static final float SPEED = 100.0f;
 
+    private static final int SPRITE_DIMENSION = 96;
     private Bitmap m_Bitmap;
 
     private float m_PositionX;
@@ -42,8 +46,21 @@ public class GameObject implements DrawableObject, UpdatableObject, Comparable<G
     private final FloatRect m_Boundary;
 
     GameObject(int type, FloatRect boundary, Resources res) {
-        m_Bitmap = BitmapFactory.decodeResource(res, R.drawable.object_spritesheet);
-        m_Bitmap = Bitmap.createBitmap(m_Bitmap);
+        //loading bitmap based on type
+        if(type == 10) {
+            //if it is a human
+            Random random = new Random();
+            int x = random.nextInt(8) * SPRITE_DIMENSION;
+            m_Bitmap = BitmapFactory.decodeResource(res, R.drawable.human_spritesheet);
+            m_Bitmap = Bitmap.createBitmap(m_Bitmap, x, 0, SPRITE_DIMENSION, SPRITE_DIMENSION);
+        }
+        else {
+            //if it is an animal
+            int x = (type % NUMBER_OF_ANIMAL_TYPES_PER_HABITAT) * SPRITE_DIMENSION;
+            int y = (type / NUMBER_OF_ANIMAL_TYPES_PER_HABITAT) * SPRITE_DIMENSION;
+            m_Bitmap = BitmapFactory.decodeResource(res, R.drawable.animal_spritesheet);
+            m_Bitmap = Bitmap.createBitmap(m_Bitmap, x, y, SPRITE_DIMENSION, SPRITE_DIMENSION);
+        }
 
         m_VelocityX = 0.0f;
         m_VelocityY = 0.0f;
@@ -51,8 +68,8 @@ public class GameObject implements DrawableObject, UpdatableObject, Comparable<G
         m_Rotation = 0.0f;
         m_RotatingRight = true;
         m_InMotion = false;
-        if(Math.random() > 0.5d) m_ScaleX = 1.0f;
-        else m_ScaleX = -1.0f;
+        if(Math.random() > 0.5d) m_ScaleX = -1.0f;
+        else m_ScaleX = 1.0f;
 
         m_Boundary = new FloatRect(
                 boundary.left,
@@ -88,8 +105,8 @@ public class GameObject implements DrawableObject, UpdatableObject, Comparable<G
     public void update(float dt) {
         if(m_InMotion) {
             //face the correct direction
-            if(m_VelocityX > 0.0f) m_ScaleX = 1.0f;
-            else m_ScaleX = -1.0f;
+            if(m_VelocityX > 0.0f) m_ScaleX = -1.0f;
+            else m_ScaleX = 1.0f;
             if(m_RotatingRight) {
                 //counting the number of steps
                 if(m_Rotation < 0.0f && m_Rotation + ROTATION_SPEED * dt > 0.0f) m_CurrentStepNumber++;

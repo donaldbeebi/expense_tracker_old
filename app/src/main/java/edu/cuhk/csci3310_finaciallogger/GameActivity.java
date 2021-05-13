@@ -154,6 +154,8 @@ public class GameActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams rl;
         LinearLayout.LayoutParams ll;
 
+        //Not gonna lie, should've used XML + layout inflater
+        //I am regretting it
         /*
          * LEFT AND RIGHT BUTTONS
          */
@@ -168,28 +170,35 @@ public class GameActivity extends AppCompatActivity {
 
         //Setting up the left button
         Button leftButton = new Button(this);
-        leftButton.setText("Left");
+        leftButton.setBackgroundResource(R.drawable.left_button);
         int left_button_id = View.generateViewId();
         leftButton.setId(left_button_id);
-        rl = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        rl = new RelativeLayout.LayoutParams((int) (90 * 1.5f), (int) (90 * 1.5f));
         rl.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         rl.addRule(RelativeLayout.ABOVE, anchor_view_1_id);
+        rl.setMargins(16, 16, 16, 16);
+        leftButton.setMinHeight(0);
+        leftButton.setMinimumHeight(0);
+        leftButton.setMinWidth(0);
+        leftButton.setMinimumWidth(0);
         leftButton.setLayoutParams(rl);
         m_GameOverlay.addView(leftButton);
 
         //Setting up the right button
         Button rightButton = new Button(this);
-        rightButton.setText("Right");
+        rightButton.setBackgroundResource(R.drawable.right_button);
         int right_button_id = View.generateViewId();
         rightButton.setId(right_button_id);
-        rl = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        rl = new RelativeLayout.LayoutParams((int) (90 * 1.5f), (int) (90 * 1.5f));
         rl.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         rl.addRule(RelativeLayout.ABOVE, anchor_view_1_id);
+        rl.setMargins(16, 16, 16, 16);
+        rightButton.setMinHeight(0);
+        rightButton.setMinimumHeight(0);
+        rightButton.setMinWidth(0);
+        rightButton.setMinimumWidth(0);
         rightButton.setLayoutParams(rl);
+
         m_GameOverlay.addView(rightButton);
 
         /*
@@ -207,6 +216,32 @@ public class GameActivity extends AppCompatActivity {
         m_GameOverlay.addView(currencyInfoBar);
 
         /*
+         * ANIMAL INFO BAR
+         */
+        //Setting up the animal info bar
+        View animalInfoBar = View.inflate(this, R.layout.animal_info_bar, null);
+        int animal_info_bar_id = View.generateViewId();
+        animalInfoBar.setId(animal_info_bar_id);
+        rl = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        rl.addRule(RelativeLayout.ABOVE, currency_info_bar_id);
+        animalInfoBar.setLayoutParams(rl);
+        m_GameOverlay.addView(animalInfoBar);
+
+        /*
+         * TOTAL CPM INFO
+         */
+        //Setting up the total cpm info
+        View totalCPMInfo = View.inflate(this, R.layout.total_cpm_info_bar, null);
+        rl = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        rl.setMargins(16, 16, 16, 16);
+        totalCPMInfo.setLayoutParams(rl);
+        m_GameOverlay.addView(totalCPMInfo);
+
+        /*
          * OVERVIEW AND LOG BUTTON
          */
         //Setting up the second anchor view
@@ -220,7 +255,7 @@ public class GameActivity extends AppCompatActivity {
 
         //Setting up the overview button
         button = new Button(this);
-        button.setText(R.string.overview_button);
+        button.setBackgroundResource(R.drawable.overview_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -234,17 +269,16 @@ public class GameActivity extends AppCompatActivity {
         });
         int overview_button_id = View.generateViewId();
         button.setId(overview_button_id);
-        rl = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-        rl.addRule(RelativeLayout.ABOVE, currency_info_bar_id);
+        rl = new RelativeLayout.LayoutParams((int) (290 * 1.5f), (int) (160 * 1.5f));
+        rl.addRule(RelativeLayout.ABOVE, animal_info_bar_id);
         rl.addRule(RelativeLayout.LEFT_OF, anchor_view_2_id);
+        rl.setMargins(32, 32, 32, 32);
         button.setLayoutParams(rl);
         m_GameOverlay.addView(button);
 
         //Setting up the log button
         button = new Button(this);
-        button.setText("Log");
+        button.setBackgroundResource(R.drawable.log_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -257,11 +291,10 @@ public class GameActivity extends AppCompatActivity {
         });
         int log_button_id = View.generateViewId();
         button.setId(log_button_id);
-        rl = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-        rl.addRule(RelativeLayout.ABOVE, currency_info_bar_id);
+        rl = new RelativeLayout.LayoutParams((int) (290 * 1.5f), (int) (160 * 1.5f));
+        rl.addRule(RelativeLayout.ABOVE, animal_info_bar_id);
         rl.addRule(RelativeLayout.RIGHT_OF, anchor_view_2_id);
+        rl.setMargins(32, 32, 32, 32);
         button.setLayoutParams(rl);
         m_GameOverlay.addView(button);
 
@@ -270,7 +303,7 @@ public class GameActivity extends AppCompatActivity {
          */
         //Setting up the spinning wheel button
         button = new Button(this);
-        button.setText("Wheel");
+        button.setBackgroundResource(R.drawable.wheel_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -281,12 +314,14 @@ public class GameActivity extends AppCompatActivity {
         });
         int spinning_wheel_button_id = View.generateViewId();
         button.setId(spinning_wheel_button_id);
-        rl = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        rl = new RelativeLayout.LayoutParams((int) (90 * 1.5f), (int) (90 * 1.5f));
         rl.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         rl.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         rl.setMargins(16, 16, 16, 16);
+        rightButton.setMinHeight(0);
+        rightButton.setMinimumHeight(0);
+        rightButton.setMinWidth(0);
+        rightButton.setMinimumWidth(0);
         button.setLayoutParams(rl);
         m_GameOverlay.addView(button);
 
@@ -315,7 +350,10 @@ public class GameActivity extends AppCompatActivity {
                 bounds.height() - actionBarHeight - statusBarHeight - navigationBarHeight,
                 leftButton, rightButton,
                 currencyInfoBar.findViewById(R.id.bucks_text_view_game),
-                currencyInfoBar.findViewById(R.id.coins_text_view_game));
+                currencyInfoBar.findViewById(R.id.coins_text_view_game),
+                animalInfoBar.findViewById(R.id.animal_name_info_bar),
+                animalInfoBar.findViewById(R.id.coins_per_minute_info_bar),
+                totalCPMInfo.findViewById(R.id.total_cpm_total_cpm_info_bar));
 
         //Setting up the frame layout
         m_FrameLayout.addView(m_GameView);
