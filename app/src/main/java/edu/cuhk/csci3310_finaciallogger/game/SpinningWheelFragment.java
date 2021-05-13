@@ -166,7 +166,14 @@ public class SpinningWheelFragment extends Fragment {
             public void onAnimationEnd(Animation animation) {
                 m_ResultText.setText("You got " + animalName + "!");
                 m_CurrentDegree = degree;
-                m_SpinButton.setEnabled(true);
+                if(m_SPM.getBucks() < SPIN_COSTS[m_SelectedWheel]) {
+                    m_SpinButton.setEnabled(false);
+                    m_CostText.setTextColor(Color.RED);
+                }
+                else {
+                    m_SpinButton.setEnabled(true);
+                    m_CostText.setTextColor(Color.GREEN);
+                }
             }
 
             @Override

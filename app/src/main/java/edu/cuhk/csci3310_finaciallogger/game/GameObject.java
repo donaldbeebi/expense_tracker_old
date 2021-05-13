@@ -14,24 +14,39 @@ public class GameObject implements DrawableObject, UpdatableObject, Comparable<G
     public static final int MAX_NUMBER_OF_ANIMALS_PER_SECTION = 10;
     public static final int TOTAL_NUMBER_OF_ANIMAL_TYPES = 9;
     public static final int NUMBER_OF_ANIMAL_TYPES_PER_HABITAT = 3;
-    public static final String[][] ANIMAL_TYPES = new String[][]{
+    public static final String[][] ANIMAL_TYPES = new String[][] {
             { "rabbit", "cow", "unicorn" }, //farm
             { "giraffe", "lion", "gryphon" }, //savanna
             { "gorilla", "panda", "lemur" } //jungle
     };
 
+    public static final float[][] SPEED = new float[][] {
+            { 20.0f, 10.0f, 30.0f },
+            { 20.0f, 10.0f, 30.0f },
+            { 10.0f, 5.0f, 40.0f }
+    };
+
+    public static final float[][] ROTATION_SPEED = new float[][] {
+            { 120.0f, 60.0f, 180.0f },
+            { 120.0f, 60.0f, 180.0f },
+            { 60.0f, 30.0f, 240.0f }
+    };
+
     private static final float MAX_DEGREE = 10.0f;
-    private static final float ROTATION_SPEED = 60.0f;
-    private static final float SPEED = 100.0f;
+    //private static final float ROTATION_SPEED = 60.0f;
+    //private static final float SPEED = 100.0f;
 
     private static final int SPRITE_DIMENSION = 96;
     private Bitmap m_Bitmap;
 
+    private int m_Type;
     private float m_PositionX;
     private float m_PositionY;
     private float m_VelocityX;
     private float m_VelocityY;
 
+    private float m_Speed;
+    private float m_RotationSpeed;
     private float m_Rotation;
     private boolean m_RotatingRight;
     private boolean m_InMotion;
@@ -46,13 +61,16 @@ public class GameObject implements DrawableObject, UpdatableObject, Comparable<G
     private final FloatRect m_Boundary;
 
     GameObject(int type, FloatRect boundary, Resources res) {
-        //loading bitmap based on type
+        m_Type = type;
+        //loading bitmap and attributes based on type
         if(type == 10) {
             //if it is a human
             Random random = new Random();
             int x = random.nextInt(8) * SPRITE_DIMENSION;
             m_Bitmap = BitmapFactory.decodeResource(res, R.drawable.human_spritesheet);
             m_Bitmap = Bitmap.createBitmap(m_Bitmap, x, 0, SPRITE_DIMENSION, SPRITE_DIMENSION);
+            m_Speed = 60.0f;
+            m_RotationSpeed = 240.0f;
         }
         else {
             //if it is an animal
@@ -60,6 +78,8 @@ public class GameObject implements DrawableObject, UpdatableObject, Comparable<G
             int y = (type / NUMBER_OF_ANIMAL_TYPES_PER_HABITAT) * SPRITE_DIMENSION;
             m_Bitmap = BitmapFactory.decodeResource(res, R.drawable.animal_spritesheet);
             m_Bitmap = Bitmap.createBitmap(m_Bitmap, x, y, SPRITE_DIMENSION, SPRITE_DIMENSION);
+            m_Speed = SPEED[m_Type / TOTAL_NUMBER_OF_ANIMAL_TYPES][m_Type % TOTAL_NUMBER_OF_ANIMAL_TYPES];
+            m_RotationSpeed = ROTATION_SPEED[m_Type / TOTAL_NUMBER_OF_ANIMAL_TYPES][m_Type % TOTAL_NUMBER_OF_ANIMAL_TYPES];
         }
 
         m_VelocityX = 0.0f;
@@ -87,8 +107,8 @@ public class GameObject implements DrawableObject, UpdatableObject, Comparable<G
          * Randomizing the walking direction
          */
         float direction = (float) (Math.random() * 360.0d);
-        m_VelocityX = SPEED * (float) Math.cos(Math.toRadians(direction));
-        m_VelocityY = SPEED * (float) Math.sin(Math.toRadians(direction));
+        m_VelocityX = m_Speed * (float) Math.cos(Math.toRadians(direction));
+        m_VelocityY = m_Speed * (float) Math.sin(Math.toRadians(direction));
 
         /*
          * Randomizing the number of steps to take
@@ -109,7 +129,7 @@ public class GameObject implements DrawableObject, UpdatableObject, Comparable<G
             else m_ScaleX = 1.0f;
             if(m_RotatingRight) {
                 //counting the number of steps
-                if(m_Rotation < 0.0f && m_Rotation + ROTATION_SPEED * dt > 0.0f) m_CurrentStepNumber++;
+                if(m_Rotation < 0.0f && m_Rotation + m_RotationSpeed * dt > 0.0f) m_CurrentStepNumber++;
                 //time to go idle
                 if(m_CurrentStepNumber == m_MaxStepNumber) {
                     m_InMotion = false;
@@ -119,7 +139,7 @@ public class GameObject implements DrawableObject, UpdatableObject, Comparable<G
                 }
                 //time to swing to the right
                 else {
-                    m_Rotation += ROTATION_SPEED * dt;
+                    m_Rotation += m_RotationSpeed * dt;
                     if(m_Rotation > MAX_DEGREE) {
                         float excess = m_Rotation - MAX_DEGREE;
                         m_RotatingRight = false;
@@ -129,7 +149,7 @@ public class GameObject implements DrawableObject, UpdatableObject, Comparable<G
             }
             //time to swing to the left
             else {
-                m_Rotation -= ROTATION_SPEED * dt;
+                m_Rotation -= m_RotationSpeed * dt;
                 if(m_Rotation < -MAX_DEGREE) {
                     float excess = -(MAX_DEGREE + m_Rotation);
                     m_RotatingRight = true;
