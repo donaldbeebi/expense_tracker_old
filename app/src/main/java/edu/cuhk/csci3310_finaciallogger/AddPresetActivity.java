@@ -25,9 +25,9 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
 public class AddPresetActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
-    private Button Button1, Button2, Button3, Button4, Button5, Button6, Button7, Button8, Button9, Button0, Buttondot, ButtonClear, ButtonCategory, ButtonConfirm;
+    private Button ButtonCategory, ButtonConfirm;
     private TextView mAmountView;
-    private String currentAmount = " ";
+    private EditText currentAmount;
     private EditText currentInput;
     private String FILE_PATH = "/data/data/edu.cuhk.csci3310_finaciallogger/files/preset";
     private String FILE_PATH_dup = "/data/data/edu.cuhk.csci3310_finaciallogger/files/preset_dup";
@@ -47,21 +47,11 @@ public class AddPresetActivity extends AppCompatActivity implements PopupMenu.On
         actionBar.setDisplayHomeAsUpEnabled(true);
 
             Intent intent = getIntent();
-            Button0 = (Button) findViewById(R.id.button0);
-            Button1 = (Button) findViewById(R.id.button1);
-            Button2 = (Button) findViewById(R.id.button2);
-            Button3 = (Button) findViewById(R.id.button3);
-            Button4 = (Button) findViewById(R.id.button4);
-            Button5 = (Button) findViewById(R.id.button5);
-            Button6 = (Button) findViewById(R.id.button6);
-            Button7 = (Button) findViewById(R.id.button7);
-            Button8 = (Button) findViewById(R.id.button8);
-            Button9 = (Button) findViewById(R.id.button9);
+
             ButtonConfirm = (Button) findViewById(R.id.ConfirmLogging);
             ButtonCategory = (Button) findViewById((R.id.CategoryButton));
-            Buttondot = (Button) findViewById(R.id.buttondot);
-            ButtonClear = (Button) findViewById(R.id.buttonClear);
             currentInput = (EditText) findViewById(R.id.current_Input);
+            currentAmount=(EditText) findViewById(R.id.AmountView);
             mAmountView = (TextView) findViewById((R.id.AmountView));
             categoryMenu = new PopupMenu(this, ButtonCategory);
             categoryMenu.setOnMenuItemClickListener(this);
@@ -110,7 +100,7 @@ public class AddPresetActivity extends AppCompatActivity implements PopupMenu.On
 
         public void savePreset(View view) {
             String savePresetItem = String.valueOf(currentInput.getText());
-            String savePresetAmount = currentAmount;
+            String savePresetAmount = String.valueOf(currentAmount.getText());
             String savePresetCategory= String.valueOf(ButtonCategory.getText());
 
             //check if filled in all the fields
@@ -190,17 +180,6 @@ public class AddPresetActivity extends AppCompatActivity implements PopupMenu.On
             startActivity(intent);
         }
 
-        public void updateAmount(View view) {
-            Button button = (Button) view;
-            String buttonText = button.getText().toString();
-            currentAmount = currentAmount + buttonText;
-            mAmountView.setText(currentAmount);
-        }
-
-        public void clearAmount(View view) {
-            currentAmount = "";
-            mAmountView.setText(currentAmount);
-        }
 
         public void showCategory(View view) {
             categoryMenu.show();
