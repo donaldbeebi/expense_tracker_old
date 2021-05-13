@@ -90,6 +90,7 @@ public class SelectWheelAdapter extends Adapter<SelectWheelAdapter.SelectWheelVi
             if(purchased) {
                 //select/selected
                 m_PriceText.setText("OWNED");
+                m_PriceText.setTextColor(Color.BLACK);
                 m_Coin.setVisibility(View.INVISIBLE);
                 if(buttonPosition == m_WheelSelector.getSelectedWheel()) {
                     m_Button.setText("Selected");
@@ -106,16 +107,14 @@ public class SelectWheelAdapter extends Adapter<SelectWheelAdapter.SelectWheelVi
                 //buy
                 m_Button.setText("Buy");
                 m_Button.setTextSize(16);
+                m_Coin.setVisibility(View.VISIBLE);
                 if(CoinManager.HABITAT_PRICES[buttonPosition] > m_CoinManager.getTotalNumberOfCoins()) {
                     m_Button.setEnabled(false);
                     m_PriceText.setTextColor(Color.RED);
-                    m_Coin.setVisibility(View.VISIBLE);
                 }
                 else {
                     m_Button.setEnabled(true);
-                    //TODO: BETTER COLOR
                     m_PriceText.setTextColor(Color.GREEN);
-                    m_Coin.setVisibility(View.VISIBLE);
                 }
             }
         };

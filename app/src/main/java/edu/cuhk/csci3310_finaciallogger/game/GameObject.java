@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.util.Log;
 
 import java.util.Random;
 
@@ -32,21 +33,28 @@ public class GameObject implements DrawableObject, UpdatableObject, Comparable<G
             { 60.0f, 30.0f, 240.0f }
     };
 
-    private static final float MAX_DEGREE = 10.0f;
+    public static final float[][] MAX_DEGREE = new float[][] {
+            { 8.0f, 10.0f, 6.0f },
+            { 5.0f, 10.0f, 6.0f },
+            { 10.0f, 15.0f, 5.0f }
+    };
+
+    //private static final float MAX_DEGREE = 10.0f;
     //private static final float ROTATION_SPEED = 60.0f;
     //private static final float SPEED = 100.0f;
 
     private static final int SPRITE_DIMENSION = 96;
     private Bitmap m_Bitmap;
 
-    private int m_Type;
+    private final int m_Type;
     private float m_PositionX;
     private float m_PositionY;
     private float m_VelocityX;
     private float m_VelocityY;
 
-    private float m_Speed;
-    private float m_RotationSpeed;
+    private final float m_Speed;
+    private final float m_RotationSpeed;
+    private final float m_MaxDegree;
     private float m_Rotation;
     private boolean m_RotatingRight;
     private boolean m_InMotion;
@@ -70,7 +78,8 @@ public class GameObject implements DrawableObject, UpdatableObject, Comparable<G
             m_Bitmap = BitmapFactory.decodeResource(res, R.drawable.human_spritesheet);
             m_Bitmap = Bitmap.createBitmap(m_Bitmap, x, 0, SPRITE_DIMENSION, SPRITE_DIMENSION);
             m_Speed = 60.0f;
-            m_RotationSpeed = 240.0f;
+            m_RotationSpeed = 120.0f;
+            m_MaxDegree = 5.0f;
         }
         else {
             //if it is an animal
@@ -78,8 +87,9 @@ public class GameObject implements DrawableObject, UpdatableObject, Comparable<G
             int y = (type / NUMBER_OF_ANIMAL_TYPES_PER_HABITAT) * SPRITE_DIMENSION;
             m_Bitmap = BitmapFactory.decodeResource(res, R.drawable.animal_spritesheet);
             m_Bitmap = Bitmap.createBitmap(m_Bitmap, x, y, SPRITE_DIMENSION, SPRITE_DIMENSION);
-            m_Speed = SPEED[m_Type / TOTAL_NUMBER_OF_ANIMAL_TYPES][m_Type % TOTAL_NUMBER_OF_ANIMAL_TYPES];
-            m_RotationSpeed = ROTATION_SPEED[m_Type / TOTAL_NUMBER_OF_ANIMAL_TYPES][m_Type % TOTAL_NUMBER_OF_ANIMAL_TYPES];
+            m_Speed = SPEED[m_Type / NUMBER_OF_ANIMAL_TYPES_PER_HABITAT][m_Type % NUMBER_OF_ANIMAL_TYPES_PER_HABITAT];
+            m_RotationSpeed = ROTATION_SPEED[m_Type / NUMBER_OF_ANIMAL_TYPES_PER_HABITAT][m_Type % NUMBER_OF_ANIMAL_TYPES_PER_HABITAT];
+            m_MaxDegree = MAX_DEGREE[m_Type / NUMBER_OF_ANIMAL_TYPES_PER_HABITAT][m_Type % NUMBER_OF_ANIMAL_TYPES_PER_HABITAT];
         }
 
         m_VelocityX = 0.0f;
@@ -140,20 +150,20 @@ public class GameObject implements DrawableObject, UpdatableObject, Comparable<G
                 //time to swing to the right
                 else {
                     m_Rotation += m_RotationSpeed * dt;
-                    if(m_Rotation > MAX_DEGREE) {
-                        float excess = m_Rotation - MAX_DEGREE;
+                    if(m_Rotation > m_MaxDegree) {
+                        float excess = m_Rotation - m_MaxDegree;
                         m_RotatingRight = false;
-                        m_Rotation = MAX_DEGREE - excess;
+                        m_Rotation = m_MaxDegree - excess;
                     }
                 }
             }
             //time to swing to the left
             else {
                 m_Rotation -= m_RotationSpeed * dt;
-                if(m_Rotation < -MAX_DEGREE) {
-                    float excess = -(MAX_DEGREE + m_Rotation);
+                if(m_Rotation < -m_MaxDegree) {
+                    float excess = -(m_MaxDegree + m_Rotation);
                     m_RotatingRight = true;
-                    m_Rotation = -MAX_DEGREE + excess;
+                    m_Rotation = -m_MaxDegree + excess;
                 }
             }
             //strolling around while detecting collision
