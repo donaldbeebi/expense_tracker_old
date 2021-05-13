@@ -1,5 +1,7 @@
 package edu.cuhk.csci3310_finaciallogger.game;
 
+import android.util.Log;
+
 public class CoinManager {
     private static final CoinManager m_Instance = new CoinManager();
 

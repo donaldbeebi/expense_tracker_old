@@ -22,21 +22,21 @@ public class GameObject implements DrawableObject, UpdatableObject, Comparable<G
     };
 
     public static final float[][] SPEED = new float[][] {
-            { 20.0f, 10.0f, 30.0f },
-            { 20.0f, 10.0f, 30.0f },
-            { 10.0f, 5.0f, 40.0f }
+            { 30.0f, 15.0f, 100.0f },
+            { 20.0f, 25.0f, 70.0f },
+            { 10.0f, 5.0f, 50.0f }
     };
 
     public static final float[][] ROTATION_SPEED = new float[][] {
-            { 120.0f, 60.0f, 180.0f },
-            { 120.0f, 60.0f, 180.0f },
-            { 60.0f, 30.0f, 240.0f }
+            { 110.0f, 40.0f, 60.0f },
+            { 50.0f, 40.0f, 60.0f },
+            { 30.0f, 30.0f, 110.0f }
     };
 
     public static final float[][] MAX_DEGREE = new float[][] {
-            { 8.0f, 10.0f, 6.0f },
-            { 5.0f, 10.0f, 6.0f },
-            { 10.0f, 15.0f, 5.0f }
+            { 6.0f, 5.0f, 10.0f },
+            { 5.0f, 5.0f, 7.0f },
+            { 7.0f, 3.0f, 6.0f }
     };
 
     //private static final float MAX_DEGREE = 10.0f;
