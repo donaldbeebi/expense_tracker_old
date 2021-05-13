@@ -34,8 +34,7 @@ import edu.cuhk.csci3310_finaciallogger.game.SharedPreferencesManager;
 
 public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
     private Button Button1, Button2, Button3, Button4, Button5, Button6, Button7, Button8, Button9, Button0, Buttondot, ButtonClear, ButtonCategory, ButtonConfirm;
-    private TextView mAmountView;
-    private String currentAmount = " ";
+    private EditText currentAmount;
     private EditText currentInput;
     private String FILE_PATH = "/data/data/edu.cuhk.csci3310_finaciallogger/files/preset";
     private String FILE_PATH_dup = "/data/data/edu.cuhk.csci3310_finaciallogger/files/preset_dup";
@@ -64,35 +63,20 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
         String input = intent.getStringExtra("input");
         String amount = intent.getStringExtra("PresetAmount");
         String category = intent.getStringExtra("PresetCategory");
-        Button0 = (Button) findViewById(R.id.button0);
-        Button1 = (Button) findViewById(R.id.button1);
-        Button2 = (Button) findViewById(R.id.button2);
-        Button3 = (Button) findViewById(R.id.button3);
-        Button4 = (Button) findViewById(R.id.button4);
-        Button5 = (Button) findViewById(R.id.button5);
-        Button6 = (Button) findViewById(R.id.button6);
-        Button7 = (Button) findViewById(R.id.button7);
-        Button8 = (Button) findViewById(R.id.button8);
-        Button9 = (Button) findViewById(R.id.button9);
         ButtonConfirm = (Button) findViewById(R.id.ConfirmLogging);
         ButtonCategory = (Button) findViewById((R.id.CategoryButton));
-        Buttondot = (Button) findViewById(R.id.buttondot);
-        ButtonClear = (Button) findViewById(R.id.buttonClear);
         currentInput = (EditText) findViewById(R.id.current_Input);
-        mAmountView = (TextView) findViewById((R.id.AmountView));
+        currentAmount=(EditText) findViewById(R.id.AmountView);
         TextView ItemTitleTextView= findViewById(R.id.ItemTitleTextView);
         ItemTitleTextView.setPaintFlags(ItemTitleTextView.getPaintFlags()| Paint.FAKE_BOLD_TEXT_FLAG);
         TextView AmountTitleTextView= findViewById(R.id.AmountTitleTextView);
         AmountTitleTextView.setPaintFlags(AmountTitleTextView.getPaintFlags()| Paint.FAKE_BOLD_TEXT_FLAG);
-        mAmountView.setText(amount);
         currentInput.setText(input);
         SelectCategory=0;
         if (amount!=null){
-            currentAmount=amount;
+            currentAmount.setText(amount);
         }
-        else{
-            currentAmount="";
-        }
+
         categoryMenu = new PopupMenu(this, ButtonCategory);
         categoryMenu.setOnMenuItemClickListener(this);
         categoryMenu.inflate(R.menu.category_menu);
@@ -138,7 +122,7 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
 
     public void confirmAmount(View view) {
         String saveRecordItem = String.valueOf(currentInput.getText());
-        String saveRecordAmount = currentAmount;
+        String saveRecordAmount = String.valueOf(currentAmount.getText());
         String saveRecordCategory= String.valueOf(ButtonCategory.getText());
         if (saveRecordAmount==null || SelectCategory==0 || saveRecordItem==null || saveRecordAmount==""){
             Toast.makeText(this, "Please fill in all the required fields!", Toast.LENGTH_LONG).show();
@@ -206,19 +190,6 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
         Toast.makeText(this, "Logging complete. You just earned " + earnedBucks + " buck.", Toast.LENGTH_SHORT).show();
 
         finish();
-    }
-
-
-    public void updateAmount(View view) {
-        Button button = (Button) view;
-        String buttonText = button.getText().toString();
-        currentAmount = currentAmount + buttonText;
-        mAmountView.setText(currentAmount);
-    }
-
-    public void clearAmount(View view) {
-        currentAmount = "";
-        mAmountView.setText(currentAmount);
     }
 
     public void showCategory(View view) {
