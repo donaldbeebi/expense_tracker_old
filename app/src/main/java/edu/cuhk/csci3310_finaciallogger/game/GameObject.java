@@ -11,11 +11,15 @@ import edu.cuhk.csci3310_finaciallogger.R;
 public class GameObject implements DrawableObject, UpdatableObject, Comparable<GameObject> {
     public static final int MAX_NUMBER_OF_ANIMALS_PER_SECTION = 10;
     public static final int TOTAL_NUMBER_OF_TYPES = 1;
-    public static final int GIRAFFE_INDEX = 0;
+    public static final String[][] ANIMAL_TYPES = new String[][]{
+            { "rabbit", "cow", "unicorn" }, //farm
+            { "giraffe", "lion", "gryphon" }, //savanna
+            { "monkey", "panda", "phoenix" } //jungle
+    };
 
     private static final float MAX_DEGREE = 10.0f;
     private static final float ROTATION_SPEED = 60.0f;
-    private static final float SPEED = 100.0f;
+    private static final float SPEED = 10.0f;
 
     private Bitmap m_Bitmap;
 

@@ -1,7 +1,6 @@
 package edu.cuhk.csci3310_finaciallogger;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;

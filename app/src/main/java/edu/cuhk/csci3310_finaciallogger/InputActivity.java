@@ -4,8 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
@@ -24,8 +25,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
+import edu.cuhk.csci3310_finaciallogger.game.SharedPreferencesManager;
 
 public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
     private Button Button1, Button2, Button3, Button4, Button5, Button6, Button7, Button8, Button9, Button0, Buttondot, ButtonClear, ButtonCategory, ButtonConfirm;
@@ -39,6 +43,10 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
     private Integer SelectCategory;
     private String category;
     private PopupMenu categoryMenu;
+
+    //by donald
+    private SharedPreferencesManager m_SPM;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,7 +129,8 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
                     return;
             }
         }
-
+        //by donald
+        m_SPM = SharedPreferencesManager.getInstance();
     }
 
     public void confirmAmount(View view) {
@@ -132,9 +141,9 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
             Toast.makeText(this, "Please fill in all the required fields!", Toast.LENGTH_LONG).show();
             return;
         }
-        SimpleDateFormat formatter=new SimpleDateFormat("dd/MM/yyyy");
-        Date saveRecordDate= Calendar.getInstance().getTime();
-        String DateStr=formatter.format(saveRecordDate);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate saveRecordDate= LocalDate.now(ZoneId.of("Asia/Hong_Kong"));
+        String DateStr=dtf.format(saveRecordDate);
         FileInputStream isr = null;
         FileInputStream isdr = null;
         try {
@@ -186,9 +195,13 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
         } catch (IOException e) {
             e.printStackTrace();
         }
-        finish();
-        //Toast.makeText(this, "done confirmation", Toast.LENGTH_SHORT).show();
+        //by Donald
+        //the user earns 1 buck when he finishes logging
+        int earnedBucks = 1;
+        Toast.makeText(this, "Logging complete. You just earned " + earnedBucks + " buck.", Toast.LENGTH_SHORT).show();
+        m_SPM.addBucks(earnedBucks);
 
+        finish();
     }
 
 

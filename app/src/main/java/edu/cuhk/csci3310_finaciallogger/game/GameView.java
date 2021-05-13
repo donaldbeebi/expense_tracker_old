@@ -43,8 +43,9 @@ public class GameView extends SurfaceView implements Runnable {
         m_Formatter = new DecimalFormat("#,###");
 
         //TODO: MARK AS INITIALIZED IS REDUNDANT??
-        m_SPM = new SharedPreferencesManager(getContext().getSharedPreferences("edu.cuhk.csci3310_finaciallogger", Context.MODE_PRIVATE));
-        //m_SPM.initialize();
+        //m_SPM = new SharedPreferencesManager(getContext().getSharedPreferences("edu.cuhk.csci3310_finaciallogger", Context.MODE_PRIVATE));
+        m_SPM = SharedPreferencesManager.getInstance();
+        m_SPM.setSharedPreferences(getContext().getSharedPreferences("edu.cuhk.csci3310_finaciallogger", Context.MODE_PRIVATE));
 
         //DEBUG
         //int[] dummyData = new int[] { 22 };
@@ -72,25 +73,9 @@ public class GameView extends SurfaceView implements Runnable {
         m_CanvasScale = (float) screenSizeY / (float) Background.BACKGROUND_HEIGHT;
         m_CanvasCamera = new CanvasCamera(Background.getCameraPositionX(0), screenSizeX);
 
-        //handling currency
-        /*
-        int coins;
-        long timeLastOpened;
-        //if this is the first time this app is installed
-        if(!m_SPM.isInitialized()) {
-            coins = 0;
-            timeLastOpened = System.nanoTime();
-            m_SPM.saveCoinInfo(coins, timeLastOpened);
-        }
-        //if there is already data about the amount of currency
-        else {
-            coins = m_SPM.getCoins();
-            timeLastOpened = m_SPM.getTimeLastOpened();
-        }
-
-         */
-
-        m_CoinManager = new CoinManager(m_SPM.getCoins(), m_SPM.getGameObjectData());
+        //m_CoinManager = new CoinManager(m_SPM.getCoins(), m_SPM.getGameObjectData());
+        m_CoinManager = CoinManager.getInstance();
+        m_CoinManager.initialize(m_SPM.getCoins(), m_SPM.getGameObjectData());
         m_CoinManager.compensate(m_SPM.getTimeLastOpened());
 
         leftButton.setOnClickListener(new Button.OnClickListener() {
@@ -194,7 +179,7 @@ public class GameView extends SurfaceView implements Runnable {
         m_UpdatableObjectManager.setGameObjects(m_GameObjectManager.getGameObjectArray());
         m_DrawableObjectManager.setBackgrounds(m_BackgroundManager.getBackgrounds());
         m_DrawableObjectManager.setGameObjects(m_GameObjectManager.getGameObjectArray());
-        m_CoinManager.updateData(gameObjectData);
+        m_CoinManager.updateAnimalNumberList(gameObjectData);
         m_BucksTextView.post(new Runnable() {
             @Override
             public void run() {
