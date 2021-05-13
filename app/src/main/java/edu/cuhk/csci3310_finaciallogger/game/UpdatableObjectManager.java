@@ -3,21 +3,22 @@ package edu.cuhk.csci3310_finaciallogger.game;
 import java.util.ArrayList;
 
 public class UpdatableObjectManager {
-    private ArrayList<ArrayList<GameObject>> m_GameObjectArray;
+    private ArrayList<ArrayList<GameObject>> m_AnimalGameObjectArray;
+    private ArrayList<GameObject> m_HumanGameObjectArray;
 
-    UpdatableObjectManager() {
-
-    }
-
-    public void setGameObjects(ArrayList<ArrayList<GameObject>> gameObjectArray) {
-        m_GameObjectArray = gameObjectArray;
+    public void setGameObjects(ArrayList<ArrayList<GameObject>> animalGameObjectArray, ArrayList<GameObject> humanGameObjectArray) {
+        m_AnimalGameObjectArray = animalGameObjectArray;
+        m_HumanGameObjectArray = humanGameObjectArray;
     }
 
     public void update(float dt) {
-        for(ArrayList<GameObject> array: m_GameObjectArray) {
+        for(ArrayList<GameObject> array: m_AnimalGameObjectArray) {
             for(GameObject gameObject: array) {
                 gameObject.update(dt);
             }
+        }
+        for(GameObject gameObject: m_HumanGameObjectArray) {
+            gameObject.update(dt);
         }
     }
 }

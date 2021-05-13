@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,6 @@ public class SpinningWheelFragment extends Fragment {
 
     private int m_CurrentDegree;
     //TODO: Properly place this static memory
-    private static final String[] m_Sectors = { "Giraffe", "Lion", "Gryphon" };
     private SharedPreferencesManager m_SPM;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -124,15 +124,33 @@ public class SpinningWheelFragment extends Fragment {
         m_SpinButton.setEnabled(false);
         m_SPM.deductBucks(SPIN_COSTS[m_SelectedWheel]);
         m_BucksText.setText(String.valueOf(m_SPM.getBucks()));
-        //TODO: ADD GAME DATA
-        m_SPM.addGameObjectData(0, 1);
 
         //rotating
         Random random = new Random();
         int degree = random.nextInt(360);
-        String animalName = GameObject.ANIMAL_TYPES[m_SelectedWheel][degree / 120].substring(0, 1).toUpperCase() + GameObject.ANIMAL_TYPES[m_SelectedWheel][degree / 120].substring(1);
+        int result = ((360 - degree + 30) % 360) / 60;
+        int typeInWheel;
+        int count;
+        if(result % 2 == 1) {
+            typeInWheel = 0;
+            count = 1 + result / 2;
+        }
+        else {
+            if(result != 0) {
+                typeInWheel = 1;
+                count = result / 2;
+            }
+            else {
+                typeInWheel = 2;
+                count = 1;
+            }
+        }
+        m_SPM.addGameObjectData(m_SelectedWheel * 3 + typeInWheel, count);
+        String animalName = GameObject.ANIMAL_TYPES[m_SelectedWheel][typeInWheel].substring(0, 1).toUpperCase() + GameObject.ANIMAL_TYPES[m_SelectedWheel][typeInWheel].substring(1) + " x" + count;
+        Log.d("degree", String.valueOf(degree));
+        Log.d("result", String.valueOf(result));
 
-        RotateAnimation rotateAnimation = new RotateAnimation(m_CurrentDegree, degree + 720,
+        RotateAnimation rotateAnimation = new RotateAnimation(m_CurrentDegree, 720 + degree,
                 RotateAnimation.RELATIVE_TO_SELF, 0.5f,
                 RotateAnimation.RELATIVE_TO_SELF, 0.5f);
 
@@ -166,13 +184,13 @@ public class SpinningWheelFragment extends Fragment {
     }
 
     private void updateData(int selectedWheel) {
-        String imagePath = DRAWABLE_FILE_PATH + "spinning_wheel_test_" + Background.HABITAT_TYPES[selectedWheel];
+        String imagePath = DRAWABLE_FILE_PATH + "spinning_wheel_" + Background.HABITAT_TYPES[selectedWheel];
         Uri uri = Uri.parse(imagePath);
         m_Wheel.setImageURI(uri);
 
         //setting the cost right
         //Checking if the user has enough bucks
-        m_CostText.setText("Cost: " + String.valueOf(SPIN_COSTS[selectedWheel] + " buck(s)."));
+        m_CostText.setText("Cost: " + String.valueOf(SPIN_COSTS[selectedWheel]));
         if(m_SPM.getBucks() < SPIN_COSTS[selectedWheel]) {
             m_SpinButton.setEnabled(false);
             m_CostText.setTextColor(Color.RED);

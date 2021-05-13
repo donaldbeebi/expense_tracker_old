@@ -32,6 +32,7 @@ public class SelectWheelAdapter extends Adapter<SelectWheelAdapter.SelectWheelVi
         TextView m_Title;
         float m_Price;
         TextView m_PriceText;
+        ImageView m_Coin;
         Button m_Button;
         boolean m_Purchased;
         int m_ButtonPosition;
@@ -43,6 +44,7 @@ public class SelectWheelAdapter extends Adapter<SelectWheelAdapter.SelectWheelVi
             m_Title = itemView.findViewById(R.id.item_title);
             m_Price = 0.0f;
             m_PriceText = itemView.findViewById(R.id.item_price);
+            m_Coin = itemView.findViewById(R.id.coin_cost_image_view);
             m_Button = itemView.findViewById(R.id.item_button);
             m_Purchased = false;
             m_ButtonPosition = 0;
@@ -71,7 +73,7 @@ public class SelectWheelAdapter extends Adapter<SelectWheelAdapter.SelectWheelVi
 
         public void bindData(String title, float price, boolean purchased, int buttonPosition) {
             //loading the preview
-            String imagePath = DRAWABLE_FILE_PATH + "spinning_wheel_preview_" + title;
+            String imagePath = DRAWABLE_FILE_PATH + "spinning_wheel_" + title;
             Uri uri = Uri.parse(imagePath);
             m_WheelPreview.setImageURI(uri);
 
@@ -82,13 +84,13 @@ public class SelectWheelAdapter extends Adapter<SelectWheelAdapter.SelectWheelVi
             m_Price = price;
             m_PriceText.setText("$" + m_Formatter.format(price));
 
-            //TODO: TWEAK TEXT SIZE
             //loading the button
             m_ButtonPosition = buttonPosition;
             m_Purchased = purchased;
             if(purchased) {
                 //select/selected
                 m_PriceText.setText("OWNED");
+                m_Coin.setVisibility(View.INVISIBLE);
                 if(buttonPosition == m_WheelSelector.getSelectedWheel()) {
                     m_Button.setText("Selected");
                     m_Button.setTextSize(8);
@@ -97,7 +99,6 @@ public class SelectWheelAdapter extends Adapter<SelectWheelAdapter.SelectWheelVi
                 else {
                     m_Button.setText("Select");
                     m_Button.setTextSize(8);
-                    //TODO: ORANGE PLEASE
                     m_Button.setEnabled(true);
                 }
             }
@@ -108,11 +109,13 @@ public class SelectWheelAdapter extends Adapter<SelectWheelAdapter.SelectWheelVi
                 if(CoinManager.HABITAT_PRICES[buttonPosition] > m_CoinManager.getTotalNumberOfCoins()) {
                     m_Button.setEnabled(false);
                     m_PriceText.setTextColor(Color.RED);
+                    m_Coin.setVisibility(View.VISIBLE);
                 }
                 else {
                     m_Button.setEnabled(true);
                     //TODO: BETTER COLOR
                     m_PriceText.setTextColor(Color.GREEN);
+                    m_Coin.setVisibility(View.VISIBLE);
                 }
             }
         };

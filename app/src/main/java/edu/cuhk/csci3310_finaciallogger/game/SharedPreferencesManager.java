@@ -2,8 +2,6 @@ package edu.cuhk.csci3310_finaciallogger.game;
 
 import android.content.SharedPreferences;
 
-import java.util.ArrayList;
-
 public class SharedPreferencesManager {
     private static final SharedPreferencesManager m_Instance = new SharedPreferencesManager();
     private  SharedPreferences m_SharedPreferences;
@@ -16,12 +14,8 @@ public class SharedPreferencesManager {
         return m_Instance;
     }
 
-    //public SharedPreferencesManager(SharedPreferences sharedPreferences) {
-    //    m_SharedPreferences = sharedPreferences;
-    //}
-
     public int[] getGameObjectData() {
-        int listSize = GameObject.TOTAL_NUMBER_OF_TYPES;
+        int listSize = GameObject.TOTAL_NUMBER_OF_ANIMAL_TYPES;
         int[] gameObjectData = new int[listSize];
         for(int i = 0; i < listSize; i++) {
             gameObjectData[i] = m_SharedPreferences.getInt(String.valueOf(i), 0);
