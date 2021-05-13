@@ -113,7 +113,7 @@ public class BarChartActivity extends AppCompatActivity {
             }
             case "By Months": {
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                long monthDiff = ChronoUnit.MONTHS.between(LocalDate.parse(date, dtf), LocalDate.now(ZoneId.of("Asia/Hong_Kong")));
+                int monthDiff = LocalDate.now(ZoneId.of("Asia/Hong_Kong")).getYear() * 12 + LocalDate.now(ZoneId.of("Asia/Hong_Kong")).getMonthValue() - LocalDate.parse(date, dtf).getYear() * 12 - LocalDate.parse(date, dtf).getMonthValue();
                 if (monthDiff < 6) {
                     position = 5 - (int) monthDiff;
                 }
@@ -122,7 +122,7 @@ public class BarChartActivity extends AppCompatActivity {
             }
             case "By Years": {
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                long yearDiff = ChronoUnit.YEARS.between(LocalDate.parse(date, dtf), LocalDate.now(ZoneId.of("Asia/Hong_Kong")));
+                int yearDiff = LocalDate.now(ZoneId.of("Asia/Hong_Kong")).getYear()- LocalDate.parse(date, dtf).getYear();
                 if (yearDiff < 5) {
                     position = 4 - (int) yearDiff;
                 }
