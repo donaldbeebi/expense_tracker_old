@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -52,6 +53,7 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
 
+        Log.d("InputActivity", "onCreate");
 
         // calling the action bar
         ActionBar actionBar = getSupportActionBar();
@@ -99,38 +101,39 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
             switch (category) {
                 case "Food":
                     ButtonCategory.setText("Food");
-                    return;
+                    break;
                 case "Daily Necessities":
                     ButtonCategory.setText("Daily Necessities");
-                    return;
+                    break;
                 case "Transportation":
                     ButtonCategory.setText("Transportation");
-                    return;
+                    break;
                 case "Clothes":
                     ButtonCategory.setText("Clothes");
-                    return;
+                    break;
                 case "Entertainment":
                     ButtonCategory.setText("Entertainment");
-                    return;
+                    break;
                 case "Transfer Fee":
                     ButtonCategory.setText("Transfer Fee");
-                    return;
+                    break;
                 case "Health":
                     ButtonCategory.setText("Health");
-                    return;
+                    break;
                 case "Beauty":
                     ButtonCategory.setText("Beauty");
-                    return;
+                    break;
                 case "Utilities":
                     ButtonCategory.setText("Utilities");
-                    return;
+                    break;
                 case "Others":
                     ButtonCategory.setText("Others");
-                    return;
+                    break;
             }
         }
         //by donald
         m_SPM = SharedPreferencesManager.getInstance();
+        Log.d("InputActivity", "m_SPM got instance");
     }
 
     public void confirmAmount(View view) {
@@ -156,7 +159,7 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
         String liner = "";
         try {
             String TARGET = saveRecordItem + "," + saveRecordAmount + "," + DateStr+"," + saveRecordCategory + "\n";
-            Toast.makeText(this, TARGET, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, TARGET, Toast.LENGTH_SHORT).show();
             fosr = openFileOutput("record", MODE_PRIVATE);
             int count = 0;
             while (((liner = brr.readLine()) != null)) {
@@ -195,11 +198,12 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         //by Donald
         //the user earns 1 buck when he finishes logging
         int earnedBucks = 1;
-        Toast.makeText(this, "Logging complete. You just earned " + earnedBucks + " buck.", Toast.LENGTH_SHORT).show();
         m_SPM.addBucks(earnedBucks);
+        Toast.makeText(this, "Logging complete. You just earned " + earnedBucks + " buck.", Toast.LENGTH_SHORT).show();
 
         finish();
     }
