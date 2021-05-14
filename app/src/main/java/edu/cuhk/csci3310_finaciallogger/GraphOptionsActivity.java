@@ -68,6 +68,10 @@ public class GraphOptionsActivity extends AppCompatActivity {
 
         // the on menu item click behaviour of the category pop up menu
         popup.setOnMenuItemClickListener(item -> {
+            category = String.valueOf(item.getTitle());
+            buttonCategory.setText(category);
+            return true;
+            /*
             switch (item.getItemId()) {
                 case R.id.item0:
                     category = "All";
@@ -116,6 +120,8 @@ public class GraphOptionsActivity extends AppCompatActivity {
                 default:
                     return false;
             }
+
+             */
         });
     }
 

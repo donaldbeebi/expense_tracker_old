@@ -154,7 +154,7 @@ public class PresetListAdapter extends RecyclerView.Adapter<PresetListAdapter.Pr
     @Override
     public void onBindViewHolder(@NonNull PresetViewHolder holder, final int position) {
         holder.mPresetTitleTextView.setText(mPresetItem.get(position));
-        holder.mPresetAmountTextView.setText("$" + mFormatter.format(Integer.parseInt(mPresetAmount.get(position))));
+        holder.mPresetAmountTextView.setText(mFormatter.format(Integer.parseInt(mPresetAmount.get(position))));
         holder.mPresetCategoryTextView.setText(mPresetCategory.get(position));
     }
 
