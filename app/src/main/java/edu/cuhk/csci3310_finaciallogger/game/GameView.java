@@ -245,7 +245,7 @@ public class GameView extends SurfaceView implements Runnable {
         if(m_GameObjectManager.getTotalNumberOfAnimals() > 0) {
             //if there are animals
             int type = m_GameObjectManager.getBackgroundToAnimalList().get(m_CurrentBackground);
-            cpm = m_Formatter1.format(CoinManager.ANIMAL_RATE_LIST[type]);
+            cpm = m_Formatter2.format(CoinManager.ANIMAL_RATE_LIST[type]);
         }
         //if there are no animals
         else cpm = "0";
