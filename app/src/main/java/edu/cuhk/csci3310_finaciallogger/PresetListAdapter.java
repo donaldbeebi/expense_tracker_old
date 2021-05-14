@@ -132,7 +132,6 @@ public class PresetListAdapter extends RecyclerView.Adapter<PresetListAdapter.Pr
         this.mPresetAmount=mPresetAmount;
         this.mPresetItem=mPresetItem;
         this.context=context;
-
     }
 
     @NonNull

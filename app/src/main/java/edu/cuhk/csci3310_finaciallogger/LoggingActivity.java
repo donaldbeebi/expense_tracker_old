@@ -80,6 +80,7 @@ public class LoggingActivity extends AppCompatActivity {
 
     public void startNewPreset(View view) {
         Intent intent = new Intent(LoggingActivity.this, AddPresetActivity.class);
+        finish();
         startActivity(intent);
     }
 }
