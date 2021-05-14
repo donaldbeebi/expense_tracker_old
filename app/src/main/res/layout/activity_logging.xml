@@ -6,122 +6,69 @@
     android:layout_height="match_parent"
     tools:context=".LoggingActivity">
 
-    <EditText
-        android:id="@+id/Manual_Input"
-        android:layout_width="292dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="65dp"
-        android:layout_marginEnd="66dp"
-        android:layout_marginBottom="80dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Manual Input"
-        android:textColor="#7D8388"
-        app:layout_constraintBottom_toTopOf="@+id/StartInputbutton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AddPreset" />
-
     <TextView
         android:id="@+id/PresetText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="150dp"
-        android:text="Click on the item to use preset options :"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="Presets"
+        android:textColor="#A5A1A1"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/PresetFragment"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/StartInputbutton"
-        android:layout_width="314dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="1dp"
-        android:background="#FFFFFF"
-        android:backgroundTint="#FFFFFF"
-        android:text="Next"
+        android:id="@+id/StartInputButton"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="48dp"
+        android:text="MANUAL INPUT"
         android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Manual_Input" />
-
+        app:layout_constraintStart_toStartOf="parent" />
 
     <FrameLayout
         android:id="@+id/PresetFragment"
-        android:name="edu.cuhk.csci3310_finaciallogger.PresetFragment"
-        android:layout_width="396dp"
-        android:layout_height="250dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginBottom="20dp"
+        android:name="edu.cuhk.csci3310_financial_logger.PresetFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/AddPreset"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PresetTitleAmountTextView"
+        app:layout_constraintTop_toBottomOf="@+id/PresetText"
         tools:layout="@layout/fragment_preset" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/AddPreset"
         android:layout_width="wrap_content"
         android:layout_height="56dp"
-        android:layout_marginStart="335dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="32dp"
         android:background="#FF4CAF50"
         android:onClick="startNewPreset"
         app:backgroundTint="#FF4CAF50"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PresetFragment"
+        app:layout_constraintBottom_toTopOf="@+id/StartInputButton"
+        app:layout_constraintEnd_toEndOf="@+id/PresetFragment"
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <TextView
-        android:id="@+id/PresetTitleItemTextView"
-        android:layout_width="wrap_content"
+        android:id="@+id/empty_preset_message"
+        android:layout_width="260sp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="63dp"
-        android:text="Item"
-        android:textColor="#3F3F3F"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/PresetFragment"
-        app:layout_constraintEnd_toStartOf="@+id/PresetTitleAmountTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PresetText" />
-
-    <TextView
-        android:id="@+id/PresetTitleAmountTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="8dp"
-        android:text="Amount"
-        android:textColor="#3F3F3F"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/PresetFragment"
-        app:layout_constraintStart_toEndOf="@+id/PresetTitleItemTextView"
-        app:layout_constraintTop_toBottomOf="@+id/PresetText" />
-
-    <TextView
-        android:id="@+id/PresetTitleCategoryTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="81dp"
-        android:text="Category"
-        android:textColor="#3F3F3F"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/PresetFragment"
+        android:gravity="center"
+        android:text="Your preset list is empty.\nClick the plus button to add one."
+        app:layout_constraintBottom_toBottomOf="@+id/AddPreset"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/PresetTitleAmountTextView"
-        app:layout_constraintTop_toBottomOf="@+id/PresetText" />
+        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/AddPreset" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

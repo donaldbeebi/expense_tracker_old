@@ -14,23 +14,23 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import edu.cuhk.csci3310_finaciallogger.game.PresetDataReader;
 import edu.cuhk.csci3310_finaciallogger.game.GameView;
 
 public class GameActivity extends AppCompatActivity {
     private Boolean m_FirstTime;
-    private HashMap<String, LinkedList<String>> m_Data;
+    private HashMap<String, ArrayList<String>> m_Data;
+    private PresetDataReader m_Reader;
     private static String PRESET_FILE_PATH = "/data/data/edu.cuhk.csci3310_finaciallogger/files/preset";
     private static String RECORD_FILE_PATH = "/data/data/edu.cuhk.csci3310_finaciallogger/files/record";
 
@@ -46,6 +46,11 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Setting up m_Data
+        m_Reader = PresetDataReader.getInstance();
+        m_Reader.loadData(this, getResources());
+        m_Data = m_Reader.getData();
+
+        /*
         m_Data = new HashMap<>();
         m_Data.put("preset_list", new LinkedList<>());
         m_Data.put("preset_list_amount", new LinkedList<>());
@@ -140,6 +145,8 @@ public class GameActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        */
 
         //Preparing the frame layout
         m_FrameLayout = new FrameLayout(this);
@@ -378,6 +385,7 @@ public class GameActivity extends AppCompatActivity {
         m_GameView.resume(m_TimeLastPaused);
         Log.d("GameActivity", "onResume");
 
+        /*
         // read the record list again
         m_Data.put("record_item", new LinkedList<>());
         m_Data.put("record_amount", new LinkedList<>());
@@ -407,6 +415,10 @@ public class GameActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+         */
+        m_Reader.loadData(this, getResources());
+        m_Data = m_Reader.getData();
     }
 
     @Override

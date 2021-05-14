@@ -11,6 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+
+import edu.cuhk.csci3310_finaciallogger.game.PresetDataReader;
 
 import static com.github.mikephil.charting.charts.Chart.LOG_TAG;
 
@@ -22,10 +30,12 @@ import static com.github.mikephil.charting.charts.Chart.LOG_TAG;
 public class PresetFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
+    //this only used to instantiate the adapter
     private String[] mPresetItem, mPresetAmount,mPresetCategory;
     private RecyclerView mRecyclerView;
     private PresetListAdapter mAdapter;
     private Context mContext;
+    private TextView mEmptyPresetMessage;
 
     public PresetFragment() {
         // Required empty public constructor
@@ -54,11 +64,7 @@ public class PresetFragment extends Fragment {
             mPresetItem = getArguments().getStringArray(String.valueOf(mPresetItem));
             mPresetAmount = getArguments().getStringArray(String.valueOf(mPresetAmount));
             mPresetCategory = getArguments().getStringArray(String.valueOf(mPresetCategory));
-
         }
-
-
-
     }
 
     @Override
@@ -72,19 +78,29 @@ public class PresetFragment extends Fragment {
         mPresetItem = this.getArguments().getStringArray("presetItemList");
         mPresetAmount = this.getArguments().getStringArray("presetAmountList");
         mPresetCategory = this.getArguments().getStringArray("presetCategoryList");
+        mEmptyPresetMessage = getActivity().findViewById(R.id.empty_preset_message);
 
-        if (mPresetItem==null){
-            Log.d(LOG_TAG,"noPresetItem");
+        if(mPresetItem.length == 0) {
+            mEmptyPresetMessage.setVisibility(View.VISIBLE);
+        }
+        else {
+            mEmptyPresetMessage.setVisibility(View.INVISIBLE);
         }
 
-        mAdapter = new PresetListAdapter(mContext,mPresetItem,mPresetAmount,mPresetCategory);
+        //quick fix
+        //locally converting String[] to ArrayList<String> for easy element removal
+        mAdapter = new PresetListAdapter(
+                mContext,
+                new ArrayList<String>(Arrays.asList(mPresetItem)),
+                new ArrayList<String>(Arrays.asList(mPresetAmount)),
+                new ArrayList<String>(Arrays.asList(mPresetCategory)),
+                mEmptyPresetMessage);
         // Connect the adapter with the RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
         // Give the RecyclerView a default layout manager.
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -95,6 +111,21 @@ public class PresetFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mContext = null;
+    }
+
+    //called to update the adapter
+    public void updateDataSet() {
+        PresetDataReader reader = PresetDataReader.getInstance();
+        reader.loadData(getContext(), getResources());
+        HashMap<String, ArrayList<String>> data = reader.getData();
+        mAdapter.updateDataSet(data.get("preset_list"), data.get("preset_list_amount"), data.get("preset_list_category"));
+        mAdapter.notifyDataSetChanged();
+        if(data.get("preset_list").size() == 0) {
+            mEmptyPresetMessage.setVisibility(View.VISIBLE);
+        }
+        else {
+            mEmptyPresetMessage.setVisibility(View.INVISIBLE);
+        }
     }
 
 }

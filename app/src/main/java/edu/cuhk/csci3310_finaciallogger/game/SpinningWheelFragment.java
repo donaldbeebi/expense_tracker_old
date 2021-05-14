@@ -39,9 +39,9 @@ public class SpinningWheelFragment extends Fragment {
 
     private int m_SelectedWheel;
     private static final int[] SPIN_COSTS = {
-            1, //savanna
-            3, //safari
-            5 //wetland
+            5, //savanna
+            10, //safari
+            15 //wetland
     };
 
     private int m_CurrentDegree;

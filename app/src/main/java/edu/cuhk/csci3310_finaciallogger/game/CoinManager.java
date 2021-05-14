@@ -7,8 +7,8 @@ public class CoinManager {
 
     public static final float[] HABITAT_PRICES = new float[] {
             0.0f, //savanna
-            1_000.0f, //safari
-            10_000.0f //wetland
+            50_000.0f, //safari
+            500_000.0f //wetland
     };
 
     private float m_TotalNumberOfCoins;
@@ -16,15 +16,17 @@ public class CoinManager {
     private float m_CPM;
     public static final float[] ANIMAL_RATE_LIST = new float[] {
             //per minute
-            3.0f,   //rabbit
-            5.0f,   //cow
-            10.0f,  //unicorn
-            15.0f,  //giraffe
-            20.0f,  //lion
-            40.0f,  //gryphon
-            50.0f,  //gorilla
-            60.0f,  //panda
-            80.0f,  //lemur
+            0.5f,   //rabbit
+            1.0f,   //cow
+            2.0f,   //unicorn
+
+            1.5f,   //giraffe
+            3.0f,   //lion
+            6.0f,  //gryphon
+
+            3.0f,   //gorilla
+            9.0f,  //panda
+            18.0f,  //lemur
     };
 
     //CoinManager(float currentCoins, int[] data) {

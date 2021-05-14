@@ -4,15 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Paint;
-import android.icu.text.SimpleDateFormat;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupMenu;
@@ -33,7 +31,7 @@ import java.time.format.DateTimeFormatter;
 import edu.cuhk.csci3310_finaciallogger.game.SharedPreferencesManager;
 
 public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
-    private Button Button1, Button2, Button3, Button4, Button5, Button6, Button7, Button8, Button9, Button0, Buttondot, ButtonClear, ButtonCategory, ButtonConfirm;
+    private Button Button1, Button2, Button3, Button4, Button5, Button6, Button7, Button8, Button9, Button0, Buttondot, ButtonClear, ButtonConfirm;
     private EditText currentAmount;
     private EditText currentInput;
     private String FILE_PATH = "/data/data/edu.cuhk.csci3310_finaciallogger/files/preset";
@@ -41,11 +39,11 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
     private String RECORD_FILE_PATH = "/data/data/edu.cuhk.csci3310_finaciallogger/files/record";
     private String RECORD_FILE_PATH_dup = "/data/data/edu.cuhk.csci3310_finaciallogger/files/record_dup";
     private Integer SelectCategory;
-    private String category;
-    private PopupMenu categoryMenu;
+    private PopupMenu mCategoryPopupMenu;
 
     //by donald
-    private SharedPreferencesManager m_SPM;
+    private SharedPreferencesManager mSPM;
+    private TextView mCategoryInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,67 +61,35 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
         String input = intent.getStringExtra("input");
         String amount = intent.getStringExtra("PresetAmount");
         String category = intent.getStringExtra("PresetCategory");
-        ButtonConfirm = (Button) findViewById(R.id.ConfirmLogging);
-        ButtonCategory = (Button) findViewById((R.id.CategoryButton));
-        currentInput = (EditText) findViewById(R.id.current_Input);
-        currentAmount=(EditText) findViewById(R.id.AmountView);
+        ButtonConfirm = (Button) findViewById(R.id.confirm_button);
+        currentInput = (EditText) findViewById(R.id.input_title_input);
+        currentAmount=(EditText) findViewById(R.id.input_amount_input);
         TextView ItemTitleTextView= findViewById(R.id.ItemTitleTextView);
-        ItemTitleTextView.setPaintFlags(ItemTitleTextView.getPaintFlags()| Paint.FAKE_BOLD_TEXT_FLAG);
-        TextView AmountTitleTextView= findViewById(R.id.AmountTitleTextView);
-        AmountTitleTextView.setPaintFlags(AmountTitleTextView.getPaintFlags()| Paint.FAKE_BOLD_TEXT_FLAG);
+        TextView AmountTitleTextView= findViewById(R.id.input_amount_text_view);
         currentInput.setText(input);
         SelectCategory=0;
         if (amount!=null){
             currentAmount.setText(amount);
         }
 
-        categoryMenu = new PopupMenu(this, ButtonCategory);
-        categoryMenu.setOnMenuItemClickListener(this);
-        categoryMenu.inflate(R.menu.category_menu);
-        if (category!=null) {
-            SelectCategory=1;
-            switch (category) {
-                case "Food":
-                    ButtonCategory.setText("Food");
-                    break;
-                case "Daily Necessities":
-                    ButtonCategory.setText("Daily Necessities");
-                    break;
-                case "Transportation":
-                    ButtonCategory.setText("Transportation");
-                    break;
-                case "Clothes":
-                    ButtonCategory.setText("Clothes");
-                    break;
-                case "Entertainment":
-                    ButtonCategory.setText("Entertainment");
-                    break;
-                case "Transfer Fee":
-                    ButtonCategory.setText("Transfer Fee");
-                    break;
-                case "Health":
-                    ButtonCategory.setText("Health");
-                    break;
-                case "Beauty":
-                    ButtonCategory.setText("Beauty");
-                    break;
-                case "Utilities":
-                    ButtonCategory.setText("Utilities");
-                    break;
-                case "Others":
-                    ButtonCategory.setText("Others");
-                    break;
-            }
+        mCategoryInput = findViewById(R.id.input_category_input);
+        mCategoryPopupMenu = new PopupMenu(this, mCategoryInput);
+        mCategoryPopupMenu.setOnMenuItemClickListener(this);
+        mCategoryPopupMenu.inflate(R.menu.category_menu);
+        if(category != null) {
+            SelectCategory = 1;
+            mCategoryInput.setText(category);
+            mCategoryInput.setTextColor(Color.parseColor("#3F3F3F"));
+            mCategoryInput.setTextSize(24);
         }
         //by donald
-        m_SPM = SharedPreferencesManager.getInstance();
-        Log.d("InputActivity", "m_SPM got instance");
+        mSPM = SharedPreferencesManager.getInstance();
     }
 
     public void confirmAmount(View view) {
         String saveRecordItem = String.valueOf(currentInput.getText());
         String saveRecordAmount = String.valueOf(currentAmount.getText());
-        String saveRecordCategory= String.valueOf(ButtonCategory.getText());
+        String saveRecordCategory= String.valueOf(mCategoryInput.getText());
         if (saveRecordAmount==null || SelectCategory==0 || saveRecordItem==null || saveRecordAmount==""){
             Toast.makeText(this, "Please fill in all the required fields!", Toast.LENGTH_LONG).show();
             return;
@@ -186,62 +152,25 @@ public class InputActivity extends AppCompatActivity implements PopupMenu.OnMenu
         //by Donald
         //the user earns 1 buck when he finishes logging
         int earnedBucks = 1;
-        m_SPM.addBucks(earnedBucks);
+        mSPM.addBucks(earnedBucks);
         Toast.makeText(this, "Logging complete. You just earned " + earnedBucks + " buck.", Toast.LENGTH_SHORT).show();
 
         finish();
     }
 
     public void showCategory(View view) {
-        categoryMenu.show();
+        mCategoryPopupMenu.show();
+        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getRootView().getApplicationWindowToken(),0);
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.item1:
-                ButtonCategory.setText("Food");
-                SelectCategory=1;
-                return true;
-            case R.id.item2:
-                ButtonCategory.setText("Daily Necessities");
-                SelectCategory=1;
-                return true;
-            case R.id.item3:
-                ButtonCategory.setText("Transportation");
-                SelectCategory=1;
-                return true;
-            case R.id.item4:
-                ButtonCategory.setText("Clothes");
-                SelectCategory=1;
-                return true;
-            case R.id.item5:
-                ButtonCategory.setText("Entertainment");
-                SelectCategory=1;
-                return true;
-            case R.id.item6:
-                ButtonCategory.setText("Transfer Fee");
-                SelectCategory=1;
-                return true;
-            case R.id.item7:
-                ButtonCategory.setText("Health");
-                SelectCategory=1;
-                return true;
-            case R.id.item8:
-                ButtonCategory.setText("Beauty");
-                SelectCategory=1;
-                return true;
-            case R.id.item9:
-                ButtonCategory.setText("Utilities");
-                SelectCategory=1;
-                return true;
-            case R.id.item10:
-                ButtonCategory.setText("Others");
-                SelectCategory=1;
-                return true;
-            default:
-                return false;
-        }
+        mCategoryInput.setText(String.valueOf(item.getTitle()));
+        mCategoryInput.setTextColor(Color.parseColor("#3F3F3F"));
+        mCategoryInput.setTextSize(24);
+        SelectCategory = 1;
+        return true;
     }
 
     // this event will enable the back function to the button on press

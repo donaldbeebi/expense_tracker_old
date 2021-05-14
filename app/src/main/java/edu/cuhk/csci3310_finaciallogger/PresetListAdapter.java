@@ -4,16 +4,16 @@ package edu.cuhk.csci3310_finaciallogger;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -22,46 +22,34 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 public class PresetListAdapter extends RecyclerView.Adapter<PresetListAdapter.PresetViewHolder> {
-    private Context context;
+    private Context mContext;
     private LayoutInflater mInflater;
-    String[] mPresetItem,mPresetAmount,mPresetCategory;
+    ArrayList<String> mPresetItem,mPresetAmount,mPresetCategory;
+    TextView mEmptyPresetMessage;
     private String FILE_PATH = "/data/data/edu.cuhk.csci3310_finaciallogger/files/preset";
     private String FILE_PATH_dup = "/data/data/edu.cuhk.csci3310_finaciallogger/files/preset_dup";
     private String RECORD_FILE_PATH = "/data/data/edu.cuhk.csci3310_finaciallogger/files/record";
     private String RECORD_FILE_PATH_dup = "/data/data/edu.cuhk.csci3310_finaciallogger/files/record_dup";
 
-
-
     class PresetViewHolder extends RecyclerView.ViewHolder {
-
-
         final PresetListAdapter mAdapter;
-        TextView presetAmountTextView, presetCategoryTextView;
-        Button presetItemButton;
-        FloatingActionButton deleteButton;
+        TextView mPresetCategoryTextView;
+        TextView mPresetTitleTextView;
+        TextView mPresetAmountTextView;
+        Button mPresetItemButton;
+        ImageView mDeleteButton;
 
         public PresetViewHolder(View itemView, PresetListAdapter adapter) {
             super(itemView);
-            presetItemButton = itemView.findViewById(R.id.PresetItem);
-            presetAmountTextView = itemView.findViewById(R.id.PresetAmount);
-            presetCategoryTextView = itemView.findViewById(R.id.PresetCategory);
-            this.mAdapter = adapter;
-            presetItemButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, InputActivity.class);
-                    intent.putExtra("input", presetItemButton.getText());
-                    intent.putExtra("PresetAmount", presetAmountTextView.getText());
-                    intent.putExtra("PresetCategory", presetCategoryTextView.getText());
-                    ((Activity)context).finish();
-                    context.startActivity(intent);
-                }
+            mPresetTitleTextView = itemView.findViewById(R.id.PresetTitle);
+            mPresetAmountTextView = itemView.findViewById(R.id.PresetAmount);
+            mPresetCategoryTextView = itemView.findViewById(R.id.PresetCategory);
 
-            });
-            deleteButton=itemView.findViewById(R.id.deleteButton);
-            deleteButton.setOnClickListener(new View.OnClickListener() {
+            mDeleteButton = itemView.findViewById(R.id.deleteButton);
+            mDeleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position=getAdapterPosition();
@@ -76,7 +64,7 @@ public class PresetListAdapter extends RecyclerView.Adapter<PresetListAdapter.Pr
                     FileOutputStream fos = null;
                     String line = "";
                     try {
-                        fos = context.openFileOutput("preset",context.MODE_PRIVATE);
+                        fos = mContext.openFileOutput("preset", mContext.MODE_PRIVATE);
                         int count = 0;
                         while (((line = br.readLine()) != null)) {
                             if (count==Integer.valueOf(position)){
@@ -102,7 +90,7 @@ public class PresetListAdapter extends RecyclerView.Adapter<PresetListAdapter.Pr
                     BufferedReader brd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
                     FileOutputStream fosd = null;
                     try {
-                        fosd = context.openFileOutput("preset_dup", context.MODE_PRIVATE);
+                        fosd = mContext.openFileOutput("preset_dup", mContext.MODE_PRIVATE);
                         while (((line = brd.readLine()) != null)) {
                             String output = line + "\n";
                             fosd.write(output.getBytes());
@@ -114,24 +102,43 @@ public class PresetListAdapter extends RecyclerView.Adapter<PresetListAdapter.Pr
                         e.printStackTrace();
                     }
 
-                    Intent intent=new Intent(context,GameActivity.class);
-                    ((Activity)context).startActivity(intent);
+                    //quick fix
+                    //local update -> no need to restart activity to see the deletion
+                    mPresetItem.remove(getLayoutPosition());
+                    mPresetAmount.remove(getLayoutPosition());
+                    mPresetCategory.remove(getLayoutPosition());
 
+                    //updating the message
+                    if(mPresetItem.isEmpty()) mEmptyPresetMessage.setVisibility(View.VISIBLE);
+
+                    notifyItemRemoved(getLayoutPosition());
 
                 }
             });
 
+            mPresetItemButton = itemView.findViewById(R.id.PresetItemSelectButton);
+            mPresetItemButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, InputActivity.class);
+                    intent.putExtra("input", mPresetTitleTextView.getText());
+                    intent.putExtra("PresetAmount", mPresetAmountTextView.getText());
+                    intent.putExtra("PresetCategory", mPresetCategoryTextView.getText());
+                    mContext.startActivity(intent);
+                }
 
+            });
+            this.mAdapter = adapter;
         }
     }
 
-    public PresetListAdapter(Context context,
-                             String[] mPresetItem,String[] mPresetAmount,String[] mPresetCategory) {
+    public PresetListAdapter(Context context, ArrayList<String> presetItem, ArrayList<String> presetAmount, ArrayList<String> presetCategory, TextView emptyPresetMessage) {
         mInflater = LayoutInflater.from(context);
-        this.mPresetCategory=mPresetCategory;
-        this.mPresetAmount=mPresetAmount;
-        this.mPresetItem=mPresetItem;
-        this.context=context;
+        mPresetCategory = presetCategory;
+        mPresetAmount = presetAmount;
+        mPresetItem = presetItem;
+        mContext = context;
+        mEmptyPresetMessage = emptyPresetMessage;
     }
 
     @NonNull
@@ -143,10 +150,9 @@ public class PresetListAdapter extends RecyclerView.Adapter<PresetListAdapter.Pr
 
     @Override
     public void onBindViewHolder(@NonNull PresetViewHolder holder, final int position) {
-        holder.presetItemButton.setText(mPresetItem[position]);
-        holder.presetAmountTextView.setText(mPresetAmount[position]);
-        holder.presetCategoryTextView.setText(mPresetCategory[position]);
-
+        holder.mPresetTitleTextView.setText(mPresetItem.get(position));
+        holder.mPresetAmountTextView.setText(mPresetAmount.get(position));
+        holder.mPresetCategoryTextView.setText(mPresetCategory.get(position));
     }
 
     public long getItemId(int position) {
@@ -155,7 +161,14 @@ public class PresetListAdapter extends RecyclerView.Adapter<PresetListAdapter.Pr
 
     @Override
     public int getItemCount() {
-        return mPresetCategory.length;
+        return mPresetCategory.size();
     }
 
+    //custom function called when the preset fragment is resumed
+    //this is to update the data set after adding a preset
+    public void updateDataSet (ArrayList<String> presetItem, ArrayList<String> presetAmount, ArrayList<String> presetCategory) {
+        mPresetCategory = presetCategory;
+        mPresetAmount = presetAmount;
+        mPresetItem = presetItem;
+    }
 }

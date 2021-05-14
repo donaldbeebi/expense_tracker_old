@@ -25,10 +25,7 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Re
             amountTextView=itemView.findViewById(R.id.recordAmount);
             categoryTextView=itemView.findViewById(R.id.recordCategory);
             this.mAdapter=adapter;
-
-
         }
-
     }
 
 
@@ -41,7 +38,6 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Re
         this.mRecordAmount = recordAmount;
         this.mRecordDate = recordDate;
         this.mContext= context;
-
     }
 
 
@@ -59,7 +55,6 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Re
         holder.dateTextView.setText(mRecordDate[position]);
         holder.categoryTextView.setText(mRecordCategory[position]);
         holder.amountTextView.setText(mRecordAmount[position]);
-
     }
 
     @Override

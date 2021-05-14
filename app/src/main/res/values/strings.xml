@@ -8,10 +8,10 @@
     <string name="please_select_a_graph_type">Please select a graph type</string>
     <string name="food">Food</string>
     <string name="daily_necessities">Daily Necessities</string>
-    <string name="transportation">Transportation</string>
+    <string name="transport">Transport</string>
     <string name="clothes">Clothes</string>
     <string name="entertainment">Entertainment</string>
-    <string name="transfer_fee">Transfer Fee</string>
+    <string name="transfer_fee">Transfer Fee (remove me)</string>
     <string name="health">Health</string>
     <string name="beauty">Beauty</string>
     <string name="utilities">Utilities</string>
@@ -34,4 +34,6 @@
     <string name="spinning_wheel">Spinning Wheel</string>
     <string name="spin_button_text">Spin</string>
     <string name="all">All</string>
+    <string name="drink">Drink</string>
+    <string name="services">Services</string>
 </resources>
