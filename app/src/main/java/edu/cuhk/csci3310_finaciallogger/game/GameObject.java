@@ -151,9 +151,11 @@ public class GameObject implements DrawableObject, UpdatableObject, Comparable<G
                 else {
                     m_Rotation += m_RotationSpeed * dt;
                     if(m_Rotation > m_MaxDegree) {
-                        float excess = m_Rotation - m_MaxDegree;
+                        //float excess = m_Rotation - m_MaxDegree;
+                        //m_RotatingRight = false;
+                        //m_Rotation = m_MaxDegree - excess;
+                        m_Rotation = m_MaxDegree;
                         m_RotatingRight = false;
-                        m_Rotation = m_MaxDegree - excess;
                     }
                 }
             }
@@ -161,9 +163,11 @@ public class GameObject implements DrawableObject, UpdatableObject, Comparable<G
             else {
                 m_Rotation -= m_RotationSpeed * dt;
                 if(m_Rotation < -m_MaxDegree) {
-                    float excess = -(m_MaxDegree + m_Rotation);
+                    //float excess = -(m_MaxDegree + m_Rotation);
+                    //m_RotatingRight = true;
+                    //m_Rotation = -m_MaxDegree + excess;
+                    m_Rotation = -m_MaxDegree;
                     m_RotatingRight = true;
-                    m_Rotation = -m_MaxDegree + excess;
                 }
             }
             //strolling around while detecting collision
