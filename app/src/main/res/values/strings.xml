@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">CSCI3310 Financial Logger</string>
-    <string name="view_by_raw_records">View By Raw Records</string>
+    <string name="view_by_raw_records">"View By Raw Records</string>
     <string name="view_by_graphs">View By Graphs</string>
     <string name="please_select_a_category">Please select a category</string>
-    <string name="go">Go</string>
+    <string name="go">View Chart</string>
     <string name="please_select_a_time">Please select a time</string>
     <string name="please_select_a_graph_type">Please select a graph type</string>
     <string name="food">Food</string>
