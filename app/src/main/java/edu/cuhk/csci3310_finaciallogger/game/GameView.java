@@ -59,7 +59,7 @@ public class GameView extends SurfaceView implements Runnable {
         m_SPM = SharedPreferencesManager.getInstance();
         m_SPM.setSharedPreferences(getContext().getSharedPreferences("edu.cuhk.csci3310_finaciallogger", Context.MODE_PRIVATE));
         //free bucks!
-        m_SPM.addBucks(400);
+        //m_SPM.addBucks(400);
 
         //setting up the sprites and game objects
         int[] gameObjectData = m_SPM.getGameObjectData();
@@ -89,7 +89,7 @@ public class GameView extends SurfaceView implements Runnable {
         m_CoinManager = CoinManager.getInstance();
         m_CoinManager.initialize(m_SPM.getCoins(), m_SPM.getGameObjectData());
         //free coins!
-        m_CoinManager.initialize(200_000.0f, m_SPM.getGameObjectData());
+        //m_CoinManager.initialize(200_000.0f, m_SPM.getGameObjectData());
         m_CoinManager.compensate(m_SPM.getTimeLastOpened());
         m_TotalCPMInfoTextView.post(new Runnable() {
             @Override

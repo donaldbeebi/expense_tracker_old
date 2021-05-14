@@ -29,7 +29,6 @@ public class PresetListAdapter extends RecyclerView.Adapter<PresetListAdapter.Pr
     private Context mContext;
     private LayoutInflater mInflater;
     ArrayList<String> mPresetItem,mPresetAmount,mPresetCategory;
-    DecimalFormat mFormatter;
     TextView mEmptyPresetMessage;
     private String FILE_PATH = "/data/data/edu.cuhk.csci3310_finaciallogger/files/preset";
     private String FILE_PATH_dup = "/data/data/edu.cuhk.csci3310_finaciallogger/files/preset_dup";
@@ -141,7 +140,6 @@ public class PresetListAdapter extends RecyclerView.Adapter<PresetListAdapter.Pr
         mPresetItem = presetItem;
         mContext = context;
         mEmptyPresetMessage = emptyPresetMessage;
-        mFormatter = new DecimalFormat("#,##0.0");
     }
 
     @NonNull
@@ -154,7 +152,7 @@ public class PresetListAdapter extends RecyclerView.Adapter<PresetListAdapter.Pr
     @Override
     public void onBindViewHolder(@NonNull PresetViewHolder holder, final int position) {
         holder.mPresetTitleTextView.setText(mPresetItem.get(position));
-        holder.mPresetAmountTextView.setText(mFormatter.format(Integer.parseInt(mPresetAmount.get(position))));
+        holder.mPresetAmountTextView.setText(mPresetAmount.get(position));
         holder.mPresetCategoryTextView.setText(mPresetCategory.get(position));
     }
 
