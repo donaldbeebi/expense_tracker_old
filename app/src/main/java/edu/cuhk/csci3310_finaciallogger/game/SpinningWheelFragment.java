@@ -167,7 +167,7 @@ public class SpinningWheelFragment extends Fragment {
                 m_ResultText.setText("You got " + animalName + "!");
                 m_CurrentDegree = degree;
                 if(m_SPM.getBucks() < SPIN_COSTS[m_SelectedWheel]) {
-                    m_SpinButton.setEnabled(false);
+                    m_SpinButton.setEnabled(flse);
                     m_CostText.setTextColor(Color.RED);
                 }
                 else {
